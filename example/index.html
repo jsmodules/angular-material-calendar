@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en-us", ng-app="materialExample">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/default-theme.css">
+</head>
+<body>
+
+    <section layout="column" layout-fill md-theme="default-theme">
+        <md-calendar data-day-format="d"></md-calendar>
+    </section>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="../bower_components/angular-material/angular-material.min.js"></script>
+    <script src="../dist/angular-material-calendar.js"></script>
+    <script>
+    angular.module("materialExample", ["ngMaterial", "materialCalendar"]);
+    </script>
+</body>
+</html>
