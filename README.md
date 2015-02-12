@@ -1,6 +1,6 @@
 # AngularJS Material Calendar
 
-A calendar directive for AngularJS and Angular Material Design. A work in progress.
+A calendar directive for AngularJS and Angular Material Design.
 
 ## Date formats
 
