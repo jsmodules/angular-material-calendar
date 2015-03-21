@@ -2,6 +2,22 @@
 
 A calendar directive for AngularJS and Angular Material Design.
 
+Install it via [Bower](//bower.io)
+
+```bash
+bower install --save material-calendar
+```
+
+Or add it to your dependencies in your `bower.json` file:
+
+```json
+{
+   "dependencies": {
+    "material-calendar": "~0.1.2"
+  }
+}
+```
+
 ![Screenshot](http://i.imgur.com/U0OtrAb.png)
 
 ## Date formats
