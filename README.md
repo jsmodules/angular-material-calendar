@@ -2,6 +2,8 @@
 
 A calendar directive for AngularJS and Angular Material Design.
 
+![Screenshot](http://i.imgur.com/U0OtrAb.png)
+
 ## Date formats
 
 The day of the week is formatted through Angular's date filter. The default is:
