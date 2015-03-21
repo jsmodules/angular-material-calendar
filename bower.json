@@ -2,11 +2,12 @@
   "name": "material-calendar",
   "version": "0.1.1",
   "homepage": "https://github.com/bradberger/material-calendar",
+  "keywords": "angular material design calendar ngCalendar mdCalendar",
   "authors": [
-    "Brad Berger <brad@bradb.net>"
+    "Brad Berger <brad@bitola.co>"
   ],
   "description": "A calendar directive for AngularJS and Angular Material Design",
-  "main": "angular-material-calendar.j",
+  "main": "dist/angular-material-calendar.js",
   "license": "MPL",
   "ignore": [
     "**/.*",
