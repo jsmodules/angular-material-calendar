@@ -5,6 +5,35 @@ It's lightweight at ~2.1 kB, and has a lot of configurability.
 
 ![Screenshot](http://i.imgur.com/Ckcq2a2.png)
 
+## Installation
+
+
+### Bower
+
+Install it via [Bower](//bower.io)
+
+```bash
+bower install --save material-calendar
+```
+
+Or add it to your dependencies in your `bower.json` file:
+
+```json
+{
+   "dependencies": {
+    "material-calendar": "~0.2"
+  }
+}
+```
+
+### NPM
+
+```bash
+npm install --save angular-material-calendar
+```
+
+## Usage
+
 The documentation still needs to be written. It should be pretty
 straight forward to figure out if you're brave by using the
 `example/index.html` file, which shows a full-fledged instance
