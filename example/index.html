@@ -6,20 +6,94 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
+    <style>
+    body, html {
+      font-family: "Roboto", sans-serif;
+    }
+    .calendar-container {
+      height: 400px;
+      margin: 2em auto;
+    }
+    pre {
+      background: rgba(0,0,0,.05);
+      padding: 12px 24px;
+    }
+    </style>
 </head>
 <body>
+    <md-content ng-controller="calendarCtrl">
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h3>
+            <span>Angular Material Calendar</span>
+          </h3>
+          <div flex></div>
+          <md-button ng-click="setDirection('vertical')">Vertical</md-button>
+          <md-button ng-click="setDirection('horizontal')">Horizontal</md-button>
+        </div>
+      </md-toolbar>
+      <md-content flex>
+        <div style="width: 600px; margin: 0 auto">
+          <h5 class="md-title">{{ msg || "Click on a date/button to get started"}}</h5>
+          <pre>{ selectedDate: {{ selectedDate }} }</pre>
+          <div class="calendar-container">
+            <md-calendar flex layout layout-fill
+              calendar-direction="direction"
+              on-prev-month="prevMonth"
+              on-next-month="nextMonth"
+              on-day-click="dayClick"
+              title-format="'MMMM y'"
+              ng-model='selectedDate'
+              day-format="'d'"
+              day-label-format="'EEE'"
+              day-label-tooltip-format="'EEEE'"
+              day-tooltip-format="'fullDate'"
+              day-content="setDayContent"></md-calendar>
+          </div>
+        </div>
+      </md-content>
+    </md-content>
+  </div>
 
-    <section layout="column" layout-fill md-theme="default-theme">
-        <md-calendar data-day-format="d"></md-calendar>
-    </section>
-    <script src="../bower_components/angular/angular.min.js"></script>
-    <script src="../bower_components/angular-animate/angular-animate.min.js"></script>
-    <script src="../bower_components/angular-aria/angular-aria.min.js"></script>
-    <script src="../bower_components/angular-material/angular-material.min.js"></script>
-    <script src="../dist/angular-material-calendar.js"></script>
-    <script>
-    angular.module("materialExample", ["ngMaterial", "materialCalendar"]);
-    </script>
+  <!-- Angular Material Dependencies -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-sanitize.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+
+  <!-- Angular Material Javascript now available via Google CDN; version 0.10 used here -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
+
+  <script src="../dist/angular-material-calendar.js"></script>
+  <script>
+  angular.module("materialExample", ["ngMaterial", "materialCalendar"]);
+  angular.module("materialExample").config(function($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+        .primaryPalette('lime')
+        .accentPalette('orange');
+  });
+  angular.module("materialExample").controller("calendarCtrl", function($scope, $filter) {
+      $scope.selectedDate = null;
+      $scope.setDirection = function(direction) {
+        $scope.direction = direction;
+      };
+      $scope.dayClick = function(date) {
+        $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
+      };
+      $scope.prevMonth = function(data) {
+        $scope.msg = "You clicked (prev) month " + data.month + ", " + data.year;
+      };
+      $scope.nextMonth = function(data) {
+        $scope.msg = "You clicked (next) month " + data.month + ", " + data.year;
+      };
+      $scope.setDayContent = function(date) {
+        // You would inject any HTML you wanted for
+        // that particular date here.
+          return "<p></p>";
+      };
+  });
+  </script>
 </body>
 </html>

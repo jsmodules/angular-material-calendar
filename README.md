@@ -1,112 +1,73 @@
 # AngularJS Material Calendar
 
 A calendar directive for AngularJS and Angular Material Design.
+It's lightweight at ~2.1 kB, and has a lot of configurability.
 
-![Screenshot](http://i.imgur.com/U0OtrAb.png)
+![Screenshot](http://i.imgur.com/Ckcq2a2.png)
 
-## Date formats
+The documentation still needs to be written. It should be pretty
+straight forward to figure out if you're brave by using the
+`example/index.html` file, which shows a full-fledged instance
+of the directive in action.
 
-The day of the week is formatted through Angular's date filter. The default is:
+Long story short, though, it's much improved by using dedicated
+click handlers, setting a `ngModel` if desired, taking all
+kinds of labels, and allowing output of HTML into the day blocks.
+There's also an option to display it with each day taking up full page
+width, which is great for small mobile screens and displaying content.
 
-```html
-<md-calendar data-day-of-week-format="EEEE"></md-calendar>
-```
-
-The title, too is formatted through Angular's date filter. The default is:
-
-```html
-<md-calendar data-title-format="MMMM yyyy"></md-calendar>
-```
-
-The label for each day is also formatted the same way:
-
-```html
-<md-calendar data-day-format="d"></md-calendar>
-```
-
-## Clicking on dates
-
-### Via Callback Function
-
-The callback when clicking on a date is set in the `ng-click-date` attribute:
+By default, the standard CSS and template are included in the single
+compiled JavaScript file, so if you're just looking to kick the tires,
+that's all you should need to use. The default template is in
+`src/angular-material-calendar.html` for reference, but you can also
+load a custom template with the `template-url` attribute of the
+directive, which should be a url that the `$http` service will fetch
+and inject.
 
 ```html
-<md-calendar ng-click-date="someFunctionName"></md-calendar>
+<md-calendar flex layout layout-fill
+  calendar-direction="direction"
+  on-prev-month="prevMonth"
+  on-next-month="nextMonth"
+  on-day-click="dayClick"
+  title-format="'MMMM y'"
+  ng-model='selectedDate'
+  day-format="'d'"
+  day-label-format="'EEE'"
+  day-label-tooltip-format="'EEEE'"
+  day-tooltip-format="'fullDate'"
+  day-content="setDayContent"></md-calendar>
 ```
 
-The callback function much be attached to the parent scope. It receives a
-JavaScript date object as the first and only parameter:
+The related scope looks like this:
 
 ```javascript
-$scope.someFunctionName = function(date) {
-    // Do something with the Date object here...
-};
-```
-
-### Via `$emit` and `$on`
-
-Clicking on a date also results in the directive sending an `$emit` call back up
-through the parent scopes, so you can listen for it with `$on`:
-
-```javascript
-$scope.$on("md-calendar.date.click", function(date) {
-    // Do something with the Date object here...
+angular.module("materialExample").controller("calendarCtrl", function($scope, $filter) {
+    $scope.selectedDate = null;
+    $scope.setDirection = function(direction) {
+      $scope.direction = direction;
+    };
+    $scope.dayClick = function(date) {
+      $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
+    };
+    $scope.prevMonth = function(data) {
+      $scope.msg = "You clicked (prev) month " + data.month + ", " + data.year;
+    };
+    $scope.nextMonth = function(data) {
+      $scope.msg = "You clicked (next) month " + data.month + ", " + data.year;
+    };
+    $scope.setDayContent = function(date) {
+      // You would inject any HTML you wanted for
+      // that particular date here.
+        return "<p></p>";
+    };
 });
+</scr
 ```
 
-## Switching Months
+## To Do
 
-When changing months, the directive sends `$emit` with an object of the following format:
-
-```json
-{
-    "year": 2015
-    "month": 1
-}
-```
-
-For both "next" and "prev" months, you can listen for `md-calendar.month.change`:
-
-```javascript
-$scope.$on("md-calendar.month.change", function(data) {
-    // Variable "data" will look like: {year: 2015, month: 6}
-});
-```
-
-### Previous Month
-For previous month, you can also listen for `md-calendar.month.prev`. (Note that the data is the
-same as `md-calendar.month.change`.
-
-```javascript
-$scope.$on("md-calendar.month.prev", function(data) {
-    // Variable "data" will look like: {year: 2015, month: 6}
-});
-```
-
-### Next Month
-For the next month, you can also listen for `md-calendar.month.next`. (Note that the data is the
-same as `md-calendar.month.change`.
-
-```javascript
-$scope.$on("md-calendar.month.next", function(data) {
-    // Variable "data" will look like: {year: 2015, month: 6}
-});
-```
-
-
-## Misc Notes
-
-### Custom click handlers
-
-Every date cell has a class of `.md-calendar-day`. It also has a `data-year`, 
-`data-month` and `data-day` attribute defined. This is useful, for example, 
-if you need to set up custom click handlers and figure out which day was clicked
-on.
-
-### Custom template
-
-The directive template is hard-wired into the directive JS, but it would be trivial to 
-switch it to a `templateUrl` instead. The actual template is build using jade, so it's
-available to hack on. Just see the `src/jade/mdCalendar.jade` file.
-
-
+- Unit tests
+- Verify the correct handling of timezones
+- Write documentation
+- Spread the work
