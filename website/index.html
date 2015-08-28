@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en" ng-app="materialExample">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Alertify.js is a lightweight brower alert and dialog plugin.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Angular Material Calendar</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.light_green-lime.min.css" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+
+    <div class="layout-transparent mdl-layout mdl-js-layout">
+      <header class="mdl-layout__header mdl-layout__header--transparent">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title ">Angular Material Calendar</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation -->
+          <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="#getting-started">Getting Started</a>
+            <a class="mdl-navigation__link" href="https://github.com/bradberger/angular-material-calendar">View on GitHub</a>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Angular Material Calendar</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="#getting-started">Getting Started</a>
+          <a class="mdl-navigation__link" href="https://github.com/bradberger/angular-material-calendar">View on GitHub</a>
+        </nav>
+      </div>
+
+      <main class="mdl-layout__content">
+        <div class="container text-center">
+            <h1 class="text--bold-shadow mdl-typography--display-4">Angular Material Calendar</h1>
+            <h3 class="text--bold-shadow mdl-typography--display-2">Flexible calendar directive for the Angular Material framework</h3>
+
+            <a href="https://github.com/bradberger/angular-material-calendar/archive/master.zip"
+               class="mdl-button mdl-button--large mdl-button--accent mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+              <i class="material-icons md-24">file_download</i>
+              Download Now
+            </a>
+
+        </div>
+        <div class="page-content">
+          <div class="container">
+
+            <h2 class="mdl-typeography--display-3" id="getting-started">Getting Started</h2>
+
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-desktop left-col">
+                <h4 class="mdl-typeograph--headline">Notes</h4>
+                <p>
+                  This is still very much a work in progress, so expect to get
+                  your hands dirty and file issues. Nonetheless, it's being
+                  prepped for use in production and should get the job done.
+                </p>
+              </div>
+
+              <div class="mdl-cell mdl-cell--8-col mdl-cell--7-col-desktop right-col">
+                <h4 class="mdl-typeograph--headline">Via RawGit</h4>
+<pre>
+&lt;script src="https://cdn.rawgit.com/bradberger/angular-material-calendar/master/dist/js/angular-material-calendar.js"&gt;&lt;script&gt;
+</pre>
+                  <h4 class="mdl-typeograph--headline">Via Bower</h4>
+                  <pre>bower install --save material-calendar</pre>
+
+                  <h4 class="mdl-typeograph--headline">Via NPM</h4>
+                  <pre>npm install --save angular-material-calendar</pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="container" ng-controller="calendarCtrl">
+
+            <h2 class="mdl-typeography--display-3" id="usage">Usage</h2>
+            <h3 class="mdl-typeography--display-1" id="usage">Demo</h3>
+
+            <div class="mdl-grid">
+
+              <div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-desktop left-col">
+                <h5 class="mdl-typeography--headline">With All Options</h5>
+                <p>
+                  While I'm working on the documentation, feel free to check
+                  out the example of it in action here.
+                </p>
+                <p>
+                  If you're brave, you  might be able to poke around the
+                  example and figure things out! Better yet, why not help
+                  contribute to the documentation?
+                </p>
+
+                <h5 class="mdl-typeography--headline">Set Calendar Layout</h5>
+
+                <p>You can also change the calendar layout dynamically.</p>
+
+                <md-button ng-click="setDirection('vertical')">Vertical</md-button>
+                <md-button ng-click="setDirection('horizontal')">Horizontal</md-button>
+
+              </div>
+              <div class="mdl-cell mdl-cell--8-col mdl-cell--7-col-desktop right-col">
+
+                <md-calendar flex layout layout-fill
+                  calendar-direction="direction"
+                  on-prev-month="prevMonth"
+                  on-next-month="nextMonth"
+                  on-day-click="dayClick"
+                  title-format="'MMMM y'"
+                  ng-model='selectedDate'
+                  day-format="'d'"
+                  day-label-format="'EEE'"
+                  day-label-tooltip-format="'EEEE'"
+                  day-tooltip-format="'fullDate'"
+                  day-content="setDayContent"></md-calendar>
+
+                <hr>
+                <p>{{ msg || "Click on a date/button to get started"}}</p>
+
+              </div>
+            </div>
+
+            <div class="mdl-grid">
+              <div class="mdl-cell md-cell--12-col mdl-cell--12-col-desktop">
+<pre>
+&lt;md-calendar flex layout layout-fill
+  calendar-direction="direction"
+  on-prev-month="prevMonth"
+  on-next-month="nextMonth"
+  on-day-click="dayClick"
+  title-format="'MMMM y'"
+  ng-model='selectedDate'
+  day-format="'d'"
+  day-label-format="'EEE'"
+  day-label-tooltip-format="'EEEE'"
+  day-tooltip-format="'fullDate'"
+  day-content="setDayContent"&gt;&lt;/md-calendar&gt;
+
+&lt;script&gt;
+angular.module("materialExample", ["ngMaterial", "materialCalendar"]);
+
+angular.module("materialExample").controller("calendarCtrl", function($scope, $filter) {
+
+    $scope.selectedDate = null;
+
+    $scope.setDirection = function(direction) {
+      $scope.direction = direction;
+    };
+
+    $scope.dayClick = function(date) {
+      $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
+    };
+
+    $scope.prevMonth = function(data) {
+      $scope.msg = "You clicked (prev) month " + data.month + ", " + data.year;
+    };
+
+    $scope.nextMonth = function(data) {
+      $scope.msg = "You clicked (next) month " + data.month + ", " + data.year;
+    };
+
+    $scope.setDayContent = function(date) {
+      // You would inject any HTML you wanted for
+      // that particular date here.
+        return "&lt;p&gt;&lt;/p&gt;";
+    };
+
+});
+&lt;/script&gt:
+</pre>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+        <footer>
+          <div class="container">
+            <p>Angular Material Calendar is released under the <a href="http://opensource.org/licenses/MIT">MPLv2 license</a>. &copy; 2015 <a href="https://bradb.net">Brad Berger</a> and contributors.
+
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-sanitize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
+    <script src="js/angular-material-calendar.js"></script>
+    <script src="js/demo.js"></script>
+
+  </body>
+</html>

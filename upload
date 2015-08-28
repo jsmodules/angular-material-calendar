@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+gsutil rsync -dr website gs://angular-material-calendar.bradb.net
+gsutil acl ch -r -u AllUsers:R gs://angular-material-calendar.bradb.net
+gsutil web set -m index.html -e 404.html gs://angular-material-calendar.bradb.net

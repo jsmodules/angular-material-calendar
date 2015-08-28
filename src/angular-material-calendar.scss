@@ -64,6 +64,9 @@ md-calendar {
     border-left: $md-calendar-border;
   }
 
+  .md-calendar-week .md-calendar-day:last-child {
+  }
+
   .md-calendar-day:hover {
     background: $md-calendar-background-hover;
   }

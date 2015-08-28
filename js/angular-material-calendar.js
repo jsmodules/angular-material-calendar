@@ -140,6 +140,7 @@ angular
                 // Add the CSS here.
                 injectCss();
 
+                $scope.columnWeekLayout = "column";
                 $scope.weekLayout = "row";
                 $scope.timezone = $scope.timezone || null;
 

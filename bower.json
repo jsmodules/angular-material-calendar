@@ -1,6 +1,6 @@
 {
   "name": "material-calendar",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/bradberger/material-calendar",
   "keywords": "angular material design calendar ngCalendar mdCalendar",
   "authors": [
@@ -17,6 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-material": "~0.10"
+    "angular-material": "~0.10",
+    "angular-sanitize": "*"
   }
 }
