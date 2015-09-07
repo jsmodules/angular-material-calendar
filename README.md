@@ -34,8 +34,7 @@ npm install --save angular-material-calendar
 
 ## Usage
 
-First off, check out the
-<a href="https://angular-material-calendar.bradb.net/>demo</a>
+First off, check out the [demo](https://angular-material-calendar.bradb.net).
 
 The documentation still needs to be written. It should be pretty
 straight forward to figure out if you're brave by using the
