@@ -99,7 +99,7 @@ angular
     return Calendar;
 
   }])
-    .directive("mdCalendar", ["$compile", "$parse", "$http", "$q", "$filter", "Calendar", function ($compile, $parse, $http, $q, $filter, Calendar) {
+    .directive("calendarMd", ["$compile", "$parse", "$http", "$q", "$filter", "Calendar", function ($compile, $parse, $http, $q, $filter, Calendar) {
 
         var hasCss;
         var defaultTemplate = "/* angular-material-calendar.html */";
@@ -109,7 +109,7 @@ angular
             var head = document.getElementsByTagName("head")[0];
             var css = document.createElement("style");
             css.type = "text/css";
-            css.id="mdCalendarCss";
+            css.id="calendarMdCss";
             css.innerHTML = "/* angular-material-calendar.css */";
             head.insertBefore(css, head.firstChild);
             hasCss = true;
