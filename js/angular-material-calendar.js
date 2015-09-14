@@ -39,7 +39,7 @@ angular
       };
 
       this.next = function () {
-        this.init(this.year, this.month + 2);
+        this.init(this.year, this.month + 3);
       };
 
       this.prev = function () {
