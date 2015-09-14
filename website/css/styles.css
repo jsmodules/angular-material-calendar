@@ -131,6 +131,10 @@ pre {
   color: #757575;
 }
 
+.mdl-layout__header--transparent.mdl-layout__header--transparent {
+  box-shadow: 0 2px 2px rgba(0,0,0,.12);
+}
+
 .container {
   width: 100%;
   max-width: 960px;
@@ -142,7 +146,6 @@ pre {
 /* Need for sure */
 .layout-transparent {
   background: #8bc34a;
-  background: url(../images/transparent.jpg);
   background-size: cover;
   background-position: fixed;
 }

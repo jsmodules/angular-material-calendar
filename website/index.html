@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.light_green-lime.min.css" />
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.0/angular-material.min.css">
+    <link rel="stylesheet" href="css/angular-material-min.css">
     <link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
@@ -17,11 +17,8 @@
     <div class="layout-transparent mdl-layout mdl-js-layout">
       <header class="mdl-layout__header mdl-layout__header--transparent">
         <div class="mdl-layout__header-row">
-          <!-- Title -->
           <span class="mdl-layout-title ">Angular Material Calendar</span>
-          <!-- Add spacer, to align navigation to the right -->
           <div class="mdl-layout-spacer"></div>
-          <!-- Navigation -->
           <nav class="mdl-navigation">
             <a class="mdl-navigation__link" href="#getting-started">Getting Started</a>
             <a class="mdl-navigation__link" href="https://github.com/bradberger/angular-material-calendar">View on GitHub</a>
@@ -35,24 +32,19 @@
           <a class="mdl-navigation__link" href="https://github.com/bradberger/angular-material-calendar">View on GitHub</a>
         </nav>
       </div>
-
       <main class="mdl-layout__content">
         <div class="container text-center">
-            <h1 class="text--bold-shadow mdl-typography--display-4">Angular Material Calendar</h1>
+            <h1 class="text--bold-shadow mdl-typography--display-4">Angular Material Calendar <small>v0.2.3</small></h1>
             <h3 class="text--bold-shadow mdl-typography--display-2">Flexible calendar directive for the Angular Material framework</h3>
-
             <a href="https://github.com/bradberger/angular-material-calendar/archive/master.zip"
                class="mdl-button mdl-button--large mdl-button--accent mdl-js-button mdl-button--raised mdl-js-ripple-effect">
               <i class="material-icons md-24">file_download</i>
               Download Now
             </a>
-
         </div>
         <div class="page-content">
           <div class="container">
-
             <h2 class="mdl-typeography--display-3" id="getting-started">Getting Started</h2>
-
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-desktop left-col">
                 <h4 class="mdl-typeograph--headline">Notes</h4>
@@ -96,16 +88,31 @@
                   contribute to the documentation?
                 </p>
 
-                <h5 class="mdl-typeography--headline">Set Calendar Layout</h5>
+                <h5 class="mdl-typeography--headline">Calendar Layout</h5>
 
                 <p>You can also change the calendar layout dynamically.</p>
 
                 <md-button ng-click="setDirection('vertical')">Vertical</md-button>
                 <md-button ng-click="setDirection('horizontal')">Horizontal</md-button>
 
+                <h5 class="mdl-typeography--headline">First Day Of Week</h5>
+                <p>
+                  You can easily change the first day of the week.
+                </p>
+                <md-input-container>
+                  <label>First day of week</label>
+                  <md-select ng-model="weekStartsOn" ng-change="">
+                    <md-option value="0">Sunday</md-option>
+                    <md-option value="1">Monday</md-option>
+                    <md-option value="2">Tuesday</md-option>
+                    <md-option value="3">Wednesday</md-option>
+                    <md-option value="4">Thursday</md-option>
+                    <md-option value="5">Friday</md-option>
+                    <md-option value="6">Saturday</md-option>
+                  </md-select>
+                </md-input-container>
               </div>
               <div class="mdl-cell mdl-cell--8-col mdl-cell--7-col-desktop right-col">
-
                 <calendar-md flex layout layout-fill
                   calendar-direction="direction"
                   on-prev-month="prevMonth"
@@ -117,29 +124,33 @@
                   day-label-format="'EEE'"
                   day-label-tooltip-format="'EEEE'"
                   day-tooltip-format="'fullDate'"
+                  week-starts-on="weekStartsOn"
                   day-content="setDayContent"></calendar-md>
-
                 <hr>
                 <p>{{ msg || "Click on a date/button to get started"}}</p>
-
               </div>
             </div>
 
             <div class="mdl-grid">
               <div class="mdl-cell md-cell--12-col mdl-cell--12-col-desktop">
 <pre>
-&lt;md-calendar flex layout layout-fill
+&lt;calendar-md flex layout layout-fill
   calendar-direction="direction"
   on-prev-month="prevMonth"
   on-next-month="nextMonth"
   on-day-click="dayClick"
   title-format="'MMMM y'"
   ng-model='selectedDate'
+  week-starts-on="firstDayOfWeek"
+  &lt;--Set the initial month here. "8" is September. Defaults to current--&gt;
+  data-start-month="8"
+  &lt;--Set the initial year here. Defaults to current.--&gt;
+  data-start-year="2014"
   day-format="'d'"
   day-label-format="'EEE'"
   day-label-tooltip-format="'EEEE'"
   day-tooltip-format="'fullDate'"
-  day-content="setDayContent"&gt;&lt;/md-calendar&gt;
+  day-content="setDayContent"&gt;&lt;/calendar-md&gt;
 
 &lt;script&gt;
 angular.module("materialExample", ["ngMaterial", "materialCalendar"]);
@@ -147,7 +158,7 @@ angular.module("materialExample", ["ngMaterial", "materialCalendar"]);
 angular.module("materialExample").controller("calendarCtrl", function($scope, $filter) {
 
     $scope.selectedDate = null;
-
+    $scope.firstDayOfWeek = 0; // First day of the week, 0 for Sunday, 1 for Monday, etc.
     $scope.setDirection = function(direction) {
       $scope.direction = direction;
     };
@@ -179,7 +190,6 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
 
           </div>
         </div>
-
         <footer>
           <div class="container">
             <p>Angular Material Calendar is released under the <a href="http://opensource.org/licenses/MIT">MPLv2 license</a>. &copy; 2015 <a href="https://bradb.net">Brad Berger</a> and contributors.
@@ -188,15 +198,13 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
         </footer>
       </main>
     </div>
-
     <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-aria.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-sanitize.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.0/angular-material.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-animate.min.js"></script>
+    <script src="js/angular-aria.min.js"></script>
+    <script src="js/angular-sanitize.min.js"></script>
+    <script src="js/angular-material.min.js"></script>
     <script src="js/angular-material-calendar.js"></script>
     <script src="js/demo.js"></script>
-
   </body>
 </html>

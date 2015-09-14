@@ -2,7 +2,7 @@ var gulp = require("gulp");
 var sass = require("gulp-sass");
 var jade = require("gulp-jade");
 var minifyCSS = require("gulp-minify-css");
-var htmlmin = require('gulp-htmlmin');
+var htmlmin = require("gulp-htmlmin");
 var autoprefixer = require("gulp-autoprefixer");
 var runSequence = require("run-sequence");
 var connect = require("gulp-connect");
@@ -18,7 +18,7 @@ function p(path) {
   return __dirname + (path.charAt(0) === "/" ? "" : "/") + path;
 }
 
-gulp.task("js", function () {
+gulp.task("js", function() {
   return gulp
     .src(p("src/angular-material-calendar.js"))
     .pipe(jshint())
@@ -47,14 +47,7 @@ gulp.task("js:hint", function() {
     .pipe(jshint.reporter("fail"));
 });
 
-gulp.task("js:fix", function() {
-  return gulp
-    .src(p("src/angular-material-calendar.js"))
-    .pipe(jscs({ fix: true }))
-    .pipe(gulp.dest(p("js")));
-})
-
-gulp.task("scss", function () {
+gulp.task("scss", function() {
   return gulp
     .src(p("src/**/*.scss"))
     .pipe(sass()).on("error", sass.logError)
@@ -63,16 +56,16 @@ gulp.task("scss", function () {
     .pipe(gulp.dest("dist"));
 });
 
-gulp.task("build", function () {
-  return runSequence(["scss", "js:fix"], "html", "js");
+gulp.task("build", function() {
+  return runSequence(["scss"], "html", "js");
 });
 
-gulp.task("connect", function () {
-  connect.server({ livereload: true, root: '' });
+gulp.task("connect", function() {
+  connect.server({ livereload: true, root: "" });
 });
 
-gulp.task("watch", function () {
-  gulp.watch(p("src/**/*"), ["build"])
+gulp.task("watch", function() {
+  gulp.watch(p("src/**/*"), ["build"]);
 });
 
 gulp.task("default", ["build", "connect", "watch"]);

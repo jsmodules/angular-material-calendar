@@ -1,6 +1,6 @@
 {
   "name": "angular-material-calendar",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A calendar directive for AngularJS and Angular Material Design",
   "main": "gulpfile.js",
   "scripts": {
@@ -11,11 +11,12 @@
     "url": "https://github.com/bradberger/material-calendar.git"
   },
   "author": "Brad Berger <brad@bradb.net>",
-  "license": "MPL",
+  "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/bradberger/material-calendar/issues"
   },
   "devDependencies": {
+    "angular-sanitize": "^1.4.5",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-connect": "^2.2.0",
@@ -37,6 +38,7 @@
     "angular": "^1.4.4",
     "angular-animate": "^1.4.4",
     "angular-aria": "^1.4.4",
+    "angular-sanitize": "^1.4.4",
     "angular-material": "^0.11.0"
   }
 }

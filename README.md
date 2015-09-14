@@ -67,6 +67,7 @@ and inject.
   day-label-format="'EEE'"
   day-label-tooltip-format="'EEEE'"
   day-tooltip-format="'fullDate'"
+  week-starts-on="firstDayOfWeek"
   day-content="setDayContent"></md-calendar>
 ```
 
@@ -75,6 +76,7 @@ The related scope looks like this:
 ```javascript
 angular.module("materialExample").controller("calendarCtrl", function($scope, $filter) {
     $scope.selectedDate = null;
+    $scope.firstDayOfWeek = 0;
     $scope.setDirection = function(direction) {
       $scope.direction = direction;
     };
