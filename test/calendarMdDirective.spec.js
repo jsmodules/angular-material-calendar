@@ -1,0 +1,1 @@
+/* eslint-env protractor, jasmine */

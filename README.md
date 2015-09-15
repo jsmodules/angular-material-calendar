@@ -105,7 +105,8 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
 
 ## To Do
 
-- Unit tests
+- Unit tests (the basic setup is there, need to fill them out)
 - Verify the correct handling of timezones
 - Write documentation
 - Spread the work
+- Add to cdnjs, jsdelivr, etc.
