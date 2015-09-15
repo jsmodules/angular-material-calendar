@@ -1,6 +1,6 @@
 # AngularJS Material Calendar
 
-[![Build Status](https://semaphoreci.com/api/v1/projects/5eaeea1e-cd7f-45cc-9200-38a9160c76c7/540382/badge.svg)](https://semaphoreci.com/brad/angular-material-calendar)
+[![Build Status](https://semaphoreci.com/api/v1/projects/be573f04-507e-4659-ad3b-0611db2227eb/540401/badge.svg)](https://semaphoreci.com/brad/angular-material-calendar)
 
 A calendar directive for AngularJS and Angular Material Design.
 It's lightweight at ~2.1 kB, and has a lot of configurability.
