@@ -16,7 +16,6 @@
     "url": "https://github.com/bradberger/material-calendar/issues"
   },
   "devDependencies": {
-    "angular-sanitize": "^1.4.5",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-connect": "^2.2.0",
@@ -30,7 +29,6 @@
     "gulp-sass": "^2.0.4",
     "gulp-size": "^2.0.0",
     "gulp-uglify": "^1.2.0",
-    "protractor": "^2.2.0",
     "replacestream": "^4.0.0",
     "run-sequence": "^1.1.2"
   },
