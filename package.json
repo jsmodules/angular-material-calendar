@@ -4,7 +4,7 @@
   "description": "A calendar directive for AngularJS and Angular Material Design",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "./node_modules/protractor/bin/webdriver-manager update && gulp test"
+    "test": "./node_modules/protractor/bin/webdriver-manager update && gulp test-ci"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "gulp-size": "^2.0.0",
     "gulp-uglify": "^1.2.0",
     "node-sass": "^3.3.2",
+    "phantomjs": "^1.9.18",
     "protractor": "^2.2.0",
     "replacestream": "^4.0.0",
     "run-sequence": "^1.1.2"

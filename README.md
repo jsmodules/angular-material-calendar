@@ -106,6 +106,33 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
 </scr
 ```
 
+## Hacking On It
+
+Use gulp to spin up the server and re-compile resources on the fly. The
+gulp `default` task does all that for you. Just make sure to Selenium is
+up and running:
+
+```bash
+# In one terminal
+webdriver-manager start
+```
+
+```bash
+# In separate terminal
+gulp
+```
+
+Protractor is set up to run all the tests during development. To make it a bit
+faster development tests run using PhantomJS, while CI tests run with real
+browsers. JavaScript code is linted with `eslint`, too, so make sure that's
+not complaining about code styling or other issues.
+
+The CI test is `test-ci` while the standard tests run all the time while
+developing.
+
+If you're having trouble with PhantomJS we can easily just switch to Chrome
+instead.
+
 ## To Do
 
 - Unit tests (the basic setup is there, need to fill them out)

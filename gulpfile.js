@@ -44,6 +44,13 @@ gulp.task("js:lint", function() {
     return gulp
       .src(p("src/angular-material-calendar.js"))
       .pipe(eslint())
+      .pipe(eslint.format());
+});
+
+gulp.task("js:lint-ci", function() {
+    return gulp
+      .src(p("src/angular-material-calendar.js"))
+      .pipe(eslint())
       .pipe(eslint.format())
       .pipe(eslint.failOnError());
 });
@@ -58,13 +65,19 @@ gulp.task("scss", function() {
       .pipe(connect.reload());
 });
 
-gulp.task("test", ["js:lint"], function() {
+gulp.task("test-ci", ["js:lint-ci"], function() {
     connect.server({ root: "website", port: 3000 });
     gulp
       .src(["./tests/*.spec.js"])
-      .pipe(protractor({ configFile: p("protractor.conf.js") }))
+      .pipe(protractor({ configFile: p("protractor-ci.conf.js") }))
       .on("error", function(e) { throw e; })
       .on("end", connect.serverClose);
+});
+
+gulp.task("test", ["js:lint"], function() {
+    gulp
+      .src(["./tests/*.spec.js"])
+      .pipe(protractor({ configFile: p("protractor.conf.js") }));
 });
 
 gulp.task("build", function() {
@@ -76,7 +89,7 @@ gulp.task("connect", function() {
 });
 
 gulp.task("watch", function() {
-    gulp.watch(p("src/**/*"), ["build"]);
+    gulp.watch(p("src/**/*"), ["test", "build"]);
 });
 
 gulp.task("default", ["build", "connect", "watch"]);
