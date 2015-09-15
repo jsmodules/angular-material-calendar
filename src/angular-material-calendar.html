@@ -1,9 +1,9 @@
 <md-content class='calendar-md' layout='column' layout-fill flex md-swipe-left='next()' md-swipe-right='prev()'>
   <md-toolbar>
     <div class='md-toolbar-tools' layout='row'>
-      <md-button class='calendar-md-left-btn' ng-click='prev()'>&laquo;</md-button>
+      <md-button class='calendar-md-prev-btn' ng-click='prev()'>&laquo;</md-button>
       <h2 class='calendar-md-title' flex><span>{{ calendar.start | date:titleFormat:timezone }}</span></h2>
-      <md-button class='calendar-md-left-btn' ng-click='next()'>&raquo;</md-button>
+      <md-button class='calendar-md-next-btn' ng-click='next()'>&raquo;</md-button>
     </div>
   </md-toolbar>
   <md-content flex layout="column" layout-fill>
