@@ -11,6 +11,7 @@ var uglify = require("gulp-uglify");
 var eslint = require("gulp-eslint");
 var size = require("gulp-size");
 var replace = require("gulp-replace");
+var protractor = require("gulp-protractor").protractor;
 
 function p(path) {
     return __dirname + (path.charAt(0) === "/" ? "" : "/") + path;
@@ -55,6 +56,15 @@ gulp.task("scss", function() {
       .pipe(minifyCSS())
       .pipe(gulp.dest("dist"))
       .pipe(connect.reload());
+});
+
+gulp.task("test", ["js:lint"], function() {
+    connect.server({ root: "website", port: 3000 });
+    gulp
+      .src(["./tests/*.spec.js"])
+      .pipe(protractor({ configFile: p("protractor.conf.js") }))
+      .on("error", function(e) { throw e; })
+      .on("end", connect.serverClose);
 });
 
 gulp.task("build", function() {
