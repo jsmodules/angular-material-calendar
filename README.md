@@ -122,21 +122,36 @@ webdriver-manager start
 gulp
 ```
 
-Protractor is set up to run all the tests during development. To make it a bit
-faster development tests run using PhantomJS, while CI tests run with real
-browsers. JavaScript code is linted with `eslint`, too, so make sure that's
-not complaining about code styling or other issues.
+Protractor is set up to run all the tests during development. JavaScript code
+is linted with `eslint`, too, so make sure that's not complaining about code
+styling or other issues.
 
-The CI test is `test-ci` while the standard tests run all the time while
-developing.
+Unit tests are thanks to Karma, so run those at the same time while developing.
+They'll detect code changes and run automatically in the background:
 
-If you're having trouble with PhantomJS we can easily just switch to Chrome
-instead.
+```bash
+# In another terminal
+karma start
+```
+
+## Contributing
+
+Pull requests are most welcomed! The build process requires strict linting
+of code, so please follow the established ESLint style guide.
+
+Also, the first round of the directive was just a proof-of-concept and test
+coverage is not complete, please do add tests for all new features and
+bug-fixes, too! Most submissions won't be merged without a test.
+
+Also, if you could kindly add an extra test that's not related to your
+submission just to help us get to 100% coverage, that would be very much
+appreciated!
 
 ## To Do
 
 - Unit tests (the basic setup is there, need to fill them out)
-- Verify the correct handling of timezones
+- Verify the correct handling of timezones (tests?)
 - Write documentation
 - Spread the work
 - Add to cdnjs, jsdelivr, etc.
+- Automate the website update process after successful CI build

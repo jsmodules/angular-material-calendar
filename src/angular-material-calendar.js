@@ -9,7 +9,7 @@ angular.module("materialCalendar").filter("dateToGmt", function() {
 
 angular.module("materialCalendar").service("Calendar", ["$filter", function($filter) {
 
-    function Calendar(year, month, options) {
+    return function(year, month, options) {
 
         var now = $filter("dateToGmt")();
 
@@ -127,9 +127,7 @@ angular.module("materialCalendar").service("Calendar", ["$filter", function($fil
 
         this.init(year, month);
 
-    }
-
-    return Calendar;
+    };
 
 }]);
 

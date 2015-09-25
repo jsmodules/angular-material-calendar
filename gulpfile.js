@@ -65,19 +65,13 @@ gulp.task("scss", function() {
       .pipe(connect.reload());
 });
 
-gulp.task("test-ci", ["js:lint-ci"], function() {
+gulp.task("test", ["js:lint-ci"], function() {
     connect.server({ root: "website", port: 3000 });
     gulp
-      .src(["./tests/*.spec.js"])
-      .pipe(protractor({ configFile: p("protractor-ci.conf.js") }))
+      .src(["./tests/e2e/**/*.spec.js"])
+      .pipe(protractor({ configFile: p("protractor.conf.js") }))
       .on("error", function(e) { throw e; })
       .on("end", connect.serverClose);
-});
-
-gulp.task("test", ["js:lint"], function() {
-    gulp
-      .src(["./tests/*.spec.js"])
-      .pipe(protractor({ configFile: p("protractor.conf.js") }));
 });
 
 gulp.task("build", function() {
@@ -89,7 +83,7 @@ gulp.task("connect", function() {
 });
 
 gulp.task("watch", function() {
-    gulp.watch(p("src/**/*"), ["test", "build"]);
+    gulp.watch(p("src/**/*"), ["js:lint", "build"]);
 });
 
 gulp.task("default", ["build", "connect", "watch"]);
