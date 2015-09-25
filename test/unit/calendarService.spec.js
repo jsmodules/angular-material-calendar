@@ -7,7 +7,7 @@ describe("calendar service", function() {
     beforeEach(module("materialCalendar"));
 
     beforeEach(inject(function(_Calendar_){
-        Calendar = _Calendar_;
+        Calendar = new _Calendar_();
     }));
 
     it("should have all public methods defined", function() {
