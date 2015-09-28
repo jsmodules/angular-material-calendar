@@ -15,7 +15,6 @@ calendar-md {
     border-bottom: $calendar-md-border;
     border-right: $calendar-md-border;
     padding: 6px;
-    min-height: 48px;
     box-sizing: border-box;
   }
 
@@ -64,6 +63,19 @@ calendar-md {
     border-left: $calendar-md-border;
   }
 
+  .calendar-md-week.vertical {
+      .calendar-md-number {
+          padding: 12px;
+          width: 200px;
+          text-align: right;
+          color: rgba(0,0,0,.75);
+          font-weight: 100;
+          overflow-x: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+      }
+  }
+
   .calendar-md-week .calendar-md-day:last-child {
   }
 
@@ -79,4 +91,16 @@ calendar-md {
 
   }
 
+}
+
+@media (max-width: 599px) {
+    calendar-md {
+        .calendar-md-week.vertical {
+            .calendar-md-number {
+                width: auto;
+                text-align: left;
+                padding-left: 0;
+            }
+        }
+    }
 }

@@ -6,14 +6,13 @@
     <meta name="description" content="Alertify.js is a lightweight brower alert and dialog plugin.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Angular Material Calendar</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:light&lang=en" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.light_green-lime.min.css" />
-    <link rel="stylesheet" href="css/angular-material-min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/angular-material-min.css">
+    <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body>
-
     <div class="layout-transparent mdl-layout mdl-js-layout">
       <header class="mdl-layout__header mdl-layout__header--transparent">
         <div class="mdl-layout__header-row">
@@ -34,7 +33,7 @@
       </div>
       <main class="mdl-layout__content">
         <div class="container text-center">
-            <h1 class="text--bold-shadow mdl-typography--display-4">Angular Material Calendar <small>v0.2.3</small></h1>
+            <h1 class="text--bold-shadow mdl-typography--display-4">Angular Material Calendar <small>v0.2.5</small></h1>
             <h3 class="text--bold-shadow mdl-typography--display-2">Flexible calendar directive for the Angular Material framework</h3>
             <a href="https://github.com/bradberger/angular-material-calendar/archive/master.zip"
                class="mdl-button mdl-button--large mdl-button--accent mdl-js-button mdl-button--raised mdl-js-ripple-effect">
@@ -73,7 +72,15 @@
 
             <h2 class="mdl-typeography--display-3" id="usage">Usage</h2>
             <h3 class="mdl-typeography--display-1" id="demo">Demo</h3>
-
+            <p>
+                There's also a <a href="/fullscreen.html">fullscreen enabled demo here</a>.
+                It's designed to fill up the horizontal and vertical space of
+                the parent element, so fullscreen is easy to do.
+            </p>
+            <p>
+                Or, if you prefer, go fullscreen with the demo calendar below
+                by <a href="#" ng-click="fullscreen()">clicking here</a>.
+            </p>
             <div class="mdl-grid">
 
               <div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-desktop left-col">
@@ -113,19 +120,22 @@
                 </md-input-container>
               </div>
               <div class="mdl-cell mdl-cell--8-col mdl-cell--7-col-desktop right-col">
-                <calendar-md flex layout layout-fill
-                  calendar-direction="direction"
-                  on-prev-month="prevMonth"
-                  on-next-month="nextMonth"
-                  on-day-click="dayClick"
-                  title-format="'MMMM y'"
-                  ng-model='selectedDate'
-                  day-format="'d'"
-                  day-label-format="'EEE'"
-                  day-label-tooltip-format="'EEEE'"
-                  day-tooltip-format="'fullDate'"
-                  week-starts-on="weekStartsOn"
-                  day-content="setDayContent"></calendar-md>
+                  <div style="height: 360px;">
+                    <calendar-md id="calendar-demo"
+                      flex layout layout-fill
+                      calendar-direction="direction"
+                      on-prev-month="prevMonth"
+                      on-next-month="nextMonth"
+                      on-day-click="dayClick"
+                      title-format="'MMMM y'"
+                      ng-model='selectedDate'
+                      day-format="dayFormat"
+                      day-label-format="'EEE'"
+                      day-label-tooltip-format="'EEEE'"
+                      day-tooltip-format="'fullDate'"
+                      week-starts-on="weekStartsOn"
+                      day-content="setDayContent"></calendar-md>
+                  </div>
                 <hr>
                 <p>{{ msg || "Click on a date/button to get started"}}</p>
               </div>
@@ -146,7 +156,7 @@
   data-start-month="8"
   &lt;--Set the initial year here. Defaults to current.--&gt;
   data-start-year="2014"
-  day-format="'d'"
+  day-format="dayFormat"
   day-label-format="'EEE'"
   day-label-tooltip-format="'EEEE'"
   day-tooltip-format="'fullDate'"
@@ -157,10 +167,12 @@ angular.module("materialExample", ["ngMaterial", "materialCalendar"]);
 
 angular.module("materialExample").controller("calendarCtrl", function($scope, $filter) {
 
+    $scope.dayFormat = "d";
     $scope.selectedDate = null;
     $scope.firstDayOfWeek = 0; // First day of the week, 0 for Sunday, 1 for Monday, etc.
     $scope.setDirection = function(direction) {
       $scope.direction = direction;
+      $scope.dayFormat = direction === "vertical" ? "EEEE, MMMM d" : "d";
     };
 
     $scope.dayClick = function(date) {
@@ -186,25 +198,22 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
 </pre>
               </div>
             </div>
-
-
           </div>
         </div>
         <footer>
           <div class="container">
             <p>Angular Material Calendar is released under the <a href="http://opensource.org/licenses/MIT">MPLv2 license</a>. &copy; 2015 <a href="https://bradb.net">Brad Berger</a> and contributors.
-
           </div>
         </footer>
       </main>
     </div>
-    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
-    <script src="js/angular.min.js"></script>
-    <script src="js/angular-animate.min.js"></script>
-    <script src="js/angular-aria.min.js"></script>
-    <script src="js/angular-sanitize.min.js"></script>
-    <script src="js/angular-material.min.js"></script>
-    <script src="js/angular-material-calendar.js"></script>
-    <script src="js/demo.js"></script>
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-animate.min.js"></script>
+    <script src="/js/angular-aria.min.js"></script>
+    <script src="/js/angular-sanitize.min.js"></script>
+    <script src="/js/angular-material.min.js"></script>
+    <script src="/js/angular-material-calendar.js"></script>
+    <script src="/js/demo.js"></script>
   </body>
 </html>

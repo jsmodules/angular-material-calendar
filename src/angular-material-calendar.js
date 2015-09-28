@@ -95,11 +95,11 @@ angular.module("materialCalendar").service("Calendar", ["$filter", function($fil
 
             var date;
             var first = this.getFirstDayOfCalendar();
-
-            // @todo Need to fix for up to 6 weeks.
+            var i = 0;
             var _i = first.getDate() == 1 && this.getNumDays() == 28 ? 28 : 42;
 
-            for (var i = 0; i < _i; i++) {
+            // @todo Need to fix for up to 6 weeks.
+            for (; i < _i; i++) {
 
                 date = $filter("dateToGmt")(new Date(first.valueOf() + (i * 86400000)));
 
@@ -121,7 +121,7 @@ angular.module("materialCalendar").service("Calendar", ["$filter", function($fil
 
             }
 
-            return this.dates; 
+            return this.dates;
 
         };
 
@@ -188,7 +188,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             $scope.dayLabelTooltipFormat = $scope.dayLabelTooltipFormat || "EEEE";
             $scope.dayFormat = $scope.dayFormat || "d";
             $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
-            $scope.getDayContent = $scope.dayContent || function() { };
+            $scope.getDayContent = $scope.dayContent || angular.noop;
 
             $scope.sameMonth = function(date) {
                 var d = $filter("dateToGmt")(date);
@@ -197,8 +197,15 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             };
 
             $scope.calendarDirection = $scope.calendarDirection || "horizontal";
+
             $scope.$watch("calendarDirection", function(val) {
                 $scope.weekLayout = val === "horizontal" ? "row" : "column";
+            });
+
+            $scope.$watch("weekLayout", function() {
+                year = $scope.calendar.year;
+                month = $scope.calendar.month;
+                bootstrap();
             });
 
             var handleCb =  function(cb, data) {
@@ -258,9 +265,13 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
 
             };
 
-            $scope.$watch("weekStartsOn", init);
+            var bootstrap = function() {
+                init().then(setTemplate);
+            };
 
-            init().then(setTemplate);
+            $scope.$watch("weekStartsOn", init);
+            bootstrap();
+
 
         }
     };
