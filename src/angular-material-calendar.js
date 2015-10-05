@@ -254,7 +254,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 // Allows fetching of dynamic templates via $http.
                 if ($scope.templateUrl) {
                     $http
-                      .get($scope.template)
+                      .get($scope.templateUrl)
                       .success(deferred.resolve)
                       .error(deferred.reject);
                 } else {
@@ -272,6 +272,10 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             $scope.$watch("weekStartsOn", init);
             bootstrap();
 
+            // These are for tests, don't remove them..
+            $scope._$$init = init;
+            $scope._$$setTemplate = setTemplate;
+            $scope._$$bootstrap = bootstrap;
 
         }
     };

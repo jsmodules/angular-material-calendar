@@ -1,6 +1,6 @@
 {
   "name": "angular-material-calendar",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "A calendar directive for AngularJS and Angular Material Design",
   "main": "gulpfile.js",
   "scripts": {
@@ -36,6 +36,7 @@
     "karma-chrome-launcher": "~0.2.0",
     "karma-firefox-launcher": "~0.1.6",
     "karma-jasmine": "~0.3.6",
+    "node-sass": "^3.3.3",
     "protractor": "~2.2.0",
     "replacestream": "~4.0.0",
     "run-sequence": "~1.1.2"
