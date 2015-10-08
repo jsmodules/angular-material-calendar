@@ -4,11 +4,6 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="/css/angular-material-min.css">
         <link rel="stylesheet" href="/css/styles.css">
-        <style>
-        md-fab-speed-dial {
-            position: fixed; right: 1em; bottom: 1em; z-index: 20;
-        }
-        </style>
     </head>
     <body>
         <md-content id="calendar-demo" ng-controller="calendarCtrl" layout="column" layout-fill>
@@ -31,9 +26,16 @@
                         <md-tooltip md-direction="left">Agenda view</md-tooltip>
                         <md-icon md-font-library="material-icons" ng-click="setDirection('vertical')">view_stream</md-icon>
                     </md-button>
+                    <md-button aria-label="Single date select" class="md-fab md-raised md-mini" ng-click="selectedDate = false;">
+                        <md-tooltip md-direction="left">Single date select</md-tooltip>
+                        <md-icon md-font-library="material-icons">filter_1</md-icon>
+                    </md-button>
+                    <md-button aria-label="Multi-date select" class="md-fab md-raised md-mini" ng-click="selectedDate = [];">
+                        <md-tooltip md-direction="left">Multi-date select</md-tooltip>
+                        <md-icon md-font-library="material-icons">filter_5</md-icon>
+                    </md-button>
                 </md-fab-actions>
             </md-fab-speed-dial>
-
             <calendar-md flex layout layout-fill
                 calendar-direction="direction"
                 on-prev-month="prevMonth"
@@ -48,8 +50,6 @@
                 week-starts-on="weekStartsOn"
                 day-content="setDayContent"></calendar-md>
         </md-content>
-
-
         <script src="js/angular.min.js"></script>
         <script src="js/angular-animate.min.js"></script>
         <script src="js/angular-aria.min.js"></script>

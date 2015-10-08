@@ -187,3 +187,7 @@ pre {
     margin: 2em 0;
   }
 }
+
+md-fab-speed-dial {
+    position: fixed; right: 1em; bottom: 1em; z-index: 20;
+}

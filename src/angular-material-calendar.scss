@@ -1,105 +1,91 @@
-$calendar-md-background-active: rgba(0, 0, 0, .06);
-$calendar-md-border: 1px solid rgba(0, 0, 0, .12) ! default;
-$calendar-md-background-hover: rgba(0, 0, 0, .04);
+$calendar-md-background-active: rgba(0, 0, 0, .02) !default;
+$calendar-md-shadow-active: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12) !default;
+$calendar-md-border: 1px solid rgba(0, 0, 0, .12) !default;
+$calendar-md-background-hover: rgba(0, 0, 0, .04) !default;
 
 calendar-md {
 
-  display: block;
-  max-height: 100%;
+    display: block;
+    max-height: 100%;
 
-  .calendar-md-subheader {
-    min-height: 36px;
-  }
+    md-content {
+        > md-content {
+            // Week row, agenda view.
+            border: $calendar-md-border;
 
-  .calendar-md-day{
-    border-bottom: $calendar-md-border;
-    border-right: $calendar-md-border;
-    padding: 6px;
-    box-sizing: border-box;
-  }
+            &.agenda {
+                // Week container
+                > * {
+                    > * {
+                        border-bottom: $calendar-md-border;
+                        // Date label.
+                        :first-child {
+                            padding: 12px;
+                            width: 200px;
+                            text-align: right;
+                            color: rgba(0,0,0,.75);
+                            font-weight: 100;
+                            overflow-x: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+                        // Day content container
+                        :not(:first-child) {
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
+            }
 
-  .calendar-md-subheader-day, .calendar-md-day {
-    overflow-x: hidden;
-    text-overflow: ellipsis;
-  }
+            // Week row (calendar view.)
+            &.calendar {
 
-  .calendar-md-subheader {
-    border-left: $calendar-md-border;
-    border-right: $calendar-md-border;
-  }
+                // Subheader row.
+                > :first-child {
+                    background: $calendar-md-background-active;
+                    border-bottom: $calendar-md-border;
+                    margin-right: 0;
+                    min-height: 36px;
+                }
 
-  .calendar-md-week:first-child,
-  .calendar-md-month:first-child .calendar-md-day {
-    border-top: $calendar-md-border;
-  }
+                // Week rows.
+                > :not(:first-child) {
 
-  .calendar-md-day:not(.calendar-md-day-inactive) {
-    cursor: pointer;
-  }
-  .calendar-md-day-inactive {
-    color: rgba(0, 0, 0, .3);
-    pointer-events: none;
-    .calendar-md-number {
-      color: inherit;
-    }
-  }
+                    // Day containers.
+                    > * {
 
-  .md-subheader {
-    border-left: $calendar-md-border;
-    border-right: $calendar-md-border;
-    margin-right: 0;
-  }
+                        border-bottom: $calendar-md-border;
+                        border-right: $calendar-md-border;
+                        cursor: pointer;
 
-  .calendar-md-day.active {
-    background-color: $calendar-md-background-active;
-  }
+                        &:hover {
+                            background: $calendar-md-background-hover;
+                        }
 
-  .md-subheader:not(.md-sticky-no-effect):after {
-    right: 0 !important;
-  }
+                        &.disabled {
+                            color: rgba(0, 0, 0, .3);
+                            pointer-events: none;
+                            cursor: auto;
+                        }
 
-  .calendar-md-week.vertical,
-  .calendar-md-week.horizontal .calendar-md-day:first-child {
-    border-left: $calendar-md-border;
-  }
+                        &.active {
+                            box-shadow: $calendar-md-shadow-active;
+                            background: $calendar-md-background-active;
+                        }
 
-  .calendar-md-week.vertical {
-      .calendar-md-number {
-          padding: 12px;
-          width: 200px;
-          text-align: right;
-          color: rgba(0,0,0,.75);
-          font-weight: 100;
-          overflow-x: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-      }
-  }
+                        // Day number label.
+                        :first-child {
+                            padding: 0;
+                        }
 
-  .calendar-md-week .calendar-md-day:last-child {
-  }
-
-  .calendar-md-day:hover {
-    background: $calendar-md-background-hover;
-  }
-
-  .calendar-md-number {
-    padding: 0;
-  }
-
-  .calendar-md-content {
-
-  }
-
-}
-
-@media (max-width: 599px) {
-    calendar-md {
-        .calendar-md-week.vertical {
-            .calendar-md-number {
-                width: auto;
-                text-align: left;
-                padding-left: 0;
+                        // Day html content.
+                        :last-child {
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
             }
         }
     }

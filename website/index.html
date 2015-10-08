@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" ng-app="materialExample">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Alertify.js is a lightweight brower alert and dialog plugin.">
@@ -11,139 +11,151 @@
     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.light_green-lime.min.css" />
     <link rel="stylesheet" href="/css/angular-material-min.css">
     <link rel="stylesheet" href="/css/styles.css">
-  </head>
-  <body>
+</head>
+<body>
     <div class="layout-transparent mdl-layout mdl-js-layout">
-      <header class="mdl-layout__header mdl-layout__header--transparent">
-        <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title ">Angular Material Calendar</span>
-          <div class="mdl-layout-spacer"></div>
+        <header class="mdl-layout__header mdl-layout__header--transparent">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title ">Angular Material Calendar</span>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" href="#getting-started">Getting Started</a>
+                    <a class="mdl-navigation__link" href="https://github.com/bradberger/angular-material-calendar">View on GitHub</a>
+                </nav>
+            </div>
+        </header>
+      <div class="mdl-layout__drawer">
+          <span class="mdl-layout-title">Angular Material Calendar</span>
           <nav class="mdl-navigation">
             <a class="mdl-navigation__link" href="#getting-started">Getting Started</a>
             <a class="mdl-navigation__link" href="https://github.com/bradberger/angular-material-calendar">View on GitHub</a>
-          </nav>
+            </nav>
         </div>
-      </header>
-      <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Angular Material Calendar</span>
-        <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="#getting-started">Getting Started</a>
-          <a class="mdl-navigation__link" href="https://github.com/bradberger/angular-material-calendar">View on GitHub</a>
-        </nav>
-      </div>
-      <main class="mdl-layout__content">
-        <div class="container text-center">
-            <h1 class="text--bold-shadow mdl-typography--display-4">Angular Material Calendar <small>v0.2.5</small></h1>
-            <h3 class="text--bold-shadow mdl-typography--display-2">Flexible calendar directive for the Angular Material framework</h3>
-            <a href="https://github.com/bradberger/angular-material-calendar/archive/master.zip"
-               class="mdl-button mdl-button--large mdl-button--accent mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-              <i class="material-icons md-24">file_download</i>
-              Download Now
-            </a>
-        </div>
-        <div class="page-content">
-          <div class="container">
-            <h2 class="mdl-typeography--display-3" id="getting-started">Getting Started</h2>
-            <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-desktop left-col">
-                <h4 class="mdl-typeograph--headline">Notes</h4>
-                <p>
-                  This is still very much a work in progress, so expect to get
-                  your hands dirty and file issues. Nonetheless, it's being
-                  prepped for use in production and should get the job done.
-                </p>
-              </div>
-
-              <div class="mdl-cell mdl-cell--8-col mdl-cell--7-col-desktop right-col">
-                <h4 class="mdl-typeograph--headline">Via RawGit</h4>
-<pre>
-&lt;script src="https://cdn.rawgit.com/bradberger/angular-material-calendar/master/dist/angular-material-calendar.js"&gt;&lt;script&gt;
-</pre>
-                  <h4 class="mdl-typeograph--headline">Via Bower</h4>
-                  <pre>bower install --save material-calendar</pre>
-
-                  <h4 class="mdl-typeograph--headline">Via NPM</h4>
-                  <pre>npm install --save angular-material-calendar</pre>
-              </div>
+        <main class="mdl-layout__content">
+            <div class="container text-center">
+                <h1 class="text--bold-shadow mdl-typography--display-4">Angular Material Calendar <small>v0.2.5</small></h1>
+                <h3 class="text--bold-shadow mdl-typography--display-2">Flexible calendar directive for the Angular Material framework</h3>
+                <a href="https://github.com/bradberger/angular-material-calendar/archive/master.zip" class="mdl-button mdl-button--large mdl-button--accent mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <i class="material-icons md-24">file_download</i>
+                    Download Now
+                </a>
             </div>
-          </div>
+            <div class="page-content">
+                <div class="container">
+                    <h2 class="mdl-typeography--display-3" id="getting-started">Getting Started</h2>
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-desktop left-col">
+                            <h4 class="mdl-typeograph--headline">Notes</h4>
+                            <p>
+                                This is still very much a work in progress, so expect to get
+                                your hands dirty and file issues. Nonetheless, it's being
+                                prepped for use in production and should get the job done.
+                            </p>
+                        </div>
+                        <div class="mdl-cell mdl-cell--8-col mdl-cell--7-col-desktop right-col">
+                            <h4 class="mdl-typeograph--headline">Via RawGit</h4>
+                            <pre>&lt;script src="https://cdn.rawgit.com/bradberger/angular-material-calendar/master/dist/angular-material-calendar.js"&gt;&lt;script&gt;</pre>
 
-          <div class="container" ng-controller="calendarCtrl">
+                            <h4 class="mdl-typeograph--headline">Via Bower</h4>
+                            <pre>bower install --save material-calendar</pre>
 
-            <h2 class="mdl-typeography--display-3" id="usage">Usage</h2>
-            <h3 class="mdl-typeography--display-1" id="demo">Demo</h3>
-            <p>
-                There's also a <a href="/fullscreen.html">fullscreen enabled demo here</a>.
-                It's designed to fill up the horizontal and vertical space of
-                the parent element, so fullscreen is easy to do.
-            </p>
-            <p>
-                Or, if you prefer, go fullscreen with the demo calendar below
-                by <a href="#" ng-click="fullscreen()">clicking here</a>.
-            </p>
-            <div class="mdl-grid">
+                            <h4 class="mdl-typeograph--headline">Via NPM</h4>
+                            <pre>npm install --save angular-material-calendar</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="container" ng-controller="calendarCtrl">
+                    <h2 class="mdl-typeography--display-3" id="usage">Usage</h2>
+                    <h3 class="mdl-typeography--display-1" id="demo">Demo</h3>
+                    <p>
+                        There's also a <a href="/fullscreen.html">fullscreen enabled demo here</a>.
+                        It's designed to fill up the horizontal and vertical space of
+                        the parent element, so fullscreen is easy to do.
+                    </p>
+                    <p>
+                        Or, if you prefer, go fullscreen with the demo calendar below
+                        by <a href="#" ng-click="fullscreen()">clicking here</a>.
+                    </p>
+                    <div style="height: 800px;">
+                        <calendar-md id="calendar-demo"
+                        flex layout layout-fill
+                        calendar-direction="direction"
+                        on-prev-month="prevMonth"
+                        on-next-month="nextMonth"
+                        on-day-click="dayClick"
+                        title-format="'MMMM y'"
+                        ng-model='selectedDate'
+                        day-format="dayFormat"
+                        day-label-format="'EEE'"
+                        day-label-tooltip-format="'EEEE'"
+                        day-tooltip-format="'fullDate'"
+                        week-starts-on="weekStartsOn"
+                        day-content="setDayContent"></calendar-md>
+                    </div>
 
-              <div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-desktop left-col">
-                <h5 class="mdl-typeography--headline">With All Options</h5>
-                <p>
-                  While I'm working on the documentation, feel free to check
-                  out the example of it in action here.
-                </p>
-                <p>
-                  If you're brave, you  might be able to poke around the
-                  example and figure things out! Better yet, why not help
-                  contribute to the documentation?
-                </p>
+                    <p>{{ msg || "Click on a date/button to get started"}}</p>
+                    <pre>$scope.selectedDate = {{ selectedDate | json }}</pre>
 
-                <h5 class="mdl-typeography--headline">Calendar Layout</h5>
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--6-col-desktop left-col">
+                            <section>
+                                <h5 class="mdl-typeography--headline">With All Options</h5>
+                                <p>
+                                    While I'm working on the documentation, feel free to check
+                                    out the example of it in action here.
+                                </p>
+                                <p>
+                                    If you're brave, you  might be able to poke around the
+                                    example and figure things out! Better yet, why not help
+                                    contribute to the documentation?
+                                </p>
+                            </section>
+                            <section>
+                                <h5 class="mdl-typeography--headline">First Day Of Week</h5>
+                                <p>
+                                    You can easily change the first day of the week.
+                                </p>
+                                <md-input-container>
+                                    <label>First day of week</label>
+                                    <md-select ng-model="weekStartsOn" ng-change="">
+                                        <md-option value="0">Sunday</md-option>
+                                        <md-option value="1">Monday</md-option>
+                                        <md-option value="2">Tuesday</md-option>
+                                        <md-option value="3">Wednesday</md-option>
+                                        <md-option value="4">Thursday</md-option>
+                                        <md-option value="5">Friday</md-option>
+                                        <md-option value="6">Saturday</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </section>
+                        </div>
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--6-col-desktop right-col">
+                            <section>
+                                <h5 class="mdl-typeography--headline">Calendar Layout</h5>
+                                <p>You can also change the calendar layout dynamically.</p>
+                                <md-button ng-click="setDirection('vertical')">Agenda</md-button>
+                                <md-button ng-click="setDirection('horizontal')">Calendar</md-button>
+                            </section>
 
-                <p>You can also change the calendar layout dynamically.</p>
-
-                <md-button ng-click="setDirection('vertical')">Vertical</md-button>
-                <md-button ng-click="setDirection('horizontal')">Horizontal</md-button>
-
-                <h5 class="mdl-typeography--headline">First Day Of Week</h5>
-                <p>
-                  You can easily change the first day of the week.
-                </p>
-                <md-input-container>
-                  <label>First day of week</label>
-                  <md-select ng-model="weekStartsOn" ng-change="">
-                    <md-option value="0">Sunday</md-option>
-                    <md-option value="1">Monday</md-option>
-                    <md-option value="2">Tuesday</md-option>
-                    <md-option value="3">Wednesday</md-option>
-                    <md-option value="4">Thursday</md-option>
-                    <md-option value="5">Friday</md-option>
-                    <md-option value="6">Saturday</md-option>
-                  </md-select>
-                </md-input-container>
-              </div>
-              <div class="mdl-cell mdl-cell--8-col mdl-cell--7-col-desktop right-col">
-                  <div style="height: 360px;">
-                    <calendar-md id="calendar-demo"
-                      flex layout layout-fill
-                      calendar-direction="direction"
-                      on-prev-month="prevMonth"
-                      on-next-month="nextMonth"
-                      on-day-click="dayClick"
-                      title-format="'MMMM y'"
-                      ng-model='selectedDate'
-                      day-format="dayFormat"
-                      day-label-format="'EEE'"
-                      day-label-tooltip-format="'EEEE'"
-                      day-tooltip-format="'fullDate'"
-                      week-starts-on="weekStartsOn"
-                      day-content="setDayContent"></calendar-md>
-                  </div>
-                <hr>
-                <p>{{ msg || "Click on a date/button to get started"}}</p>
-              </div>
-            </div>
-
-            <div class="mdl-grid">
-              <div class="mdl-cell md-cell--12-col mdl-cell--12-col-desktop">
-<pre>
+                            <section>
+                                <h5 class="mdl-typeography--headline">Selecting Dates</h5>
+                                <p>
+                                    You can select multiple dates. Just make sure your ng-model
+                                    value is initialized as an array. This demo also demonstrates
+                                    that if the ngModel is changed from outside the directive,
+                                    the directive will detect that change. That means you can
+                                    select dates programatically.
+                                </p>
+                                <p>
+                                    <md-button ng-click="selectedDate = [];">Multiple dates</md-button>
+                                    <md-button ng-click="selectedDate = false;">Single date</md-button>
+                                </p>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="mdl-grid">
+                        <div class="mdl-cell md-cell--12-col mdl-cell--12-col-desktop">
+                            <pre>
 &lt;calendar-md flex layout layout-fill
   calendar-direction="direction"
   on-prev-month="prevMonth"
@@ -168,7 +180,13 @@ angular.module("materialExample", ["ngMaterial", "materialCalendar"]);
 angular.module("materialExample").controller("calendarCtrl", function($scope, $filter) {
 
     $scope.dayFormat = "d";
+
+    // To select a single date, make sure the ngModel is not an array.
     $scope.selectedDate = null;
+
+    // If you want multi-date select, initialize it as an array.
+    $scope.selectedDate = [];
+
     $scope.firstDayOfWeek = 0; // First day of the week, 0 for Sunday, 1 for Monday, etc.
     $scope.setDirection = function(direction) {
       $scope.direction = direction;
@@ -196,24 +214,24 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
 });
 &lt;/script&gt:
 </pre>
-              </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
         <footer>
-          <div class="container">
-            <p>Angular Material Calendar is released under the <a href="http://opensource.org/licenses/MIT">MPLv2 license</a>. &copy; 2015 <a href="https://bradb.net">Brad Berger</a> and contributors.
-          </div>
+            <div class="container">
+                <p>Angular Material Calendar is released under the <a href="http://opensource.org/licenses/MIT">MPLv2 license</a>. &copy; 2015 <a href="https://bradb.net">Brad Berger</a> and contributors.
+            </div>
         </footer>
-      </main>
-    </div>
-    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
-    <script src="/js/angular.min.js"></script>
-    <script src="/js/angular-animate.min.js"></script>
-    <script src="/js/angular-aria.min.js"></script>
-    <script src="/js/angular-sanitize.min.js"></script>
-    <script src="/js/angular-material.min.js"></script>
-    <script src="/js/angular-material-calendar.js"></script>
-    <script src="/js/demo.js"></script>
-  </body>
+    </main>
+</div>
+<script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
+<script src="/js/angular.min.js"></script>
+<script src="/js/angular-animate.min.js"></script>
+<script src="/js/angular-aria.min.js"></script>
+<script src="/js/angular-sanitize.min.js"></script>
+<script src="/js/angular-material.min.js"></script>
+<script src="/js/angular-material-calendar.js"></script>
+<script src="/js/demo.js"></script>
+</body>
 </html>

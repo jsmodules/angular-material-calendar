@@ -20,11 +20,6 @@ describe("calendar service", function() {
 
     }));
 
-    xit("should be tested", function() {
-        $compile("<calendar-md></calendar-md>")($rootScope);
-        $rootScope.$digest();
-    });
-
     it("should fetch dynamic templates from external urls", function() {
 
         $httpBackend.expectGET(customTemplateUrl);

@@ -7,6 +7,13 @@ angular.module("materialCalendar").filter("dateToGmt", function() {
     };
 });
 
+angular.module("materialCalendar").config(["$logProvider", "$compileProvider", function($logProvider, $compileProvider) {
+    if (document.domain.indexOf("localhost") < 0) {
+        $logProvider.debugEnabled(false);
+        $compileProvider.debugInfoEnabled(false);
+    }
+}]);
+
 angular.module("materialCalendar").service("Calendar", ["$filter", function($filter) {
 
     function Calendar(year, month, options) {
@@ -133,7 +140,7 @@ angular.module("materialCalendar").service("Calendar", ["$filter", function($fil
 
 }]);
 
-angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse", "$http", "$q", "$filter", "Calendar", function($compile, $parse, $http, $q, $filter, Calendar) {
+angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse", "$http", "$q", "$filter", "$log", "Calendar", function($compile, $parse, $http, $q, $filter, $log, Calendar) {
 
     var hasCss;
     var defaultTemplate = "/* angular-material-calendar.html */";
@@ -160,7 +167,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             onPrevMonth: "=?",
             onNextMonth: "=?",
             calendarDirection: "=?",
-            dayContent: "=?",
+            dayContent: "&?",
             timezone: "=?",
             titleFormat: "=?",
             dayFormat: "=?",
@@ -182,13 +189,27 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             $scope.weekLayout = "row";
             $scope.timezone = $scope.timezone || null;
 
+            // Parse the parent model to determine if it's an array.
+            // If it is an array, than we'll automatically be able to select
+            // more than one date.
+            if ($attrs.ngModel) {
+                $scope.active = $scope.$parent.$eval($attrs.ngModel);
+                if ($attrs.ngModel) {
+                    $scope.$watch("$parent." + $attrs.ngModel, function(val) {
+                        $scope.active = val;
+                    });
+                }
+            } else {
+                $scope.active = null;
+            }
+
             // Set the defaults here.
             $scope.titleFormat = $scope.titleFormat || "MMMM yyyy";
             $scope.dayLabelFormat = $scope.dayLabelFormat || "EEE";
             $scope.dayLabelTooltipFormat = $scope.dayLabelTooltipFormat || "EEEE";
             $scope.dayFormat = $scope.dayFormat || "d";
             $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
-            $scope.getDayContent = $scope.dayContent || angular.noop;
+            //$scope.getDayContent = $scope.dayContent || angular.noop;
 
             $scope.sameMonth = function(date) {
                 var d = $filter("dateToGmt")(date);
@@ -212,6 +233,29 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 (cb || angular.noop)(data);
             };
 
+            var dateFind = function(arr, date) {
+                var index = -1;
+                angular.forEach(arr, function(d, k) {
+                    if (index < 0) {
+                        if(angular.equals(date, d)) {
+                            index = k;
+                        }
+                    }
+                });
+                return index;
+            };
+
+            $scope.isActive = function(date) {
+                var match;
+                var active = angular.copy($scope.active);
+                if (!angular.isArray(active)) {
+                    match = angular.equals(date, active);
+                } else {
+                    match = dateFind(active, date) > -1;
+                }
+                return match;
+            };
+
             $scope.prev = function() {
                 $scope.calendar.prev();
                 var data = {
@@ -230,12 +274,36 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 handleCb($scope.onNextMonth, data);
             };
 
+
+
+
             $scope.handleDayClick = function(date) {
-                $scope.active = date;
-                if ($attrs.ngModel) {
-                    $parse($attrs.ngModel).assign($scope.$parent, date);
+
+                var active = angular.copy($scope.active);
+                if (angular.isArray(active)) {
+                    var idx = dateFind(active, date);
+                    if (idx > -1) {
+                        active.splice(idx, 1);
+                    } else {
+                        active.push(date);
+                    }
+                } else {
+                    if (angular.equals(active, date)) {
+                        active = null;
+                    } else {
+                        active = date;
+                    }
                 }
-                handleCb($scope.onDayClick, date);
+
+                $scope.active = active;
+                if ($attrs.ngModel) {
+                    $parse($attrs.ngModel).assign($scope.$parent, angular.copy($scope.active));
+                }
+
+                $log.log("isActive", $scope.active, date, $scope.isActive(date));
+
+                handleCb($scope.onDayClick, angular.copy(date));
+
             };
 
             // Small helper function to set the contents of the template.
@@ -263,6 +331,14 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
 
                 return deferred.promise;
 
+            };
+
+            $scope.data = {};
+            $scope.getDayContent = function(date) {
+                if ("undefined" === typeof $scope.data[date.valueOf()]) {
+                    $scope.data[date.valueOf()] = ($scope.dayContent() || angular.noop)(date) || "";
+                }
+                return $scope.data[date.valueOf()];
             };
 
             var bootstrap = function() {
