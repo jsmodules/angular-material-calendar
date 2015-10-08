@@ -1,3 +1,10 @@
+## 0.2.7
+
+- Adds selection of multiple dates
+- Will now read the ngModel and update selected dates accordingly
+- Fixes bug with injection of HTML for date content
+- Simplifies CSS, removing most custom classes
+
 ## 0.2.5
 
 - Adds better layout support for mobile
