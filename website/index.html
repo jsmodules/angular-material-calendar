@@ -187,7 +187,7 @@
 &lt;script&gt;
 angular.module("materialExample", ["ngMaterial", "materialCalendar"]);
 
-angular.module("materialExample").controller("calendarCtrl", function($scope, $filter) {
+angular.module("materialExample").controller("calendarCtrl", function($scope, $filter, $http, $q) {
 
     $scope.dayFormat = "d";
 
@@ -217,9 +217,21 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
 
     $scope.tooltips = true;
     $scope.setDayContent = function(date) {
-      // You would inject any HTML you wanted for
-      // that particular date here.
+
+        // You would inject any HTML you wanted for
+        // that particular date here.
         return "&lt;p&gt;&lt;/p&gt;";
+
+        // You could also use an $http function directly.
+        return $http.get("/some/external/api");
+
+        // You could also use a promise.
+        var deferred = $q.defer();
+        $timeout(function() {
+            deferred.resolve("&lt;p&gt;&lt;/p&gt;");
+        }, 1000);
+        return deferred.promise;
+
     };
 
 });

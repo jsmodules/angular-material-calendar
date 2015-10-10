@@ -43,10 +43,20 @@ describe("calendar service", function() {
         expect(Calendar.weeks.length).toBe(4);
     });
 
+    it("should end with the correct date in February 2015", function() {
+        Calendar.init(2015, 1);
+        expect(angular.equals(Calendar.weeks[Calendar.weeks.length-1][6], $date(2015, 1, 28))).toBe(true);
+    });
+
     it("should start with the correct dates in October 2015", function() {
         Calendar.init(2015, 9);
         expect(angular.equals(Calendar.start, $date(2015, 9, 1))).toBe(true);
         expect(angular.equals(Calendar.weeks[0][0], $date(2015, 8, 27))).toBe(true);
+    });
+
+    it("should end with the correct date in October 2015", function() {
+        Calendar.init(2015, 9);
+        expect(angular.equals(Calendar.weeks[Calendar.weeks.length-1][6], $date(2015, 10, 6))).toBe(true);
     });
 
     it("should contain the correct number of weeks in October 2015", function() {
