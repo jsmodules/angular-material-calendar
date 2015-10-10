@@ -1,3 +1,7 @@
+## 0.2.9
+
+- Overhauls the way dates/weeks are calculated, should be much more stable.
+
 ## 0.2.8
 
 - Fixes bug with incorrect use of one-time bindings, resulting in the
