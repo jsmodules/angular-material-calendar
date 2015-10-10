@@ -29,7 +29,18 @@ describe("calendar service", function() {
         expect(angular.isNumber(Calendar.year)).toBe(true);
         expect(angular.isNumber(Calendar.month)).toBe(true);
         expect(angular.isNumber(Calendar.weekStartsOn)).toBe(true);
-        expect(angular.isArray(Calendar.dates)).toBe(true);
+        expect(angular.isArray(Calendar.weeks)).toBe(true);
+    });
+
+    it("should start with the correct dates in February 2015", function() {
+        Calendar.init(2015, 1);
+        expect(angular.equals(Calendar.start, $date(2015, 1, 1))).toBe(true);
+        expect(angular.equals(Calendar.weeks[0][0], $date(2015, 1, 1))).toBe(true);
+    });
+
+    it("should contain the correct number of weeks in February 2015", function() {
+        Calendar.init(2015, 1);
+        expect(Calendar.weeks.length).toBe(4);
     });
 
     it("should start with the correct dates in October 2015", function() {
@@ -38,16 +49,31 @@ describe("calendar service", function() {
         expect(angular.equals(Calendar.weeks[0][0], $date(2015, 8, 27))).toBe(true);
     });
 
+    it("should contain the correct number of weeks in October 2015", function() {
+        Calendar.init(2015, 9);
+        expect(Calendar.weeks.length).toBe(6);
+    });
+
     it("should start with the correct dates in November 2015", function() {
         Calendar.init(2015, 10);
         expect(angular.equals(Calendar.start, $date(2015, 10, 1))).toBe(true);
         expect(angular.equals(Calendar.weeks[0][0], $date(2015, 10, 1))).toBe(true);
     });
 
+    it("should contain the correct number of weeks in November 2015", function() {
+        Calendar.init(2015, 10);
+        expect(Calendar.weeks.length).toBe(5);
+    });
+
     it("should start with the correct dates in July 2016", function() {
         Calendar.init(2016, 6);
         expect(angular.equals(Calendar.start, $date(2016, 6, 1))).toBe(true);
         expect(angular.equals(Calendar.weeks[0][0], $date(2016, 5, 26))).toBe(true);
+    });
+
+    it("should contain the correct number of weeks in November 2015", function() {
+        Calendar.init(2016, 6);
+        expect(Calendar.weeks.length).toBe(6);
     });
 
     it("should start with the correct dates in March 2017", function() {

@@ -90,6 +90,7 @@
                         day-label-tooltip-format="'EEEE'"
                         day-tooltip-format="'fullDate'"
                         week-starts-on="weekStartsOn"
+                        tooltips="true"
                         day-content="setDayContent"></calendar-md>
                     </div>
 
@@ -151,6 +152,14 @@
                                     <md-button ng-click="selectedDate = false;">Single date</md-button>
                                 </p>
                             </section>
+
+                            <section>
+                                <h5 class="mdl-typeography--headline">Tooltips</h5>
+                                <p>
+                                    Since 0.2.9 tooltips are off by default, but can easily be enabled.
+                                    See the example below.
+                                </p>
+                            </section>
                         </div>
                     </div>
                     <div class="mdl-grid">
@@ -168,6 +177,7 @@
   data-start-month="8"
   &lt;--Set the initial year here. Defaults to current.--&gt;
   data-start-year="2014"
+  tooltips="tooltips"
   day-format="dayFormat"
   day-label-format="'EEE'"
   day-label-tooltip-format="'EEEE'"
@@ -205,6 +215,7 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
       $scope.msg = "You clicked (next) month " + data.month + ", " + data.year;
     };
 
+    $scope.tooltips = true;
     $scope.setDayContent = function(date) {
       // You would inject any HTML you wanted for
       // that particular date here.

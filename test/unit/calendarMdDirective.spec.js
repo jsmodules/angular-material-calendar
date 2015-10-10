@@ -6,6 +6,7 @@ describe("calendar service", function() {
     var $rootScope;
     var $httpBackend;
     var customTemplateUrl = "/a/custom/template";
+    var customTemplateContents = "<p>This is a custom template loaded via $http</p>";
 
     beforeEach(module("materialCalendar"));
 
@@ -16,7 +17,7 @@ describe("calendar service", function() {
         $httpBackend = $injector.get("$httpBackend");
         $httpBackend
             .when("GET", customTemplateUrl)
-            .respond("<p>This is a custom template loaded via $http</p>");
+            .respond(customTemplateContents);
 
     }));
 
@@ -29,7 +30,7 @@ describe("calendar service", function() {
         $rootScope.$digest();
         $httpBackend.flush();
 
-        expect(element.html()).toContain("This is a custom template loaded via $http");
+        expect(element.html()).toContain(customTemplateContents);
 
     });
 

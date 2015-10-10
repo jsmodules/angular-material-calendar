@@ -1,1 +1,402 @@
-angular.module("materialCalendar",["ngMaterial","ngSanitize"]),angular.module("materialCalendar").filter("dateToGmt",function(){return function(t){return t=t||new Date,new Date(Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()))}}),angular.module("materialCalendar").config(["$logProvider","$compileProvider",function(t,e){document.domain.indexOf("localhost")<0&&(t.debugEnabled(!1),e.debugInfoEnabled(!1))}]),angular.module("materialCalendar").service("Calendar",["$filter",function(t){function e(e,a,n){var o=t("dateToGmt")();this.getNumDays=function(){return t("dateToGmt")(new Date(this.start.getYear(),this.start.getMonth(),0)).getDate()},this.setWeekStartsOn=function(t){var e=parseInt(t||0,10);return this.weekStartsOn=!isNaN(e)&&e>=0&&6>=e?e:0,this.weekStartsOn},this.options=angular.isObject(n)?n:{},this.year=o.getFullYear(),this.month=o.getMonth(),this.dates=[],this.weekStartsOn=this.setWeekStartsOn(this.options.weekStartsOn),this.getFirstDayOfCalendar=function(){var t=this.start,e=new Date(t.getFullYear(),t.getMonth(),1);return e.getDay()!==this.weekStartsOn&&(e.setDate(e.getDate()-e.getDay()+this.weekStartsOn),e.getDate()>1&&e.getDate()<7&&e.setDate(e.getDate()-7)),e},this.next=function(){this.init(this.year,this.month+1)},this.prev=function(){this.init(this.year,this.month-1)},this._isFirstDayOfWeek=function(t){return!t.getDay()},this.init=function(e,a){e&&(a?(this.year=e,this.month=a):(this.year=e-1,this.month=11)),this.start=t("dateToGmt")(new Date(this.year,this.month,1,0,0)),this.dates=[],this.weeks=[],this.year=this.start.getFullYear(),this.month=this.start.getMonth();for(var n,o=this.getFirstDayOfCalendar(),r=0,i=1==o.getDate()&&28==this.getNumDays()?28:42;i>r&&(n=t("dateToGmt")(new Date(o.valueOf()+864e5*r)),r%7===0&&this.weeks.push([]),!(this.weeks.length>1)||this.weeks[this.weeks.length-1].length||n.getMonth()===this.month);r++)this.dates.push(n),this.weeks[this.weeks.length-1].push(n);return this.dates},this.init(e,a)}return e}]),angular.module("materialCalendar").directive("calendarMd",["$compile","$parse","$http","$q","$filter","$log","Calendar",function(t,e,a,n,o,r,i){var d,l="<md-content layout='column' layout-fill flex md-swipe-left='next()' md-swipe-right='prev()'><md-toolbar><div class='md-toolbar-tools' layout='row'><md-button ng-click='prev()'>&laquo;</md-button><div flex></div><h2 class='calendar-md-title'><span>{{ calendar.start | date:titleFormat:timezone }}</span></h2><div flex></div><md-button ng-click='next()'>&raquo;</md-button></div></md-toolbar><!-- agenda view --><md-content ng-if='weekLayout === columnWeekLayout' class='agenda'><div ng-repeat='week in calendar.weeks track by $index'><div ng-if='sameMonth(day)' ng-class='{ active: active === day }' ng-click='handleDayClick(day)' ng-repeat='day in week' layout><md-tooltip>{{ day | date:dayTooltipFormat:timezone }}</md-tooltip><div>{{ day | date:dayFormat:timezone }}</div><div flex ng-bind-html='getDayContent(day)'></div></div></div></md-content><!-- calendar view --><md-content ng-if='weekLayout !== columnWeekLayout' flex layout='column' class='calendar'><div ng-if='weekLayout != columnWeekLayout' layout='row' layout-fill class='subheader'><div layout-padding class='subheader-day' flex ng-repeat='day in calendar.weeks[0]'><md-tooltip>{{ day | date:dayLabelTooltipFormat:timezone }}</md-tooltip>{{ day | date:dayLabelFormat:timezone }}</div></div><div ng-if='weekLayout != columnWeekLayout' ng-repeat='week in calendar.weeks track by $index' flex layout='row' layout-fill><div tabindex='{{ sameMonth(day) ? (day | date:dayFormat:timezone) : 0 }}' ng-repeat='day in week track by $index' ng-click='handleDayClick(day)' flex layout layout-padding ng-class='{&quot;disabled&quot; : ! sameMonth(day), &quot;active&quot;: isActive(day), &quot;md-whiteframe-12dp&quot;: hover || focus }' ng-focus='focus = true;' ng-blur='focus = false;' ng-mouseleave='hover = false' ng-mouseenter='hover = true'><md-tooltip>{{ day | date:dayTooltipFormat:timezone }}</md-tooltip><div>{{ day | date:dayFormat:timezone }}</div><div flex ng-bind-html='getDayContent(day)'></div></div></div></md-content></md-content>",c=function(){if(!d){var t=document.getElementsByTagName("head")[0],e=document.createElement("style");e.type="text/css",e.id="calendarMdCss",e.innerHTML="calendar-md md-content>md-content.agenda>*>* :not(:first-child),calendar-md md-content>md-content.calendar>:not(:first-child)>* :last-child{overflow:hidden;text-overflow:ellipsis}calendar-md{display:block;max-height:100%}calendar-md md-content>md-content{border:1px solid rgba(0,0,0,.12)}calendar-md md-content>md-content.agenda>*>*{border-bottom:1px solid rgba(0,0,0,.12)}calendar-md md-content>md-content.agenda>*>* :first-child{padding:12px;width:200px;text-align:right;color:rgba(0,0,0,.75);font-weight:100;overflow-x:hidden;text-overflow:ellipsis;white-space:nowrap}calendar-md md-content>md-content.calendar>:first-child{background:rgba(0,0,0,.02);border-bottom:1px solid rgba(0,0,0,.12);margin-right:0;min-height:36px}calendar-md md-content>md-content.calendar>:not(:first-child)>*{border-bottom:1px solid rgba(0,0,0,.12);border-right:1px solid rgba(0,0,0,.12);cursor:pointer}calendar-md md-content>md-content.calendar>:not(:first-child)>:hover{background:rgba(0,0,0,.04)}calendar-md md-content>md-content.calendar>:not(:first-child)>.disabled{color:rgba(0,0,0,.3);pointer-events:none;cursor:auto}calendar-md md-content>md-content.calendar>:not(:first-child)>.active{box-shadow:0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);background:rgba(0,0,0,.02)}calendar-md md-content>md-content.calendar>:not(:first-child)>* :first-child{padding:0}",t.insertBefore(e,t.firstChild),d=!0}};return{restrict:"E",scope:{ngModel:"=?",template:"&",templateUrl:"=?",onDayClick:"=?",onPrevMonth:"=?",onNextMonth:"=?",calendarDirection:"=?",dayContent:"&?",timezone:"=?",titleFormat:"=?",dayFormat:"=?",dayLabelFormat:"=?",dayLabelTooltipFormat:"=?",dayTooltipFormat:"=?",weekStartsOn:"=?"},link:function(d,s,m){c();var u=new Date,h=parseInt(m.startMonth||u.getMonth()),g=parseInt(m.startYear||u.getFullYear());d.columnWeekLayout="column",d.weekLayout="row",d.timezone=d.timezone||null,m.ngModel?(d.active=d.$parent.$eval(m.ngModel),m.ngModel&&d.$watch("$parent."+m.ngModel,function(t){d.active=t})):d.active=null,d.titleFormat=d.titleFormat||"MMMM yyyy",d.dayLabelFormat=d.dayLabelFormat||"EEE",d.dayLabelTooltipFormat=d.dayLabelTooltipFormat||"EEEE",d.dayFormat=d.dayFormat||"d",d.dayTooltipFormat=d.dayTooltipFormat||"fullDate",d.sameMonth=function(t){var e=o("dateToGmt")(t);return e.getFullYear()===d.calendar.year&&e.getMonth()===d.calendar.month},d.calendarDirection=d.calendarDirection||"horizontal",d.$watch("calendarDirection",function(t){d.weekLayout="horizontal"===t?"row":"column"}),d.$watch("weekLayout",function(){g=d.calendar.year,h=d.calendar.month,w()});var y=function(t,e){(t||angular.noop)(e)},f=function(t,e){var a=-1;return angular.forEach(t,function(t,n){0>a&&angular.equals(e,t)&&(a=n)}),a};d.isActive=function(t){var e,a=angular.copy(d.active);return e=angular.isArray(a)?f(a,t)>-1:angular.equals(t,a)},d.prev=function(){d.calendar.prev();var t={year:d.calendar.year,month:d.calendar.month+1};y(d.onPrevMonth,t)},d.next=function(){d.calendar.next();var t={year:d.calendar.year,month:d.calendar.month+1};y(d.onNextMonth,t)},d.handleDayClick=function(t){var a=angular.copy(d.active);if(angular.isArray(a)){var n=f(a,t);n>-1?a.splice(n,1):a.push(t)}else a=angular.equals(a,t)?null:t;d.active=a,m.ngModel&&e(m.ngModel).assign(d.$parent,angular.copy(d.active)),r.log("isActive",d.active,t,d.isActive(t)),y(d.onDayClick,angular.copy(t))};var p=function(e){s.html(e),t(s.contents())(d)},v=function(){d.calendar=new i(g,h,{weekStartsOn:d.weekStartsOn||0});var t=n.defer();return d.templateUrl?a.get(d.templateUrl).success(t.resolve).error(t.reject):t.resolve(d.template()||l),t.promise};d.data={},d.getDayContent=function(t){return"undefined"==typeof d.data[t.valueOf()]&&(d.data[t.valueOf()]=(d.dayContent()||angular.noop)(t)||""),d.data[t.valueOf()]};var w=function(){v().then(p)};d.$watch("weekStartsOn",v),w(),d._$$init=v,d._$$setTemplate=p,d._$$bootstrap=w}}}]);
+angular.module("materialCalendar", ["ngMaterial", "ngSanitize"]);
+
+angular.module("materialCalendar").filter("dateToGmt", function() {
+    return function(date) {
+        date = date || new Date();
+        return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    };
+});
+
+angular.module("materialCalendar").constant("config", {
+    version: "0.2.9",
+    debug: document.domain.indexOf("localhost") > -1
+});
+
+angular.module("materialCalendar").config(["config", "$logProvider", "$compileProvider", function(config, $logProvider, $compileProvider) {
+    if (config.debug) {
+        $logProvider.debugEnabled(false);
+        $compileProvider.debugInfoEnabled(false);
+    }
+}]);
+
+angular.module("materialCalendar").service("Calendar", ["$filter", function($filter) {
+
+    function Calendar(year, month, options) {
+
+        var now = $filter("dateToGmt")();
+
+        this.getNumDays = function() {
+            return $filter("dateToGmt")(new Date(
+              this.start.getYear(),
+              this.start.getMonth(),
+              0
+            )).getDate();
+        };
+
+        this.setWeekStartsOn = function(i) {
+            var d = parseInt(i || 0, 10);
+            if (!isNaN(d) && d >= 0 && d <= 6) {
+                this.weekStartsOn = d;
+            } else {
+                this.weekStartsOn = 0;
+            }
+            return this.weekStartsOn;
+        };
+
+        this.options = angular.isObject(options) ? options : {};
+        this.year = now.getFullYear();
+        this.month = now.getMonth();
+        this.weeks = [];
+        this.weekStartsOn = this.setWeekStartsOn(this.options.weekStartsOn);
+
+        this.getFirstDayOfCalendar = function() {
+
+            // Get first date of month.
+            var date = this.start;
+            var first = new Date(date.getFullYear(), date.getMonth(), 1);
+
+            if (first.getDay() !== this.weekStartsOn) {
+
+                // Set the first day of the month.
+                first.setDate(first.getDate() - first.getDay() + (this.weekStartsOn));
+
+                // Sanity check to prevent first/last week from being out of month.
+                if (first.getDate() > 1 && first.getDate() < 7) {
+                    first.setDate(first.getDate() - 7);
+                }
+
+            }
+
+            return first;
+
+        };
+
+        this.next = function() {
+            this.init(this.year, this.month + 1);
+        };
+
+        this.prev = function() {
+            this.init(this.year, this.month - 1);
+        };
+
+        this._isFirstDayOfWeek = function(date) {
+            return !date.getDay();
+        };
+
+        // Month should be the javascript indexed month, 0 is January, etc.
+        this.init = function(year, month) {
+
+            if (year) {
+                if (month) {
+                    this.year = year;
+                    this.month = month;
+                } else {
+                    this.year = year - 1;
+                    this.month = 11;
+                }
+            }
+
+            // Set up the new date.
+            this.start = $filter("dateToGmt")(new Date(this.year, this.month, 1, 0, 0));
+            this.weeks = [];
+
+            // Reset the month and year to handle the case of many
+            // prev/next calls across years.
+            this.year = this.start.getFullYear();
+            this.month = this.start.getMonth();
+
+            var date;
+            var first = this.getFirstDayOfCalendar();
+            var i = 0;
+            var _i = first.getDate() == 1 && this.getNumDays() == 28 ? 28 : 42;
+
+            // @todo Need to fix for up to 6 weeks.
+            for (; i < _i; i++) {
+
+                date = $filter("dateToGmt")(new Date(first.valueOf() + (i * 86400000)));
+
+                // Let's start a new week.
+                // @todo If timezone changes, this goes haywire.
+                if (i % 7 === 0) {
+                    this.weeks.push([]);
+                }
+
+                // Sanity check to prevent first day of week from being in next month.
+                if (this.weeks.length > 1 && !this.weeks[this.weeks.length - 1].length) {
+                    if (date.getMonth() !== this.month) {
+                        break;
+                    }
+                }
+
+                this.weeks[this.weeks.length - 1].push(date);
+
+            }
+
+            // Sanity check to prevent empty weeks.
+            for (var x = this.weeks.length - 1; x >= 0; --x) {
+                if (this.weeks[x].length === 0) {
+                    this.weeks.splice(x, 1);
+                }
+            }
+
+        };
+
+        this.init(year, month);
+
+    }
+
+    return Calendar;
+
+}]);
+
+angular.module("materialCalendar").directive("calendarMd", ["$compile", "$timeout", "$parse", "$http", "$q", "$filter", "$log", "Calendar", function($compile, $timeout, $parse, $http, $q, $filter, $log, Calendar) {
+
+    var hasCss;
+    var defaultTemplate = "<md-content layout='column' layout-fill flex md-swipe-left='next()' md-swipe-right='prev()'><md-toolbar><div class='md-toolbar-tools' layout='row'><md-button ng-click='prev()' aria-label='Previous month'><md-tooltip ng-if='::tooltips()'>Previous month</md-tooltip>&laquo;</md-button><div flex></div><h2 class='calendar-md-title'><span>{{ calendar.start | date:titleFormat:timezone }}</span></h2><div flex></div><md-button ng-click='next()' aria-label='Next month'><md-tooltip ng-if='::tooltips()'>Next month</md-tooltip>&raquo;</md-button></div></md-toolbar><!-- agenda view --><md-content ng-if='weekLayout === columnWeekLayout' class='agenda'><div ng-repeat='week in calendar.weeks track by $index'><div ng-if='sameMonth(day)' ng-class='{ active: active === day }' ng-click='handleDayClick(day)' ng-repeat='day in week' layout><md-tooltip ng-if='::tooltips()'>{{ day | date:dayTooltipFormat:timezone }}</md-tooltip><div>{{ day | date:dayFormat:timezone }}</div><div flex ng-bind-html='getDayContent(day)'></div></div></div></md-content><!-- calendar view --><md-content ng-if='weekLayout !== columnWeekLayout' flex layout='column' class='calendar'><div layout='row' layout-fill class='subheader'><div layout-padding class='subheader-day' flex ng-repeat='day in calendar.weeks[0]'><md-tooltip ng-if='::tooltips()'>{{ day | date:dayLabelTooltipFormat:timezone }}</md-tooltip>{{ day | date:dayLabelFormat:timezone }}</div></div><div ng-if='week.length' ng-repeat='week in calendar.weeks track by $index' flex layout='row' layout-fill><div tabindex='{{ sameMonth(day) ? (day | date:dayFormat:timezone) : 0 }}' ng-repeat='day in week track by $index' ng-click='handleDayClick(day)' flex layout layout-padding ng-class='{&quot;disabled&quot; : ! sameMonth(day), &quot;active&quot;: isActive(day), &quot;md-whiteframe-12dp&quot;: hover || focus }' ng-focus='focus = true;' ng-blur='focus = false;' ng-mouseleave='hover = false' ng-mouseenter='hover = true'><md-tooltip ng-if='::tooltips()'>{{ day | date:dayTooltipFormat:timezone }}</md-tooltip><div>{{ day | date:dayFormat:timezone }}</div><div flex ng-bind-html='data[dayKey(day)]'></div></div></div></md-content></md-content>";
+
+    var injectCss = function() {
+        if (!hasCss) {
+            var head = document.getElementsByTagName("head")[0];
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.id="calendarMdCss";
+            css.innerHTML = "calendar-md md-content>md-content.agenda>*>* :not(:first-child),calendar-md md-content>md-content.calendar>:not(:first-child)>* :last-child{overflow:hidden;text-overflow:ellipsis}calendar-md{display:block;max-height:100%}calendar-md md-content>md-content{border:1px solid rgba(0,0,0,.12)}calendar-md md-content>md-content.agenda>*>*{border-bottom:1px solid rgba(0,0,0,.12)}calendar-md md-content>md-content.agenda>*>* :first-child{padding:12px;width:200px;text-align:right;color:rgba(0,0,0,.75);font-weight:100;overflow-x:hidden;text-overflow:ellipsis;white-space:nowrap}calendar-md md-content>md-content.calendar>:first-child{background:rgba(0,0,0,.02);border-bottom:1px solid rgba(0,0,0,.12);margin-right:0;min-height:36px}calendar-md md-content>md-content.calendar>:not(:first-child)>*{border-bottom:1px solid rgba(0,0,0,.12);border-right:1px solid rgba(0,0,0,.12);cursor:pointer}calendar-md md-content>md-content.calendar>:not(:first-child)>:hover{background:rgba(0,0,0,.04)}calendar-md md-content>md-content.calendar>:not(:first-child)>.disabled{color:rgba(0,0,0,.3);pointer-events:none;cursor:auto}calendar-md md-content>md-content.calendar>:not(:first-child)>.active{box-shadow:0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);background:rgba(0,0,0,.02)}calendar-md md-content>md-content.calendar>:not(:first-child)>* :first-child{padding:0}";
+            head.insertBefore(css, head.firstChild);
+            hasCss = true;
+        }
+    };
+
+    return {
+        restrict: "E",
+        scope: {
+            ngModel: "=?",
+            template: "&",
+            templateUrl: "=?",
+            onDayClick: "=?",
+            onPrevMonth: "=?",
+            onNextMonth: "=?",
+            calendarDirection: "=?",
+            dayContent: "&?",
+            timezone: "=?",
+            titleFormat: "=?",
+            dayFormat: "=?",
+            dayLabelFormat: "=?",
+            dayLabelTooltipFormat: "=?",
+            dayTooltipFormat: "=?",
+            weekStartsOn: "=?",
+            tooltips: "&?"
+        },
+        link: function($scope, $element, $attrs) {
+
+            // Add the CSS here.
+            injectCss();
+
+            var date = new Date();
+            var month = parseInt($attrs.startMonth || date.getMonth());
+            var year = parseInt($attrs.startYear || date.getFullYear());
+
+            $scope.columnWeekLayout = "column";
+            $scope.weekLayout = "row";
+            $scope.timezone = $scope.timezone || null;
+
+            // Parse the parent model to determine if it's an array.
+            // If it is an array, than we'll automatically be able to select
+            // more than one date.
+            if ($attrs.ngModel) {
+                $scope.active = $scope.$parent.$eval($attrs.ngModel);
+                if ($attrs.ngModel) {
+                    $scope.$watch("$parent." + $attrs.ngModel, function(val) {
+                        $scope.active = val;
+                    });
+                }
+            } else {
+                $scope.active = null;
+            }
+
+            // Set the defaults here.
+            $scope.titleFormat = $scope.titleFormat || "MMMM yyyy";
+            $scope.dayLabelFormat = $scope.dayLabelFormat || "EEE";
+            $scope.dayLabelTooltipFormat = $scope.dayLabelTooltipFormat || "EEEE";
+            $scope.dayFormat = $scope.dayFormat || "d";
+            $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
+
+            $scope.sameMonth = function(date) {
+                var d = $filter("dateToGmt")(date);
+                return d.getFullYear() === $scope.calendar.year &&
+                  d.getMonth() === $scope.calendar.month;
+            };
+
+            $scope.calendarDirection = $scope.calendarDirection || "horizontal";
+
+            $scope.$watch("calendarDirection", function(val) {
+                $scope.weekLayout = val === "horizontal" ? "row" : "column";
+            });
+
+            $scope.$watch("weekLayout", function() {
+                year = $scope.calendar.year;
+                month = $scope.calendar.month;
+                bootstrap();
+            });
+
+            var handleCb =  function(cb, data) {
+                (cb || angular.noop)(data);
+            };
+
+            var dateFind = function(arr, date) {
+                var index = -1;
+                angular.forEach(arr, function(d, k) {
+                    if (index < 0) {
+                        if(angular.equals(date, d)) {
+                            index = k;
+                        }
+                    }
+                });
+                return index;
+            };
+
+            $scope.isActive = function(date) {
+                var match;
+                var active = angular.copy($scope.active);
+                if (!angular.isArray(active)) {
+                    match = angular.equals(date, active);
+                } else {
+                    match = dateFind(active, date) > -1;
+                }
+                return match;
+            };
+
+            $scope.prev = function() {
+                $scope.calendar.prev();
+                var data = {
+                    year: $scope.calendar.year,
+                    month: $scope.calendar.month + 1
+                };
+                setData();
+                handleCb($scope.onPrevMonth, data);
+            };
+
+            $scope.next = function() {
+                $scope.calendar.next();
+                var data = {
+                    year: $scope.calendar.year,
+                    month: $scope.calendar.month + 1
+                };
+                setData();
+                handleCb($scope.onNextMonth, data);
+            };
+
+            $scope.handleDayClick = function(date) {
+
+                var active = angular.copy($scope.active);
+                if (angular.isArray(active)) {
+                    var idx = dateFind(active, date);
+                    if (idx > -1) {
+                        active.splice(idx, 1);
+                    } else {
+                        active.push(date);
+                    }
+                } else {
+                    if (angular.equals(active, date)) {
+                        active = null;
+                    } else {
+                        active = date;
+                    }
+                }
+
+                $scope.active = active;
+                if ($attrs.ngModel) {
+                    $parse($attrs.ngModel).assign($scope.$parent, angular.copy($scope.active));
+                }
+
+                $log.log("isActive", $scope.active, date, $scope.isActive(date));
+
+                handleCb($scope.onDayClick, angular.copy(date));
+
+            };
+
+            // Small helper function to set the contents of the template.
+            var setTemplate = function(contents) {
+                $element.html(contents);
+                $compile($element.contents())($scope);
+            };
+
+            var init = function() {
+
+                $scope.calendar = new Calendar(year, month, {
+                    weekStartsOn: $scope.weekStartsOn || 0
+                });
+
+                var deferred = $q.defer();
+                // Allows fetching of dynamic templates via $http.
+                if ($scope.templateUrl) {
+                    $http
+                      .get($scope.templateUrl)
+                      .success(deferred.resolve)
+                      .error(deferred.reject);
+                } else {
+                    deferred.resolve($scope.template() || defaultTemplate);
+                }
+
+                return deferred.promise;
+
+            };
+
+
+            // Set the html contents of each date.
+            var getDayKey = function(date) {
+                return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-");
+            };
+
+            $scope.data = {};
+            $scope.dayKey = getDayKey;
+
+            var getDayContent = function(date) {
+
+                // Make sure some data in the data array.
+                $scope.data[getDayKey(date)] = $scope.data[getDayKey(date)] || "";
+
+                var cb = ($scope.dayContent || angular.noop)();
+                var result = (cb || angular.noop)(date);
+
+                // Check for async function. This should support $http.get() and also regular $q.defer() functions.
+                if (angular.isObject(result) && "function" === typeof result.success) {
+                    result.success(function(html) {
+                        $scope.data[getDayKey(date)] = html;
+                    });
+                } else if (angular.isObject(result) && "function" === typeof result.then) {
+                    result.then(function(html) {
+                        $scope.data[getDayKey(date)] = html;
+                    });
+                } else {
+                    $scope.data[getDayKey(date)] = result;
+                }
+
+            };
+
+            var setData = function() {
+                angular.forEach($scope.calendar.weeks, function(week) {
+                    angular.forEach(week, getDayContent);
+                });
+            };
+
+            window.data = $scope.data;
+
+            var bootstrap = function() {
+                init().then(function(contents) {
+                    setTemplate(contents);
+                    setData();
+                });
+            };
+
+            $scope.$watch("weekStartsOn", init);
+            bootstrap();
+
+            // These are for tests, don't remove them..
+            $scope._$$init = init;
+            $scope._$$setTemplate = setTemplate;
+            $scope._$$bootstrap = bootstrap;
+
+        }
+    };
+
+}]);

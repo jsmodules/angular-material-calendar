@@ -7,7 +7,7 @@ var autoprefixer = require("gulp-autoprefixer");
 var runSequence = require("run-sequence");
 var connect = require("gulp-connect");
 var gfi = require("gulp-file-insert");
-var uglify = require("gulp-uglify");
+// var uglify = require("gulp-uglify");
 var eslint = require("gulp-eslint");
 var size = require("gulp-size");
 var replace = require("gulp-replace");
@@ -27,7 +27,7 @@ gulp.task("js", function() {
           "/* angular-material-calendar.html */": p("dist/angular-material-calendar.html"),
           "/* angular-material-calendar.css */": p("dist/angular-material-calendar.css")
       }))
-      .pipe(uglify())
+    //   .pipe(uglify())
       .pipe(size({ gzip: true, prettySize: true }))
       .pipe(gulp.dest("dist"));
 });
@@ -83,7 +83,7 @@ gulp.task("test", ["js:lint-ci"], function() {
 });
 
 gulp.task("build", function() {
-    return runSequence(["scss"], "html", "js");
+    runSequence("scss", "html", "js");
 });
 
 gulp.task("connect", function() {
@@ -94,4 +94,4 @@ gulp.task("watch", function() {
     gulp.watch(p("src/**/*"), ["js:lint", "build"]);
 });
 
-gulp.task("default", ["build", "karma:tdd", "connect", "watch"]);
+gulp.task("default", ["karma:tdd", "connect", "watch"]);

@@ -7,8 +7,13 @@ angular.module("materialCalendar").filter("dateToGmt", function() {
     };
 });
 
-angular.module("materialCalendar").config(["$logProvider", "$compileProvider", function($logProvider, $compileProvider) {
-    if (document.domain.indexOf("localhost") < 0) {
+angular.module("materialCalendar").constant("config", {
+    version: "0.2.9",
+    debug: document.domain.indexOf("localhost") > -1
+});
+
+angular.module("materialCalendar").config(["config", "$logProvider", "$compileProvider", function(config, $logProvider, $compileProvider) {
+    if (config.debug) {
         $logProvider.debugEnabled(false);
         $compileProvider.debugInfoEnabled(false);
     }
@@ -41,7 +46,7 @@ angular.module("materialCalendar").service("Calendar", ["$filter", function($fil
         this.options = angular.isObject(options) ? options : {};
         this.year = now.getFullYear();
         this.month = now.getMonth();
-        this.dates = [];
+        this.weeks = [];
         this.weekStartsOn = this.setWeekStartsOn(this.options.weekStartsOn);
 
         this.getFirstDayOfCalendar = function() {
@@ -93,7 +98,6 @@ angular.module("materialCalendar").service("Calendar", ["$filter", function($fil
 
             // Set up the new date.
             this.start = $filter("dateToGmt")(new Date(this.year, this.month, 1, 0, 0));
-            this.dates = [];
             this.weeks = [];
 
             // Reset the month and year to handle the case of many
@@ -124,12 +128,16 @@ angular.module("materialCalendar").service("Calendar", ["$filter", function($fil
                     }
                 }
 
-                this.dates.push(date);
                 this.weeks[this.weeks.length - 1].push(date);
 
             }
 
-            return this.dates;
+            // Sanity check to prevent empty weeks.
+            for (var x = this.weeks.length - 1; x >= 0; --x) {
+                if (this.weeks[x].length === 0) {
+                    this.weeks.splice(x, 1);
+                }
+            }
 
         };
 
@@ -141,7 +149,7 @@ angular.module("materialCalendar").service("Calendar", ["$filter", function($fil
 
 }]);
 
-angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse", "$http", "$q", "$filter", "$log", "Calendar", function($compile, $parse, $http, $q, $filter, $log, Calendar) {
+angular.module("materialCalendar").directive("calendarMd", ["$compile", "$timeout", "$parse", "$http", "$q", "$filter", "$log", "Calendar", function($compile, $timeout, $parse, $http, $q, $filter, $log, Calendar) {
 
     var hasCss;
     var defaultTemplate = "/* angular-material-calendar.html */";
@@ -175,7 +183,8 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             dayLabelFormat: "=?",
             dayLabelTooltipFormat: "=?",
             dayTooltipFormat: "=?",
-            weekStartsOn: "=?"
+            weekStartsOn: "=?",
+            tooltips: "&?"
         },
         link: function($scope, $element, $attrs) {
 
@@ -210,7 +219,6 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             $scope.dayLabelTooltipFormat = $scope.dayLabelTooltipFormat || "EEEE";
             $scope.dayFormat = $scope.dayFormat || "d";
             $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
-            //$scope.getDayContent = $scope.dayContent || angular.noop;
 
             $scope.sameMonth = function(date) {
                 var d = $filter("dateToGmt")(date);
@@ -263,6 +271,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                     year: $scope.calendar.year,
                     month: $scope.calendar.month + 1
                 };
+                setData();
                 handleCb($scope.onPrevMonth, data);
             };
 
@@ -272,11 +281,9 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                     year: $scope.calendar.year,
                     month: $scope.calendar.month + 1
                 };
+                setData();
                 handleCb($scope.onNextMonth, data);
             };
-
-
-
 
             $scope.handleDayClick = function(date) {
 
@@ -334,16 +341,51 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
 
             };
 
-            $scope.data = {};
-            $scope.getDayContent = function(date) {
-                if ("undefined" === typeof $scope.data[date.valueOf()]) {
-                    $scope.data[date.valueOf()] = ($scope.dayContent() || angular.noop)(date) || "";
-                }
-                return $scope.data[date.valueOf()];
+
+            // Set the html contents of each date.
+            var getDayKey = function(date) {
+                return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-");
             };
 
+            $scope.data = {};
+            $scope.dayKey = getDayKey;
+
+            var getDayContent = function(date) {
+
+                // Make sure some data in the data array.
+                $scope.data[getDayKey(date)] = $scope.data[getDayKey(date)] || "";
+
+                var cb = ($scope.dayContent || angular.noop)();
+                var result = (cb || angular.noop)(date);
+
+                // Check for async function. This should support $http.get() and also regular $q.defer() functions.
+                if (angular.isObject(result) && "function" === typeof result.success) {
+                    result.success(function(html) {
+                        $scope.data[getDayKey(date)] = html;
+                    });
+                } else if (angular.isObject(result) && "function" === typeof result.then) {
+                    result.then(function(html) {
+                        $scope.data[getDayKey(date)] = html;
+                    });
+                } else {
+                    $scope.data[getDayKey(date)] = result;
+                }
+
+            };
+
+            var setData = function() {
+                angular.forEach($scope.calendar.weeks, function(week) {
+                    angular.forEach(week, getDayContent);
+                });
+            };
+
+            window.data = $scope.data;
+
             var bootstrap = function() {
-                init().then(setTemplate);
+                init().then(function(contents) {
+                    setTemplate(contents);
+                    setData();
+                });
             };
 
             $scope.$watch("weekStartsOn", init);
