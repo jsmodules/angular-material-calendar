@@ -1,12 +1,5 @@
 angular.module("materialCalendar", ["ngMaterial", "ngSanitize"]);
 
-angular.module("materialCalendar").filter("dateToGmt", function() {
-    return function(date) {
-        date = date || new Date();
-        return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    };
-});
-
 angular.module("materialCalendar").constant("config", {
     version: "0.2.9",
     debug: document.domain.indexOf("localhost") > -1
@@ -19,18 +12,18 @@ angular.module("materialCalendar").config(["config", "$logProvider", "$compilePr
     }
 }]);
 
-angular.module("materialCalendar").service("Calendar", ["$filter", function($filter) {
+angular.module("materialCalendar").service("Calendar", [function() {
 
     function Calendar(year, month, options) {
 
-        var now = $filter("dateToGmt")();
+        var now = new Date();
 
         this.getNumDays = function() {
-            return $filter("dateToGmt")(new Date(
+            return new Date(
               this.start.getYear(),
               this.start.getMonth(),
               0
-            )).getDate();
+            ).getDate();
         };
 
         this.setWeekStartsOn = function(i) {
@@ -53,18 +46,13 @@ angular.module("materialCalendar").service("Calendar", ["$filter", function($fil
 
             // Get first date of month.
             var date = this.start;
-            var first = new Date(date.getFullYear(), date.getMonth(), 1);
 
-            if (first.getDay() !== this.weekStartsOn) {
+            // Undo the timezone offset here.
+            var first = angular.copy(date);
 
-                // Set the first day of the month.
-                first.setDate(first.getDate() - first.getDay() + (this.weekStartsOn));
-
-                // Sanity check to prevent first/last week from being out of month.
-                if (first.getDate() > 1 && first.getDate() < 7) {
-                    first.setDate(first.getDate() - 7);
-                }
-
+            while(first.getDay() != this.weekStartsOn) {
+                var d = first.getDate();
+                first.setDate(d - 1);
             }
 
             return first;
@@ -72,71 +60,67 @@ angular.module("materialCalendar").service("Calendar", ["$filter", function($fil
         };
 
         this.next = function() {
-            this.init(this.year, this.month + 1);
+            if(this.start.getMonth() < 11) {
+                this.init(this.start.getFullYear(), this.start.getMonth() + 1);
+            } else {
+                this.init(this.start.getFullYear() + 1, 0);
+            }
         };
 
         this.prev = function() {
-            this.init(this.year, this.month - 1);
-        };
-
-        this._isFirstDayOfWeek = function(date) {
-            return !date.getDay();
+            if (this.month) {
+                this.init(this.start.getFullYear(), this.start.getMonth() - 1);
+                return;
+            } else {
+                this.init(this.start.getFullYear() - 1, 11);
+            }
         };
 
         // Month should be the javascript indexed month, 0 is January, etc.
         this.init = function(year, month) {
 
-            if (year) {
-                if (month) {
-                    this.year = year;
-                    this.month = month;
-                } else {
-                    this.year = year - 1;
-                    this.month = 11;
+            var now = new Date();
+            this.year = angular.isDefined(year) ? year : now.getFullYear();
+            this.month = angular.isDefined(month) ? month : now.getMonth();
+
+            var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            var monthLength = daysInMonth[this.month];
+
+            // Figure out if is a leap year.
+            if (this.month == 1) {
+                if ((this.year % 4 == 0 && this.year % 100 != 0) || this.year % 400 == 0){
+                    monthLength = 29;
                 }
             }
 
-            // Set up the new date.
-            this.start = $filter("dateToGmt")(new Date(this.year, this.month, 1, 0, 0));
+            // First day of calendar month.
+            this.start = new Date(this.year, this.month, 1);
+            var date = angular.copy(this.start);
+            while(date.getDay() != this.weekStartsOn) {
+                date.setDate(date.getDate() - 1);
+                monthLength++;
+            }
+
+            // Last day of calendar month.
+            while(monthLength % 7 !== 0) {
+                monthLength++;
+            }
+
             this.weeks = [];
-
-            // Reset the month and year to handle the case of many
-            // prev/next calls across years.
-            this.year = this.start.getFullYear();
-            this.month = this.start.getMonth();
-
-            var date;
-            var first = this.getFirstDayOfCalendar();
-            var i = 0;
-            var _i = first.getDate() == 1 && this.getNumDays() == 28 ? 28 : 42;
-
-            // @todo Need to fix for up to 6 weeks.
-            for (; i < _i; i++) {
-
-                date = $filter("dateToGmt")(new Date(first.valueOf() + (i * 86400000)));
+            for(var i = 0; i < monthLength; ++i) {
 
                 // Let's start a new week.
-                // @todo If timezone changes, this goes haywire.
                 if (i % 7 === 0) {
                     this.weeks.push([]);
                 }
 
-                // Sanity check to prevent first day of week from being in next month.
-                if (this.weeks.length > 1 && !this.weeks[this.weeks.length - 1].length) {
-                    if (date.getMonth() !== this.month) {
-                        break;
-                    }
-                }
+                // Add copy of the date. If not a copy,
+                // it will get updated shortly.
+                this.weeks[this.weeks.length - 1].push(angular.copy(date));
 
-                this.weeks[this.weeks.length - 1].push(date);
+                // Increment it.
+                date.setDate(date.getDate() + 1);
 
-            }
-
-            // Sanity check to prevent empty weeks.
-            for (var x = this.weeks.length - 1; x >= 0; --x) {
-                if (this.weeks[x].length === 0) {
-                    this.weeks.splice(x, 1);
-                }
             }
 
         };
@@ -221,7 +205,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$timeou
             $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
 
             $scope.sameMonth = function(date) {
-                var d = $filter("dateToGmt")(date);
+                var d = angular.copy(date);
                 return d.getFullYear() === $scope.calendar.year &&
                   d.getMonth() === $scope.calendar.month;
             };

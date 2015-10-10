@@ -2,16 +2,17 @@
 /* global inject, module */
 describe("calendar service", function() {
 
-    var $date;
     var Calendar;
+    var sameDay = function(src, dst) {
+        return angular.equals(src.getFullYear(), dst.getFullYear())
+            && angular.equals(src.getMonth(), dst.getMonth())
+            && angular.equals(src.getDate(), dst.getDate());
+    };
 
     beforeEach(module("materialCalendar"));
 
-    beforeEach(inject(function(_Calendar_, _$filter_){
+    beforeEach(inject(function(_Calendar_){
         Calendar = new _Calendar_();
-        $date = function(year, month, day) {
-            return _$filter_("dateToGmt")(new Date(year, month, day, 0, 0));
-        };
     }));
 
     it("should have all public methods defined", function() {
@@ -34,8 +35,8 @@ describe("calendar service", function() {
 
     it("should start with the correct dates in February 2015", function() {
         Calendar.init(2015, 1);
-        expect(angular.equals(Calendar.start, $date(2015, 1, 1))).toBe(true);
-        expect(angular.equals(Calendar.weeks[0][0], $date(2015, 1, 1))).toBe(true);
+        expect(sameDay(Calendar.start, new Date(2015, 1, 1))).toBe(true);
+        expect(sameDay(Calendar.weeks[0][0], new Date(2015, 1, 1))).toBe(true);
     });
 
     it("should contain the correct number of weeks in February 2015", function() {
@@ -45,29 +46,29 @@ describe("calendar service", function() {
 
     it("should end with the correct date in February 2015", function() {
         Calendar.init(2015, 1);
-        expect(angular.equals(Calendar.weeks[Calendar.weeks.length-1][6], $date(2015, 1, 28))).toBe(true);
+        expect(sameDay(Calendar.weeks[Calendar.weeks.length-1][6], new Date(2015, 1, 28))).toBe(true);
     });
 
     it("should start with the correct dates in October 2015", function() {
         Calendar.init(2015, 9);
-        expect(angular.equals(Calendar.start, $date(2015, 9, 1))).toBe(true);
-        expect(angular.equals(Calendar.weeks[0][0], $date(2015, 8, 27))).toBe(true);
+        expect(sameDay(Calendar.start, new Date(2015, 9, 1))).toBe(true);
+        expect(sameDay(Calendar.weeks[0][0], new Date(2015, 8, 27))).toBe(true);
     });
 
     it("should end with the correct date in October 2015", function() {
         Calendar.init(2015, 9);
-        expect(angular.equals(Calendar.weeks[Calendar.weeks.length-1][6], $date(2015, 10, 6))).toBe(true);
+        expect(sameDay(Calendar.weeks[Calendar.weeks.length-1][6], new Date(2015, 9, 31))).toBe(true);
     });
 
     it("should contain the correct number of weeks in October 2015", function() {
         Calendar.init(2015, 9);
-        expect(Calendar.weeks.length).toBe(6);
+        expect(Calendar.weeks.length).toBe(5);
     });
 
     it("should start with the correct dates in November 2015", function() {
         Calendar.init(2015, 10);
-        expect(angular.equals(Calendar.start, $date(2015, 10, 1))).toBe(true);
-        expect(angular.equals(Calendar.weeks[0][0], $date(2015, 10, 1))).toBe(true);
+        expect(sameDay(Calendar.start, new Date(2015, 10, 1))).toBe(true);
+        expect(sameDay(Calendar.weeks[0][0], new Date(2015, 10, 1))).toBe(true);
     });
 
     it("should contain the correct number of weeks in November 2015", function() {
@@ -77,8 +78,8 @@ describe("calendar service", function() {
 
     it("should start with the correct dates in July 2016", function() {
         Calendar.init(2016, 6);
-        expect(angular.equals(Calendar.start, $date(2016, 6, 1))).toBe(true);
-        expect(angular.equals(Calendar.weeks[0][0], $date(2016, 5, 26))).toBe(true);
+        expect(sameDay(Calendar.start, new Date(2016, 6, 1))).toBe(true);
+        expect(sameDay(Calendar.weeks[0][0], new Date(2016, 5, 26))).toBe(true);
     });
 
     it("should contain the correct number of weeks in November 2015", function() {
@@ -88,14 +89,14 @@ describe("calendar service", function() {
 
     it("should start with the correct dates in March 2017", function() {
         Calendar.init(2017, 2);
-        expect(angular.equals(Calendar.start, $date(2017, 2, 1))).toBe(true);
-        expect(angular.equals(Calendar.weeks[0][0], $date(2017, 1, 26))).toBe(true);
+        expect(sameDay(Calendar.start, new Date(2017, 2, 1))).toBe(true);
+        expect(sameDay(Calendar.weeks[0][0], new Date(2017, 1, 26))).toBe(true);
     });
 
     it("should start with the correct dates in April 2018", function() {
         Calendar.init(2018, 3);
-        expect(angular.equals(Calendar.start, $date(2018, 3, 1))).toBe(true);
-        expect(angular.equals(Calendar.weeks[0][0], $date(2018, 3, 1))).toBe(true);
+        expect(sameDay(Calendar.start, new Date(2018, 3, 1))).toBe(true);
+        expect(sameDay(Calendar.weeks[0][0], new Date(2018, 3, 1))).toBe(true);
     });
 
 });
