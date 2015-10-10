@@ -133,7 +133,7 @@ angular.module("materialCalendar").service("Calendar", [function() {
 
 }]);
 
-angular.module("materialCalendar").directive("calendarMd", ["$compile", "$timeout", "$parse", "$http", "$q", "$filter", "$log", "Calendar", function($compile, $timeout, $parse, $http, $q, $filter, $log, Calendar) {
+angular.module("materialCalendar").directive("calendarMd", ["$compile", "$timeout", "$parse", "$http", "$q", "$log", "Calendar", function($compile, $timeout, $parse, $http, $q, $log, Calendar) {
 
     var hasCss;
     var defaultTemplate = "/* angular-material-calendar.html */";
