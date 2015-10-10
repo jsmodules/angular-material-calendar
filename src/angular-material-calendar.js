@@ -78,6 +78,7 @@ angular.module("materialCalendar").service("Calendar", ["$filter", function($fil
             return !date.getDay();
         };
 
+        // Month should be the javascript indexed month, 0 is January, etc.
         this.init = function(year, month) {
 
             if (year) {

@@ -1,3 +1,8 @@
+## 0.2.8
+
+- Fixes bug with incorrect use of one-time bindings, resulting in the
+  dates not updating.
+
 ## 0.2.7
 
 - Adds selection of multiple dates

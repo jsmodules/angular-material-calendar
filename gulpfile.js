@@ -12,6 +12,7 @@ var eslint = require("gulp-eslint");
 var size = require("gulp-size");
 var replace = require("gulp-replace");
 var protractor = require("gulp-protractor").protractor;
+var Karma = require("karma").Server;
 
 function p(path) {
     return __dirname + (path.charAt(0) === "/" ? "" : "/") + path;
@@ -65,6 +66,13 @@ gulp.task("scss", function() {
       .pipe(connect.reload());
 });
 
+gulp.task("karma:tdd", function(done) {
+    new Karma({
+        configFile: __dirname + "/karma.conf.js",
+        singleRun: false
+    }, done).start();
+});
+
 gulp.task("test", ["js:lint-ci"], function() {
     connect.server({ root: "website", port: 3000 });
     gulp
@@ -86,4 +94,4 @@ gulp.task("watch", function() {
     gulp.watch(p("src/**/*"), ["js:lint", "build"]);
 });
 
-gulp.task("default", ["build", "connect", "watch"]);
+gulp.task("default", ["build", "karma:tdd", "connect", "watch"]);

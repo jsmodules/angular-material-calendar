@@ -12,9 +12,9 @@
     <md-content ng-if='weekLayout === columnWeekLayout' class='agenda'>
         <div ng-repeat='week in calendar.weeks track by $index'>
             <div ng-if="sameMonth(day)" ng-class='{ active: active === day }' ng-click='handleDayClick(day)' ng-repeat='day in week' layout>
-                <md-tooltip>{{ ::day | date:dayTooltipFormat:timezone }}</md-tooltip>
-                <div>{{ ::day | date:dayFormat:timezone }}</div>
-                <div flex ng-bind-html='::getDayContent(day)'></div>
+                <md-tooltip>{{ day | date:dayTooltipFormat:timezone }}</md-tooltip>
+                <div>{{ day | date:dayFormat:timezone }}</div>
+                <div flex ng-bind-html='getDayContent(day)'></div>
             </div>
         </div>
     </md-content>
@@ -22,14 +22,14 @@
     <md-content ng-if='weekLayout !== columnWeekLayout' flex layout="column" class='calendar'>
         <div ng-if='weekLayout != columnWeekLayout' layout='row' layout-fill class='subheader'>
             <div layout-padding class='subheader-day' flex ng-repeat='day in calendar.weeks[0]'>
-              <md-tooltip>{{ ::day | date:dayLabelTooltipFormat:timezone }}</md-tooltip>
-              {{ ::day | date:dayLabelFormat:timezone }}
+              <md-tooltip>{{ day | date:dayLabelTooltipFormat:timezone }}</md-tooltip>
+              {{ day | date:dayLabelFormat:timezone }}
             </div>
         </div>
         <div ng-if='weekLayout != columnWeekLayout' ng-repeat='week in calendar.weeks track by $index' flex layout='row' layout-fill>
-            <div tabindex='{{ ::sameMonth(day) ? (day | date:dayFormat:timezone) : 0 }}' ng-repeat='day in week track by $index' ng-click='handleDayClick(day)' flex layout layout-padding ng-class='{"disabled" : ! sameMonth(day), "active": isActive(day), "md-whiteframe-12dp": hover || focus }' ng-focus='focus = true;' ng-blur='focus = false;' ng-mouseleave="hover = false" ng-mouseenter="hover = true">
-                <md-tooltip>{{ ::day | date:dayTooltipFormat:timezone }}</md-tooltip>
-                <div>{{ ::day | date:dayFormat:timezone }}</div>
+            <div tabindex='{{ sameMonth(day) ? (day | date:dayFormat:timezone) : 0 }}' ng-repeat='day in week track by $index' ng-click='handleDayClick(day)' flex layout layout-padding ng-class='{"disabled" : ! sameMonth(day), "active": isActive(day), "md-whiteframe-12dp": hover || focus }' ng-focus='focus = true;' ng-blur='focus = false;' ng-mouseleave="hover = false" ng-mouseenter="hover = true">
+                <md-tooltip>{{ day | date:dayTooltipFormat:timezone }}</md-tooltip>
+                <div>{{ day | date:dayFormat:timezone }}</div>
                 <div flex ng-bind-html="getDayContent(day)"></div>
             </div>
         </div>
