@@ -1,10 +1,13 @@
-languages:
-  JavaScript: true
-
 exclude_paths:
+- "node_modules/*"
+- "bower_components/*"
+- ".git/*"
 - "test/*"
 - "gulpfile.js"
 - "protractor.conf.js"
+- "karma.conf.js"
+- "*.min.js"
+- "*.min.css"
 - "dist/*"
 - "website/*"
 
@@ -14,4 +17,4 @@ engines:
 
 ratings:
   paths:
-  - src/**/*.js
+  - src/**

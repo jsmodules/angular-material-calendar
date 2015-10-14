@@ -21,8 +21,6 @@ module.exports = function(config) {
             "test/unit/**/*.spec.js"
         ],
 
-        autoWatch: true,
-
         // list of files to exclude
         exclude: [
         ],

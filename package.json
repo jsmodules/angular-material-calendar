@@ -2,7 +2,18 @@
   "name": "angular-material-calendar",
   "version": "0.2.11",
   "description": "A calendar directive for AngularJS and Angular Material Design",
-  "keywords": ["angular", "material", "design", "calendar", "ngCalendar", "mdCalendar", "calendarMd", "calendar-md", "md-calendar", "ng-calendar"],
+  "keywords": [
+    "angular",
+    "material",
+    "design",
+    "calendar",
+    "ngCalendar",
+    "mdCalendar",
+    "calendarMd",
+    "calendar-md",
+    "md-calendar",
+    "ng-calendar"
+  ],
   "main": "gulpfile.js",
   "scripts": {
     "postinstall": "./node_modules/protractor/bin/webdriver-manager update",
@@ -13,13 +24,13 @@
     "url": "https://github.com/bradberger/material-calendar.git"
   },
   "maintainers": [
-      "Brad Berger <brad@bradb.net>",
-      "Gavin Barron <gavin.barron@teamintergen.com>"
+    "Brad Berger <brad@bradb.net>",
+    "Gavin Barron <gavin.barron@teamintergen.com>"
   ],
   "contributors": [
-      "Brad Berger <brad@bradb.net>",
-      "Gavin Barron <gavin.barron@teamintergen.com>",
-      "Dave Gavigan <davegavigan@gmail.com>"
+    "Brad Berger <brad@bradb.net>",
+    "Gavin Barron <gavin.barron@teamintergen.com>",
+    "Dave Gavigan <davegavigan@gmail.com>"
   ],
   "license": "MPL-2.0",
   "bugs": {
@@ -37,6 +48,7 @@
     "gulp-minify-css": "~1.2",
     "gulp-minify-html": "~1.0",
     "gulp-protractor": "~1.0",
+    "gulp-rename": "^1.2.2",
     "gulp-replace": "~0.5",
     "gulp-sass": "~2.0",
     "gulp-size": "~2.0",

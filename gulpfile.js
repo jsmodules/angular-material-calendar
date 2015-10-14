@@ -13,6 +13,7 @@ var size = require("gulp-size");
 var replace = require("gulp-replace");
 var protractor = require("gulp-protractor").protractor;
 var Karma = require("karma").Server;
+var rename = require("gulp-rename");
 
 function p(path) {
     return __dirname + (path.charAt(0) === "/" ? "" : "/") + path;
@@ -25,10 +26,13 @@ gulp.task("js", function() {
       .pipe(eslint.format())
       .pipe(gfi({
           "/* angular-material-calendar.html */": p("dist/angular-material-calendar.html"),
-          "/* angular-material-calendar.css */": p("dist/angular-material-calendar.css")
+          "/* angular-material-calendar.css */": p("dist/angular-material-calendar.min.css")
       }))
+      .pipe(gulp.dest("dist"))
+      .pipe(gulp.dest(""))
       .pipe(uglify())
       .pipe(size({ gzip: true, prettySize: true }))
+      .pipe(rename({ suffix: ".min" }))
       .pipe(gulp.dest("dist"))
       .pipe(gulp.dest(""));
 });
@@ -63,7 +67,10 @@ gulp.task("scss", function() {
       .src(p("src/**/*.scss"))
       .pipe(sass()).on("error", sass.logError)
       .pipe(autoprefixer())
+      .pipe(gulp.dest("dist"))
+      .pipe(gulp.dest(""))
       .pipe(minifyCSS())
+      .pipe(rename({ suffix: ".min" }))
       .pipe(gulp.dest("dist"))
       .pipe(gulp.dest(""))
       .pipe(connect.reload());
