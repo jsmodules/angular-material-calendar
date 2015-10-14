@@ -1,7 +1,7 @@
 angular.module("materialCalendar", ["ngMaterial", "ngSanitize"]);
 
 angular.module("materialCalendar").constant("config", {
-    version: "0.2.10",
+    version: "0.2.11",
     debug: document.domain.indexOf("localhost") > -1
 });
 
