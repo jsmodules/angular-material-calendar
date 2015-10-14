@@ -1,6 +1,3 @@
-// hack to improve code analysis metrics
-var angular = angular || {};
-
 angular.module("materialCalendar", ["ngMaterial", "ngSanitize"]);
 
 angular.module("materialCalendar").constant("config", {
