@@ -66,7 +66,10 @@ gulp.task("scss", function() {
     return gulp
       .src(p("src/**/*.scss"))
       .pipe(sass()).on("error", sass.logError)
-      .pipe(autoprefixer())
+      .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
       .pipe(gulp.dest("dist"))
       .pipe(gulp.dest(""))
       .pipe(minifyCSS())
