@@ -2,6 +2,7 @@
 
 [![Build Status](https://semaphoreci.com/api/v1/projects/be573f04-507e-4659-ad3b-0611db2227eb/540401/badge.svg)](https://semaphoreci.com/brad/angular-material-calendar)
 [![Code Climate](https://codeclimate.com/github/bradberger/angular-material-calendar/badges/gpa.svg)](https://codeclimate.com/github/bradberger/angular-material-calendar)
+[![Coverage Status](https://coveralls.io/repos/bradberger/angular-material-calendar/badge.svg?branch=master&service=github)](https://coveralls.io/github/bradberger/angular-material-calendar?branch=master)
 
 A calendar directive for AngularJS and Angular Material Design.
 It's lightweight at ~2.1 kB, and has a lot of configurability.
