@@ -29,7 +29,8 @@ gulp.task("js", function() {
       }))
       .pipe(uglify())
       .pipe(size({ gzip: true, prettySize: true }))
-      .pipe(gulp.dest("dist"));
+      .pipe(gulp.dest("dist"))
+      .pipe(gulp.dest(""));
 });
 
 gulp.task("html", function() {
@@ -38,6 +39,7 @@ gulp.task("html", function() {
       .pipe(htmlmin({ collapseWhitespace: true }))
       .pipe(replace("\"", "'"))
       .pipe(gulp.dest(p("dist")))
+      .pipe(gulp.dest(""))
       .pipe(connect.reload());
 });
 
@@ -63,6 +65,7 @@ gulp.task("scss", function() {
       .pipe(autoprefixer())
       .pipe(minifyCSS())
       .pipe(gulp.dest("dist"))
+      .pipe(gulp.dest(""))
       .pipe(connect.reload());
 });
 

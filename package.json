@@ -1,6 +1,6 @@
 {
   "name": "angular-material-calendar",
-  "version": "0.2.10",
+  "version": "0.2.10.1",
   "description": "A calendar directive for AngularJS and Angular Material Design",
   "keywords": ["angular", "material", "design", "calendar", "ngCalendar", "mdCalendar", "calendarMd", "calendar-md", "md-calendar", "ng-calendar"],
   "main": "gulpfile.js",

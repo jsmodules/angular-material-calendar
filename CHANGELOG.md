@@ -1,3 +1,10 @@
+## 0.2.10.1
+
+- Adds production ready files to base directory of project, similar to angular
+- Re-implements minified of JS which was commented out by mistake
+- Slight refactoring
+- Prevents CSS from being injected multiple times if more than one calendar on page
+
 ## 0.2.10
 
 - Implements a data service to allow for shared access to HTML per day
