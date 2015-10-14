@@ -1,4 +1,4 @@
-<md-content layout='column' layout-fill flex md-swipe-left='next()' md-swipe-right='prev()'>
+<md-content layout='column' layout-fill md-swipe-left='next()' md-swipe-right='prev()'>
     <md-toolbar>
         <div class='md-toolbar-tools' layout='row'>
             <md-button ng-click='prev()' aria-label="Previous month">
@@ -26,13 +26,13 @@
     </md-content>
     <!-- calendar view -->
     <md-content ng-if='weekLayout !== columnWeekLayout' flex layout="column" class='calendar'>
-        <div layout='row' layout-fill class='subheader'>
+        <div layout='row' class='subheader'>
             <div layout-padding class='subheader-day' flex ng-repeat='day in calendar.weeks[0]'>
               <md-tooltip ng-if="::tooltips()">{{ day | date:dayLabelTooltipFormat }}</md-tooltip>
               {{ day | date:dayLabelFormat }}
             </div>
         </div>
-        <div ng-if='week.length' ng-repeat='week in calendar.weeks track by $index' flex layout='row' layout-fill>
+        <div ng-if='week.length' ng-repeat='week in calendar.weeks track by $index' flex layout='row'>
             <div tabindex='{{ sameMonth(day) ? (day | date:dayFormat:timezone) : 0 }}' ng-repeat='day in week track by $index' ng-click='handleDayClick(day)' flex layout layout-padding ng-class='{"disabled" : ! sameMonth(day), "active": isActive(day), "md-whiteframe-12dp": hover || focus }' ng-focus='focus = true;' ng-blur='focus = false;' ng-mouseleave="hover = false" ng-mouseenter="hover = true">
                 <md-tooltip ng-if="::tooltips()">{{ day | date:dayTooltipFormat }}</md-tooltip>
                 <div>{{ day | date:dayFormat }}</div>
