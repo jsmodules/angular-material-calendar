@@ -17,9 +17,7 @@ describe("calendar service", function() {
 
     it("should have all public methods defined", function() {
         expect(Calendar).toBeDefined();
-        expect(typeof Calendar.getNumDays).toBe("function");
         expect(typeof Calendar.setWeekStartsOn).toBe("function");
-        expect(typeof Calendar.getFirstDayOfCalendar).toBe("function");
         expect(typeof Calendar.next).toBe("function");
         expect(typeof Calendar.prev).toBe("function");
         expect(typeof Calendar.init).toBe("function");
@@ -106,8 +104,7 @@ describe("calendar service", function() {
         Calendar.next();
         expect(sameDay(Calendar.start, new Date(2015, 11, 1))).toBe(true);
         expect(sameDay(Calendar.weeks[0][0], new Date(2015, 10, 29))).toBe(true);
-    })
-
+    });
 
     it("should move to from December 2015 to January 2016 on next", function() {
         Calendar.init(2015, 11);
@@ -116,8 +113,7 @@ describe("calendar service", function() {
         Calendar.next();
         expect(sameDay(Calendar.start, new Date(2016, 0, 1))).toBe(true);
         expect(sameDay(Calendar.weeks[0][0], new Date(2015, 11, 27))).toBe(true);
-    })
-
+    });
 
     it("should move to from January 2016 to December 2015 on prev", function() {
         Calendar.init(2016, 0);
@@ -126,5 +122,6 @@ describe("calendar service", function() {
         Calendar.prev();
         expect(sameDay(Calendar.start, new Date(2015, 11, 1))).toBe(true);
         expect(sameDay(Calendar.weeks[0][0], new Date(2015, 10, 29))).toBe(true);
-    })
+    });
+
 });

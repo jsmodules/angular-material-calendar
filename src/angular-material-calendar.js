@@ -18,14 +18,6 @@ angular.module("materialCalendar").service("Calendar", [function () {
 
         var now = new Date();
 
-        this.getNumDays = function () {
-            return new Date(
-                this.start.getYear(),
-                this.start.getMonth(),
-                0
-                ).getDate();
-        };
-
         this.setWeekStartsOn = function (i) {
             var d = parseInt(i || 0, 10);
             if (!isNaN(d) && d >= 0 && d <= 6) {
@@ -42,38 +34,20 @@ angular.module("materialCalendar").service("Calendar", [function () {
         this.weeks = [];
         this.weekStartsOn = this.setWeekStartsOn(this.options.weekStartsOn);
 
-        this.getFirstDayOfCalendar = function () {
-
-            // Get first date of month.
-            var date = this.start;
-
-            // Undo the timezone offset here.
-            var first = angular.copy(date);
-
-            while (first.getDay() !== this.weekStartsOn) {
-                var d = first.getDate();
-                first.setDate(d - 1);
-            }
-
-            return first;
-
-        };
-
         this.next = function () {
             if (this.start.getMonth() < 11) {
                 this.init(this.start.getFullYear(), this.start.getMonth() + 1);
-            } else {
-                this.init(this.start.getFullYear() + 1, 0);
+                return;
             }
+            this.init(this.start.getFullYear() + 1, 0);
         };
 
         this.prev = function () {
             if (this.month) {
                 this.init(this.start.getFullYear(), this.start.getMonth() - 1);
                 return;
-            } else {
-                this.init(this.start.getFullYear() - 1, 11);
             }
+            this.init(this.start.getFullYear() - 1, 11);
         };
 
         // Month should be the javascript indexed month, 0 is January, etc.
@@ -146,23 +120,22 @@ angular.module("materialCalendar").service("CalendarData", [function () {
             this.data[this.getDayKey(date)] = content || this.data[this.getDayKey(date)] || "";
         };
     }
-    return new CalendarData;
+    return new CalendarData();
 }]);
 
-angular.module("materialCalendar").directive("calendarMd", ["$compile", "$timeout", "$parse", "$http", "$q", "$log", "Calendar", "CalendarData", function ($compile, $timeout, $parse, $http, $q, $log, Calendar, CalendarData) {
+angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse", "$http", "$q", "Calendar", "CalendarData", function ($compile, $parse, $http, $q, Calendar, CalendarData) {
 
-    var hasCss;
     var defaultTemplate = "/* angular-material-calendar.html */";
 
     var injectCss = function () {
-        if (!hasCss) {
+        var styleId = "calendarMdCss";
+        if (!document.getElementById(styleId)) {
             var head = document.getElementsByTagName("head")[0];
             var css = document.createElement("style");
             css.type = "text/css";
-            css.id = "calendarMdCss";
+            css.id = styleId;
             css.innerHTML = "/* angular-material-calendar.css */";
             head.insertBefore(css, head.firstChild);
-            hasCss = true;
         }
     };
 
@@ -309,8 +282,6 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$timeou
                 if ($attrs.ngModel) {
                     $parse($attrs.ngModel).assign($scope.$parent, angular.copy($scope.active));
                 }
-
-                $log.log("isActive", $scope.active, date, $scope.isActive(date));
 
                 handleCb($scope.onDayClick, angular.copy(date));
 

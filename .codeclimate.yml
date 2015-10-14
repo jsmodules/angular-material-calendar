@@ -14,4 +14,4 @@ engines:
 
 ratings:
   paths:
-  - src/**
+  - src/**/*.js
