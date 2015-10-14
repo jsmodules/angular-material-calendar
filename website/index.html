@@ -129,6 +129,18 @@
                                     </md-select>
                                 </md-input-container>
                             </section>
+                            <section>
+                                <h5>Updating calendar data using the CalendarData service</h5>
+                                <p>
+                                    To support scenarios where you wish to update the content of a
+                                    given day without re-loading the containing scope a CalendarData
+                                    service has been added. Just inject CalendarData and use the
+                                    <code>setDayContent(date,content)</code> function
+                                </p>
+                                <p>
+                                    <md-button ng-click="setContentViaService()">Make today a happy day</md-button>
+                                </p>
+                            </section>
                         </div>
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--6-col-desktop right-col">
                             <section>

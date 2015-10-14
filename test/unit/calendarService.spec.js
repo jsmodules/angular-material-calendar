@@ -99,4 +99,32 @@ describe("calendar service", function() {
         expect(sameDay(Calendar.weeks[0][0], new Date(2018, 3, 1))).toBe(true);
     });
 
+    it("should move to from November 2015 to December 2015 on next", function() {
+        Calendar.init(2015, 10);
+        expect(sameDay(Calendar.start, new Date(2015, 10, 1))).toBe(true);
+        expect(sameDay(Calendar.weeks[0][0], new Date(2015, 10, 1))).toBe(true);
+        Calendar.next();
+        expect(sameDay(Calendar.start, new Date(2015, 11, 1))).toBe(true);
+        expect(sameDay(Calendar.weeks[0][0], new Date(2015, 10, 29))).toBe(true);
+    })
+
+
+    it("should move to from December 2015 to January 2016 on next", function() {
+        Calendar.init(2015, 11);
+        expect(sameDay(Calendar.start, new Date(2015, 11, 1))).toBe(true);
+        expect(sameDay(Calendar.weeks[0][0], new Date(2015, 10, 29))).toBe(true);
+        Calendar.next();
+        expect(sameDay(Calendar.start, new Date(2016, 0, 1))).toBe(true);
+        expect(sameDay(Calendar.weeks[0][0], new Date(2015, 11, 27))).toBe(true);
+    })
+
+
+    it("should move to from January 2016 to December 2015 on prev", function() {
+        Calendar.init(2016, 0);
+        expect(sameDay(Calendar.start, new Date(2016, 0, 1))).toBe(true);
+        expect(sameDay(Calendar.weeks[0][0], new Date(2015, 11, 27))).toBe(true);
+        Calendar.prev();
+        expect(sameDay(Calendar.start, new Date(2015, 11, 1))).toBe(true);
+        expect(sameDay(Calendar.weeks[0][0], new Date(2015, 10, 29))).toBe(true);
+    })
 });
