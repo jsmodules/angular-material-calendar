@@ -1,7 +1,8 @@
 {
   "name": "angular-material-calendar",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "A calendar directive for AngularJS and Angular Material Design",
+  "keywords": ["angular", "material", "design", "calendar", "ngCalendar", "mdCalendar", "calendarMd", "calendar-md", "md-calendar", "ng-calendar"],
   "main": "gulpfile.js",
   "scripts": {
     "postinstall": "./node_modules/protractor/bin/webdriver-manager update",
@@ -11,7 +12,15 @@
     "type": "git",
     "url": "https://github.com/bradberger/material-calendar.git"
   },
-  "author": "Brad Berger <brad@bradb.net>",
+  "maintainers": [
+      "Brad Berger <brad@bradb.net>",
+      "Gavin Barron <gavin.barron@teamintergen.com>"
+  ],
+  "contributors": [
+      "Brad Berger <brad@bradb.net>",
+      "Gavin Barron <gavin.barron@teamintergen.com>",
+      "Dave Gavigan <davegavigan@gmail.com>"
+  ],
   "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/bradberger/material-calendar/issues"

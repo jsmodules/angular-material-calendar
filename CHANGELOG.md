@@ -1,3 +1,7 @@
+## 0.2.10
+
+- Implements a data service to allow for shared access to HTML per day
+
 ## 0.2.9
 
 - Overhauls the way dates/weeks are calculated, should be much more stable.
