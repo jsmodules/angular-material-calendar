@@ -8,6 +8,14 @@ calendar-md {
     display: block;
     max-height: 100%;
 
+    .md-toolbar-tools {
+        h2 {
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
     md-content {
         > md-content {
             // Week row, agenda view.
@@ -36,6 +44,11 @@ calendar-md {
                         }
                     }
                 }
+            }
+
+            // All day cells, don't make them too small, even on tiny screens.
+            > * > * {
+                min-width: 48px;
             }
 
             // Week row (calendar view.)

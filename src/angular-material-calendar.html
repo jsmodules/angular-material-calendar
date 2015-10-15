@@ -1,14 +1,14 @@
 <md-content layout='column' layout-fill md-swipe-left='next()' md-swipe-right='prev()'>
     <md-toolbar>
         <div class='md-toolbar-tools' layout='row'>
-            <md-button ng-click='prev()' aria-label="Previous month">
+            <md-button class="md-icon-button" ng-click='prev()' aria-label="Previous month">
                 <md-tooltip ng-if="::tooltips()">Previous month</md-tooltip>
                 &laquo;
             </md-button>
             <div flex></div>
             <h2 class='calendar-md-title'><span>{{ calendar.start | date:titleFormat:timezone }}</span></h2>
             <div flex></div>
-            <md-button ng-click='next()' aria-label="Next month">
+            <md-button class="md-icon-button" ng-click='next()' aria-label="Next month">
                 <md-tooltip ng-if="::tooltips()">Next month</md-tooltip>
                 &raquo;
             </md-button>

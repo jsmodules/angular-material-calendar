@@ -1,4 +1,10 @@
-## 0.2.10.1
+## 0.2.12
+
+- Fixes #26 Rows in Calendar View when using IE/Edge are too tall
+- Improves toolbar layout
+- Adds minimum with for day cells
+
+## 0.2.11
 
 - Adds production ready files to base directory of project, similar to angular
 - Re-implements minified of JS which was commented out by mistake

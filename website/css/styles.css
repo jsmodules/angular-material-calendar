@@ -173,7 +173,7 @@ pre {
   .container {
     width: 100%;
     max-width: 100%;
-    padding: 2em 1em;
+    padding: 6px;
   }
   .styles__ribbon {
     padding: 0 1em;
