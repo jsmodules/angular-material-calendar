@@ -149,7 +149,7 @@ gulp.task("karma:tdd", function (done) {
     }, done).start();
 });
 
-gulp.task("test", ["js:lint-ci"], function () {
+gulp.task("test", ["js:lint-ci", "index"], function () {
     connect.server({ root: "website", port: 3000 });
     gulp
         .src(["./tests/e2e/**/*.spec.js"])
