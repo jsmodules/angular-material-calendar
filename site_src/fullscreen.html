@@ -2,8 +2,10 @@
 <html ng-app="materialExample">
     <head>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="/css/angular-material-min.css">
-        <link rel="stylesheet" href="/css/styles.css">
+        <!-- bower:css -->
+        <!-- endbower -->
+        <!-- inject:css -->
+        <!-- endinject -->
     </head>
     <body>
         <md-content id="calendar-demo" ng-controller="calendarCtrl" layout="column" layout-fill>
@@ -51,12 +53,9 @@
                 tooltips="tooltips"
                 day-content="setDayContent"></calendar-md>
         </md-content>
-        <script src="js/angular.min.js"></script>
-        <script src="js/angular-animate.min.js"></script>
-        <script src="js/angular-aria.min.js"></script>
-        <script src="js/angular-sanitize.min.js"></script>
-        <script src="js/angular-material.min.js"></script>
-        <script src="js/angular-material-calendar.js"></script>
-        <script src="js/demo.js"></script>
+        <!-- bower:js -->
+        <!-- endbower -->
+        <!-- inject:js -->
+        <!-- endinject -->
     </body>
 </html>
