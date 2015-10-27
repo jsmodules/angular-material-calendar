@@ -1,0 +1,70 @@
+<!doctype html>
+<html ng-app="materialExample">
+    <head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- bower:css -->
+        <link rel="stylesheet" href="/css/angular-material.css"/>
+        <!-- endbower -->
+        <!-- inject:css -->
+        <link rel="stylesheet" href="/css/styles.css"/>
+        <!-- endinject -->
+    </head>
+    <body>
+        <md-content id="calendar-demo" ng-controller="calendarCtrl" layout="column" layout-fill>
+            <md-fab-speed-dial md-direction="up">
+                <md-fab-trigger>
+                  <md-button aria-label="menu" class="md-fab md-warn">
+                    <md-icon md-font-library="material-icons">menu</md-icon>
+                  </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button aria-label="Go fullscreen " class="md-fab md-raised md-mini">
+                        <md-tooltip md-direction="left">Go fullscreen</md-tooltip>
+                        <md-icon md-font-library="material-icons" ng-click="fullscreen($event)">launch</md-icon>
+                    </md-button>
+                    <md-button aria-label="Calendar View" class="md-fab md-raised md-mini">
+                        <md-tooltip md-direction="left">Calendar view</md-tooltip>
+                        <md-icon md-font-library="material-icons" ng-click="setDirection('horizontal')">view_module</md-icon>
+                    </md-button>
+                    <md-button aria-label="Agenda View" class="md-fab md-raised md-mini">
+                        <md-tooltip md-direction="left">Agenda view</md-tooltip>
+                        <md-icon md-font-library="material-icons" ng-click="setDirection('vertical')">view_stream</md-icon>
+                    </md-button>
+                    <md-button aria-label="Single date select" class="md-fab md-raised md-mini" ng-click="selectedDate = false;">
+                        <md-tooltip md-direction="left">Single date select</md-tooltip>
+                        <md-icon md-font-library="material-icons">filter_1</md-icon>
+                    </md-button>
+                    <md-button aria-label="Multi-date select" class="md-fab md-raised md-mini" ng-click="selectedDate = [];">
+                        <md-tooltip md-direction="left">Multi-date select</md-tooltip>
+                        <md-icon md-font-library="material-icons">filter_5</md-icon>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+            <calendar-md flex layout layout-fill
+                calendar-direction="direction"
+                on-prev-month="prevMonth"
+                on-next-month="nextMonth"
+                on-day-click="dayClick"
+                title-format="'MMMM y'"
+                ng-model='selectedDate'
+                day-format="dayFormat"
+                day-label-format="'EEE'"
+                day-label-tooltip-format="'EEEE'"
+                day-tooltip-format="'fullDate'"
+                week-starts-on="weekStartsOn"
+                tooltips="tooltips"
+                day-content="setDayContent"></calendar-md>
+        </md-content>
+        <!-- bower:js -->
+        <script src="/js/angular.js"></script>
+        <script src="/js/angular-animate.js"></script>
+        <script src="/js/angular-aria.js"></script>
+        <script src="/js/angular-material.js"></script>
+        <script src="/js/angular-sanitize.js"></script>
+        <!-- endbower -->
+        <!-- inject:js -->
+        <script src="/js/angular-material-calendar.js"></script>
+        <script src="/js/demo.js"></script>
+        <!-- endinject -->
+    </body>
+</html>
