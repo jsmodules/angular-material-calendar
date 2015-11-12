@@ -153,7 +153,11 @@ gulp.task("test", ["js:lint-ci"], function () {
     connect.server({ root: "website", port: 3000 });
     gulp
         .src(["./tests/e2e/**/*.spec.js"])
-        .pipe(protractor({ configFile: p("protractor.conf.js") }))
+        .pipe(protractor({
+            configFile: p("protractor.conf.js"),
+            args: ["--troubleshoot", "true"],
+            deug: true
+        }))
         .on("error", function (e) { throw e; })
         .on("end", connect.serverClose);
 });
