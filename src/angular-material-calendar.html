@@ -17,7 +17,7 @@
     <!-- agenda view -->
     <md-content ng-if='weekLayout === columnWeekLayout' class='agenda'>
         <div ng-repeat='week in calendar.weeks track by $index'>
-            <div ng-if="sameMonth(day)" ng-class='{"disabled" : isDisabled(day) active: active === day }' ng-click='handleDayClick(day)' ng-repeat='day in week' layout>
+            <div ng-if="sameMonth(day)" ng-class='{"disabled" : isDisabled(day), active: active === day }' ng-click='handleDayClick(day)' ng-repeat='day in week' layout>
                 <md-tooltip ng-if="::tooltips()">{{ day | date:dayTooltipFormat:timezone }}</md-tooltip>
                 <div>{{ day | date:dayFormat:timezone }}</div>
                 <div flex ng-bind-html='dataService.data[dayKey(day)]'></div>
