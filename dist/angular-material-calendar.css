@@ -9,6 +9,10 @@ calendar-md {
     border: 1px solid rgba(0, 0, 0, 0.12); }
     calendar-md md-content > md-content.agenda > * > * {
       border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+      calendar-md md-content > md-content.agenda > * > *.disabled {
+        color: rgba(0, 0, 0, 0.3);
+        pointer-events: none;
+        cursor: auto; }
       calendar-md md-content > md-content.agenda > * > * :first-child {
         padding: 12px;
         width: 200px;
