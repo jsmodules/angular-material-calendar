@@ -1,7 +1,7 @@
 angular.module("materialCalendar", ["ngMaterial", "ngSanitize"]);
 
 angular.module("materialCalendar").constant("config", {
-    version: "0.2.12",
+    version: "0.2.13",
     debug: document.domain.indexOf("localhost") > -1
 });
 
@@ -158,7 +158,8 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             dayTooltipFormat: "=?",
             weekStartsOn: "=?",
             tooltips: "&?",
-            clearDataCacheOnLoad: "=?"
+            clearDataCacheOnLoad: "=?",
+            disableFutureSelection: "=?"
         },
         link: function ($scope, $element, $attrs) {
 
@@ -194,11 +195,17 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             $scope.dayLabelTooltipFormat = $scope.dayLabelTooltipFormat || "EEEE";
             $scope.dayFormat = $scope.dayFormat || "d";
             $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
+            $scope.disableFutureSelection = $scope.disableFutureSelection || false;
 
             $scope.sameMonth = function (date) {
                 var d = angular.copy(date);
                 return d.getFullYear() === $scope.calendar.year &&
                     d.getMonth() === $scope.calendar.month;
+            };
+
+            $scope.isDisabled = function (date) {
+                if ($scope.disableFutureSelection && date > new Date()) { return true; }
+                return !$scope.sameMonth(date);
             };
 
             $scope.calendarDirection = $scope.calendarDirection || "horizontal";
@@ -261,6 +268,10 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             };
 
             $scope.handleDayClick = function (date) {
+
+                if($scope.disableFutureSelection && date > new Date()) {
+                    return;
+                }
 
                 var active = angular.copy($scope.active);
                 if (angular.isArray(active)) {
