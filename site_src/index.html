@@ -93,7 +93,8 @@
                         day-tooltip-format="'fullDate'"
                         week-starts-on="weekStartsOn"
                         tooltips="true"
-                        day-content="setDayContent"></calendar-md>
+                        day-content="setDayContent"
+                        disable-future-selection="disableFutureDates"></calendar-md>
                     </div>
 
                     <p>{{ msg || "Click on a date/button to get started"}}</p>
@@ -172,6 +173,17 @@
                                 <p>
                                     Since 0.2.9 tooltips are off by default, but can easily be enabled.
                                     See the example below.
+                                </p>
+                            </section>
+
+                            <section>
+                                <h5 class="mdl-typeography--headline">Disable future selection</h5>
+                                <p>
+                                    If you don&apos;t want users selecting dates in the future then
+                                    set the disable-future-selection attribute on the directive to true
+
+
+                                    <md-button ng-click="disableFutureDates = !disableFutureDates;">Toggle future selection</md-button>
                                 </p>
                             </section>
                         </div>

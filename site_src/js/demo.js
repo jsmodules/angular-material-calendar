@@ -12,6 +12,7 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
     $scope.weekStartsOn = 0;
     $scope.dayFormat = "d";
     $scope.tooltips = true;
+    $scope.disableFutureDates = false;
 
     $scope.fullscreen = function() {
         var elem = document.querySelector("#calendar-demo");
