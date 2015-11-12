@@ -195,13 +195,18 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             $scope.dayLabelTooltipFormat = $scope.dayLabelTooltipFormat || "EEEE";
             $scope.dayFormat = $scope.dayFormat || "d";
             $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
-            $scope.disableFutureSelection = $attrs.disableFutureSelection || false;
+            $scope.disableFutureSelection = $scope.disableFutureSelection || false;
 
             $scope.sameMonth = function (date) {
                 var d = angular.copy(date);
                 return d.getFullYear() === $scope.calendar.year &&
                     d.getMonth() === $scope.calendar.month;
             };
+
+            $scope.isDisabled = function (date) {
+                if ($scope.disableFutureSelection && date > new Date()) { return true; }
+                return $scope.sameMonth(date);
+            }
 
             $scope.calendarDirection = $scope.calendarDirection || "horizontal";
 
