@@ -202,13 +202,10 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 return d.getFullYear() === $scope.calendar.year &&
                     d.getMonth() === $scope.calendar.month;
             };
-
-            $scope.disable = function (date) {
-                if ($scope.disableFutureSelection && date > new Date()) {
-                    return true;
-                }
+            $scope.isDisabled = function (date) {
+                if ($scope.disableFutureSelection && date > new Date()) { return true; }
                 return !$scope.sameMonth(date);
-            };
+            }
 
             $scope.calendarDirection = $scope.calendarDirection || "horizontal";
 
