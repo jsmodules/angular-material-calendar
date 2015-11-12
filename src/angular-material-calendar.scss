@@ -25,6 +25,11 @@ calendar-md {
                 // Week container
                 > * {
                     > * {
+                        &.disabled {
+                            color: rgba(0, 0, 0, .3);
+                            pointer-events: none;
+                            cursor: auto;
+                        }
                         border-bottom: $calendar-md-border;
                         // Date label.
                         :first-child {
