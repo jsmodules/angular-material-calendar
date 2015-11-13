@@ -1,7 +1,7 @@
 angular.module("materialCalendar", ["ngMaterial", "ngSanitize"]);
 
 angular.module("materialCalendar").constant("config", {
-    version: "0.2.12",
+    version: "0.2.13",
     debug: document.domain.indexOf("localhost") > -1
 });
 
@@ -207,6 +207,11 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 return !$scope.sameMonth(date);
             };
 
+            $scope.isDisabled = function (date) {
+                if ($scope.disableFutureSelection && date > new Date()) { return true; }
+                return !$scope.sameMonth(date);
+            };
+
             $scope.calendarDirection = $scope.calendarDirection || "horizontal";
 
             $scope.$watch("calendarDirection", function (val) {
@@ -267,6 +272,10 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             };
 
             $scope.handleDayClick = function (date) {
+
+                if($scope.disableFutureSelection && date > new Date()) {
+                    return;
+                }
 
                 var active = angular.copy($scope.active);
                 if (angular.isArray(active)) {
