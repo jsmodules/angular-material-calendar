@@ -1,18 +1,18 @@
 angular.module("materialCalendar", ["ngMaterial", "ngSanitize"]);
 
-angular.module("materialCalendar").constant("config", {
+angular.module("materialCalendar").constant("materialCalendar.config", {
     version: "0.2.13",
     debug: document.domain.indexOf("localhost") > -1
 });
 
-angular.module("materialCalendar").config(["config", "$logProvider", "$compileProvider", function (config, $logProvider, $compileProvider) {
+angular.module("materialCalendar").config(["materialCalendar.config", "$logProvider", "$compileProvider", function (config, $logProvider, $compileProvider) {
     if (config.debug) {
         $logProvider.debugEnabled(false);
         $compileProvider.debugInfoEnabled(false);
     }
 }]);
 
-angular.module("materialCalendar").service("Calendar", [function () {
+angular.module("materialCalendar").service("materialCalendar.Calendar", [function () {
 
     function Calendar(year, month, options) {
 
@@ -107,7 +107,7 @@ angular.module("materialCalendar").service("Calendar", [function () {
 
 }]);
 
-angular.module("materialCalendar").service("CalendarData", [function () {
+angular.module("materialCalendar").service("MaterialCalendarData", [function () {
     function CalendarData() {
 
         this.data = {};
@@ -123,7 +123,7 @@ angular.module("materialCalendar").service("CalendarData", [function () {
     return new CalendarData();
 }]);
 
-angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse", "$http", "$q", "Calendar", "CalendarData", function ($compile, $parse, $http, $q, Calendar, CalendarData) {
+angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse", "$http", "$q", "materialCalendar.Calendar", "MaterialCalendarData", function ($compile, $parse, $http, $q, Calendar, CalendarData) {
 
     var defaultTemplate = "/* angular-material-calendar.html */";
 
