@@ -118,6 +118,10 @@ gulp `default` task does all that for you. Just make sure to Selenium is
 up and running:
 
 ```bash
+./node_modules/protractor/bin/webdriver-manager update
+```
+
+```bash
 # In one terminal
 webdriver-manager start
 ```
@@ -154,8 +158,8 @@ appreciated!
 
 ## To Do
 
-- Unit tests (the basic setup is there, need to fill them out)
-- Verify the correct handling of timezones (tests?)
+- [X] Unit tests (the basic setup is there, need to fill them out)
+- [X] Verify the correct handling of timezones (tests?)
 - Write documentation
 - Spread the work
 - Add to cdnjs, jsdelivr, etc.

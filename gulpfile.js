@@ -21,30 +21,30 @@ function p(path) {
 
 gulp.task("js", function() {
     return gulp
-      .src(p("src/angular-material-calendar.js"))
-      .pipe(eslint())
-      .pipe(eslint.format())
-      .pipe(gfi({
-          "/* angular-material-calendar.html */": p("dist/angular-material-calendar.html"),
-          "/* angular-material-calendar.css */": p("dist/angular-material-calendar.min.css")
-      }))
-      .pipe(gulp.dest("dist"))
-      .pipe(gulp.dest(""))
-      .pipe(uglify())
-      .pipe(size({ gzip: true, prettySize: true }))
-      .pipe(rename({ suffix: ".min" }))
-      .pipe(gulp.dest("dist"))
-      .pipe(gulp.dest(""));
+        .src(p("src/angular-material-calendar.js"))
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(gfi({
+            "/* angular-material-calendar.html */": p("dist/angular-material-calendar.html"),
+            "/* angular-material-calendar.css */": p("dist/angular-material-calendar.min.css")
+        }))
+        .pipe(gulp.dest("dist"))
+        .pipe(gulp.dest(""))
+        .pipe(uglify())
+        .pipe(size({ gzip: true, prettySize: true }))
+        .pipe(rename({ suffix: ".min" }))
+        .pipe(gulp.dest("dist"))
+        .pipe(gulp.dest(""));
 });
 
 gulp.task("html", function() {
     return gulp
-      .src(p("src/angular-material-calendar.html"))
-      .pipe(htmlmin({ collapseWhitespace: true }))
-      .pipe(replace("\"", "'"))
-      .pipe(gulp.dest(p("dist")))
-      .pipe(gulp.dest(""))
-      .pipe(connect.reload());
+        .src(p("src/angular-material-calendar.html"))
+        .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(replace("\"", "'"))
+        .pipe(gulp.dest(p("dist")))
+        .pipe(gulp.dest(""))
+        .pipe(connect.reload());
 });
 
 gulp.task("js:lint", function() {
@@ -64,19 +64,19 @@ gulp.task("js:lint-ci", function() {
 
 gulp.task("scss", function() {
     return gulp
-      .src(p("src/**/*.scss"))
-      .pipe(sass()).on("error", sass.logError)
-      .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
+        .src(p("src/**/*.scss"))
+        .pipe(sass()).on("error", sass.logError)
+        .pipe(autoprefixer({
+            browsers: ["last 2 versions"],
             cascade: false
         }))
-      .pipe(gulp.dest("dist"))
-      .pipe(gulp.dest(""))
-      .pipe(minifyCSS())
-      .pipe(rename({ suffix: ".min" }))
-      .pipe(gulp.dest("dist"))
-      .pipe(gulp.dest(""))
-      .pipe(connect.reload());
+        .pipe(gulp.dest("dist"))
+        .pipe(gulp.dest(""))
+        .pipe(minifyCSS())
+        .pipe(rename({ suffix: ".min" }))
+        .pipe(gulp.dest("dist"))
+        .pipe(gulp.dest(""))
+        .pipe(connect.reload());
 });
 
 gulp.task("karma:tdd", function(done) {
