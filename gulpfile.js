@@ -130,7 +130,7 @@ gulp.task("scss", function () {
         .src(p("src/**/*.scss"))
         .pipe(sass()).on("error", sass.logError)
         .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
+            browsers: ["last 2 versions"],
             cascade: false
         }))
         .pipe(gulp.dest("dist"))
