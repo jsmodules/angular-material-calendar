@@ -112,11 +112,11 @@ angular.module("materialCalendar").service("MaterialCalendarData", [function () 
 
         this.data = {};
 
-        this.getDayKey = function (date) {
+        this.getDayKey = function(date) {
             return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-");
         };
 
-        this.setDayContent = function (date, content) {
+        this.setDayContent = function(date, content) {
             this.data[this.getDayKey(date)] = content || this.data[this.getDayKey(date)] || "";
         };
     }
@@ -201,10 +201,6 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 var d = angular.copy(date);
                 return d.getFullYear() === $scope.calendar.year &&
                     d.getMonth() === $scope.calendar.month;
-            };
-            $scope.isDisabled = function (date) {
-                if ($scope.disableFutureSelection && date > new Date()) { return true; }
-                return !$scope.sameMonth(date);
             };
 
             $scope.isDisabled = function (date) {
