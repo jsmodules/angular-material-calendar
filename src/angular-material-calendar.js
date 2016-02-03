@@ -1,18 +1,18 @@
 angular.module("materialCalendar", ["ngMaterial", "ngSanitize"]);
 
-angular.module("materialCalendar").constant("config", {
+angular.module("materialCalendar").constant("materialCalendar.config", {
     version: "0.2.13",
     debug: document.domain.indexOf("localhost") > -1
 });
 
-angular.module("materialCalendar").config(["config", "$logProvider", "$compileProvider", function (config, $logProvider, $compileProvider) {
+angular.module("materialCalendar").config(["materialCalendar.config", "$logProvider", "$compileProvider", function (config, $logProvider, $compileProvider) {
     if (config.debug) {
         $logProvider.debugEnabled(false);
         $compileProvider.debugInfoEnabled(false);
     }
 }]);
 
-angular.module("materialCalendar").service("Calendar", [function () {
+angular.module("materialCalendar").service("materialCalendar.Calendar", [function () {
 
     function Calendar(year, month, options) {
 
@@ -107,23 +107,23 @@ angular.module("materialCalendar").service("Calendar", [function () {
 
 }]);
 
-angular.module("materialCalendar").service("CalendarData", [function () {
+angular.module("materialCalendar").service("MaterialCalendarData", [function () {
     function CalendarData() {
 
         this.data = {};
 
-        this.getDayKey = function (date) {
+        this.getDayKey = function(date) {
             return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-");
         };
 
-        this.setDayContent = function (date, content) {
+        this.setDayContent = function(date, content) {
             this.data[this.getDayKey(date)] = content || this.data[this.getDayKey(date)] || "";
         };
     }
     return new CalendarData();
 }]);
 
-angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse", "$http", "$q", "Calendar", "CalendarData", function ($compile, $parse, $http, $q, Calendar, CalendarData) {
+angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse", "$http", "$q", "materialCalendar.Calendar", "MaterialCalendarData", function ($compile, $parse, $http, $q, Calendar, CalendarData) {
 
     var defaultTemplate = "/* angular-material-calendar.html */";
 
@@ -202,6 +202,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 return d.getFullYear() === $scope.calendar.year &&
                     d.getMonth() === $scope.calendar.month;
             };
+
             $scope.isDisabled = function (date) {
                 if ($scope.disableFutureSelection && date > new Date()) { return true; }
                 return !$scope.sameMonth(date);
@@ -267,6 +268,10 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             };
 
             $scope.handleDayClick = function (date) {
+
+                if($scope.disableFutureSelection && date > new Date()) {
+                    return;
+                }
 
                 var active = angular.copy($scope.active);
                 if (angular.isArray(active)) {
