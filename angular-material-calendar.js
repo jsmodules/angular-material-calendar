@@ -240,7 +240,9 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 var match;
                 var active = angular.copy($scope.active);
                 if (!angular.isArray(active)) {
-                    match = angular.equals(date, active);
+                    if (angular.equals(active.getYear(), date.getYear()) && angular.equals(active.getMonth(), date.getMonth()) && angular.equals(active.getDate(), date.getDate())) {
+                        match = true;
+                    }
                 } else {
                     match = dateFind(active, date) > -1;
                 }
