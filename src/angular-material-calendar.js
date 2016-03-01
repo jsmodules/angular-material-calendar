@@ -123,7 +123,7 @@ angular.module("materialCalendar").service("MaterialCalendarData", [function () 
     return new CalendarData();
 }]);
 
-angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse", "$http", "$q", "materialCalendar.Calendar", "MaterialCalendarData", function ($compile, $parse, $http, $q, Calendar, CalendarData) {
+angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse", "$templateRequest", "$q", "materialCalendar.Calendar", "MaterialCalendarData", function ($compile, $parse, $templateRequest, $q, Calendar, CalendarData) {
 
     var defaultTemplate = "/* angular-material-calendar.html */";
 
@@ -312,19 +312,12 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                     weekStartsOn: $scope.weekStartsOn || 0
                 });
 
-                var deferred = $q.defer();
-                // Allows fetching of dynamic templates via $http.
+                // Allows fetching of dynamic templates via $templateCache.
                 if ($scope.templateUrl) {
-                    $http
-                        .get($scope.templateUrl)
-                        .success(deferred.resolve)
-                        .error(deferred.reject);
-                } else {
-                    deferred.resolve($scope.template() || defaultTemplate);
+                    return $templateRequest($scope.templateUrl);
                 }
 
-                return deferred.promise;
-
+                return $q.resolve($scope.template() || defaultTemplate);
             };
 
 
