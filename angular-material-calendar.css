@@ -50,3 +50,5 @@ calendar-md {
       calendar-md md-content > md-content.calendar > :not(:first-child) > * :last-child {
         overflow: hidden;
         text-overflow: ellipsis; }
+      calendar-md md-content > md-content.calendar .currentDayHighlight {
+          background-color: #FCF8CD !important; }
