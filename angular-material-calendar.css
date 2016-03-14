@@ -51,4 +51,4 @@ calendar-md {
         overflow: hidden;
         text-overflow: ellipsis; }
       calendar-md md-content > md-content.calendar .currentDayHighlight {
-          background-color: #FCF8CD !important; }
+          background-color: #FCF8CD; }
