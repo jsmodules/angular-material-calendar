@@ -69,7 +69,7 @@ directive, which should be a url that the `$http` service will fetch
 and inject.
 
 ```html
-<md-calendar flex layout layout-fill
+<calendar-md flex layout layout-fill
   calendar-direction="direction"
   on-prev-month="prevMonth"
   on-next-month="nextMonth"
@@ -81,7 +81,7 @@ and inject.
   day-label-tooltip-format="'EEEE'"
   day-tooltip-format="'fullDate'"
   week-starts-on="firstDayOfWeek"
-  day-content="setDayContent"></md-calendar>
+  day-content="setDayContent"></calendar-md>
 ```
 
 The related scope looks like this:
