@@ -28,14 +28,14 @@ angular.module("materialCalendar").service("materialCalendar.Calendar", [functio
             return this.weekStartsOn;
         };
 
-        this.setStartDate = function (i) {
+        this.setStartDateOfMonth = function (i) {
             var d = parseInt(i || 1, 10);
             if (!isNaN(d) && d >= 1 && d <= 31) {
-                this.startDate = d;
+                this.startDateOfMonth = d;
             } else {
-                this.startDate = 1;
+                this.startDateOfMonth = 1;
             }
-            return this.startDate;
+            return this.startDateOfMonth;
         };
 
         this.setNoOfDays = function (i) {
@@ -53,7 +53,7 @@ angular.module("materialCalendar").service("materialCalendar.Calendar", [functio
         this.month = now.getMonth();
         this.weeks = [];
         this.weekStartsOn = this.setWeekStartsOn(this.options.weekStartsOn);
-        this.startDate = this.setStartDate(this.options.startDate);
+        this.startDateOfMonth = this.setStartDateOfMonth(this.options.startDateOfMonth);
         this.noOfDays = this.setNoOfDays(this.options.noOfDays);
 
         this.next = function () {
@@ -90,8 +90,8 @@ angular.module("materialCalendar").service("materialCalendar.Calendar", [functio
             }
 
             // First day of calendar month.
-            if ( angular.isDefined(this.options.startDate) ) {
-                this.start = new Date(this.year, this.month, this.startDate);
+            if ( angular.isDefined(this.options.startDateOfMonth) ) {
+                this.start = new Date(this.year, this.month, this.startDateOfMonth);
             } else {
                 this.start = new Date(this.year, this.month, 1);
             }
@@ -105,10 +105,10 @@ angular.module("materialCalendar").service("materialCalendar.Calendar", [functio
             }
 
             if ( this.noOfDays !== 0) {
-              while (this.noOfDays % 7 !== 0) {
-                  this.noOfDays++;
-              }
-              monthLength = this.noOfDays;
+                while (this.noOfDays % 7 !== 0) {
+                    this.noOfDays++;
+                }
+                monthLength = this.noOfDays;
             } else {
                 // Last day of calendar month.
                 while (monthLength % 7 !== 0) {
@@ -166,7 +166,7 @@ angular.module("materialCalendar").service("MaterialCalendarData", [function () 
 
 angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse", "$templateRequest", "$q", "materialCalendar.Calendar", "MaterialCalendarData", function ($compile, $parse, $templateRequest, $q, Calendar, CalendarData) {
 
-    var defaultTemplate = "<md-content layout='column' layout-fill md-swipe-left='next()' md-swipe-right='prev()'><md-toolbar><div class='md-toolbar-tools' layout='row'><md-button class='md-icon-button' ng-click='prev()' aria-label='Previous month'><md-tooltip ng-if='::tooltips()'>Previous month</md-tooltip>&laquo;</md-button><div flex></div><h2 class='calendar-md-title'><span>{{ calendar.start | date:titleFormat:timezone }}</span></h2><div flex></div><md-button class='md-icon-button' ng-click='next()' aria-label='Next month'><md-tooltip ng-if='::tooltips()'>Next month</md-tooltip>&raquo;</md-button></div></md-toolbar><!-- agenda view --><md-content ng-if='weekLayout === columnWeekLayout' class='agenda'><div ng-repeat='week in calendar.weeks track by $index'><div ng-if='sameMonth(day)' ng-class='{&quot;disabled&quot; : isDisabled(day,startDate,noOfDays), active: active === day, currentDayHighlight : isCurrentDay(day) }' ng-click='handleDayClick(day)' ng-repeat='day in week' layout><md-tooltip ng-if='::tooltips()'>{{ day | date:dayTooltipFormat:timezone }}</md-tooltip><div>{{ day | date:dayFormat:timezone }}</div><div flex ng-bind-html='dataService.data[dayKey(day)]'></div></div></div></md-content><!-- calendar view --><md-content ng-if='weekLayout !== columnWeekLayout' flex layout='column' class='calendar'><div layout='row' class='subheader'><div layout-padding class='subheader-day' flex ng-repeat='day in calendar.weeks[0]'><md-tooltip ng-if='::tooltips()'>{{ day | date:dayLabelTooltipFormat }}</md-tooltip>{{ day | date:dayLabelFormat }}</div></div><div ng-if='week.length' ng-repeat='week in calendar.weeks track by $index' flex layout='row'><div tabindex='{{ sameMonth(day) ? (day | date:dayFormat:timezone) : 0 }}' ng-repeat='day in week track by $index' ng-click='handleDayClick(day)' flex layout layout-padding ng-class='{&quot;disabled&quot; : isDisabled(day,startDate,noOfDays), &quot;active&quot;: isActive(day), &quot;md-whiteframe-12dp&quot;: hover || focus }' ng-focus='focus = true;' ng-blur='focus = false;' ng-mouseleave='hover = false' ng-mouseenter='hover = true'><md-tooltip ng-if='::tooltips()'>{{ day | date:dayTooltipFormat }}</md-tooltip><div>{{ day | date:dayFormat }}</div><div flex ng-bind-html='dataService.data[dayKey(day)]'></div></div></div></md-content></md-content>";
+    var defaultTemplate = "<md-content layout='column' layout-fill md-swipe-left='next()' md-swipe-right='prev()'><md-toolbar><div class='md-toolbar-tools' layout='row'><md-button class='md-icon-button' ng-click='prev()' aria-label='Previous month'><md-tooltip ng-if='::tooltips()'>Previous month</md-tooltip>&laquo;</md-button><div flex></div><h2 class='calendar-md-title'><span>{{ calendar.start | date:titleFormat:timezone }}</span></h2><div flex></div><md-button class='md-icon-button' ng-click='next()' aria-label='Next month'><md-tooltip ng-if='::tooltips()'>Next month</md-tooltip>&raquo;</md-button></div></md-toolbar><!-- agenda view --><md-content ng-if='weekLayout === columnWeekLayout' class='agenda'><div ng-repeat='week in calendar.weeks track by $index'><div ng-if='sameMonth(day)' ng-class='{&quot;disabled&quot; : isDisabled(day,startDateOfMonth,noOfDays), active: active === day, currentDayHighlight : isCurrentDay(day) }' ng-click='handleDayClick(day)' ng-repeat='day in week' layout><md-tooltip ng-if='::tooltips()'>{{ day | date:dayTooltipFormat:timezone }}</md-tooltip><div>{{ day | date:dayFormat:timezone }}</div><div flex ng-bind-html='dataService.data[dayKey(day)]'></div></div></div></md-content><!-- calendar view --><md-content ng-if='weekLayout !== columnWeekLayout' flex layout='column' class='calendar'><div layout='row' class='subheader'><div layout-padding class='subheader-day' flex ng-repeat='day in calendar.weeks[0]'><md-tooltip ng-if='::tooltips()'>{{ day | date:dayLabelTooltipFormat }}</md-tooltip>{{ day | date:dayLabelFormat }}</div></div><div ng-if='week.length' ng-repeat='week in calendar.weeks track by $index' flex layout='row'><div tabindex='{{ sameMonth(day) ? (day | date:dayFormat:timezone) : 0 }}' ng-repeat='day in week track by $index' ng-click='handleDayClick(day)' flex layout layout-padding ng-class='{&quot;disabled&quot; : isDisabled(day,startDateOfMonth,noOfDays), &quot;active&quot;: isActive(day), &quot;md-whiteframe-12dp&quot;: hover || focus }' ng-focus='focus = true;' ng-blur='focus = false;' ng-mouseleave='hover = false' ng-mouseenter='hover = true'><md-tooltip ng-if='::tooltips()'>{{ day | date:dayTooltipFormat }}</md-tooltip><div>{{ day | date:dayFormat }}</div><div flex ng-bind-html='dataService.data[dayKey(day)]'></div></div></div></md-content></md-content>";
 
     var injectCss = function () {
         var styleId = "calendarMdCss";
@@ -199,7 +199,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             dayTooltipFormat: "=?",
             weekStartsOn: "=?",
             tooltips: "&?",
-            startDate: "=?",
+            startDateOfMonth: "=?",
             noOfDays: "=?",
             clearDataCacheOnLoad: "=?",
             disableFutureSelection: "=?"
@@ -246,8 +246,8 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                     d.getMonth() === $scope.calendar.month;
             };
 
-            $scope.isDisabled = function (date,startDate,noOfDays) {
-                if (noOfDays!=0 && date.getDate() >= (startDate+noOfDays)) {return true;}
+            $scope.isDisabled = function (date,startDateOfMonth,noOfDays) {
+                if (noOfDays!=0 && date.getDate() >= (startDateOfMonth+noOfDays)) {return true;}
                 if ($scope.disableFutureSelection && date > new Date()) { return true; }
                 return !$scope.sameMonth(date);
             };
@@ -359,7 +359,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
 
                 $scope.calendar = new Calendar(year, month, {
                     weekStartsOn: $scope.weekStartsOn || 0,
-                    startDate: $scope.startDate || 1,
+                    startDateOfMonth: $scope.startDateOfMonth || 1,
                     noOfDays: $scope.noOfDays || 0
                 });
 
@@ -424,7 +424,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 });
             };
 
-            $scope.$watchGroup(["weekStartsOn","startDate","noOfDays"], init);
+            $scope.$watchGroup(["weekStartsOn","startDateOfMonth","noOfDays"], init);
             bootstrap();
 
             // These are for tests, don't remove them..
