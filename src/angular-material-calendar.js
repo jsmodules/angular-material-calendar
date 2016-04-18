@@ -105,10 +105,10 @@ angular.module("materialCalendar").service("materialCalendar.Calendar", [functio
             }
 
             if ( this.noOfDays !== 0) {
-              while (this.noOfDays % 7 !== 0) {
-                  this.noOfDays++;
-              }
-              monthLength = this.noOfDays;
+                while (this.noOfDays % 7 !== 0) {
+                    this.noOfDays++;
+                }
+                monthLength = this.noOfDays;
             } else {
                 // Last day of calendar month.
                 while (monthLength % 7 !== 0) {
