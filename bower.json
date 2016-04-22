@@ -18,7 +18,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-material": "~0.11",
+    "angular-material": "~1.0.0",
     "angular-sanitize": "*"
   }
 }

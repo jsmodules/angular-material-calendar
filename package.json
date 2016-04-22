@@ -44,6 +44,8 @@
     "gulp-eslint": "~1.0",
     "gulp-file-insert": "~1.0",
     "gulp-htmlmin": "~1.1",
+    "gulp-inject": "^3.0.0",
+    "gulp-load-plugins": "^1.0.0",
     "gulp-minify-css": "~1.2",
     "gulp-minify-html": "~1.0",
     "gulp-protractor": "~1.0",
@@ -61,7 +63,8 @@
     "node-sass": "^3.3",
     "protractor": "~2.2",
     "replacestream": "~4.0",
-    "run-sequence": "~1.1"
+    "run-sequence": "~1.1",
+    "wiredep": "^2.2.2"
   },
   "dependencies": {
     "angular": "~1.4",
