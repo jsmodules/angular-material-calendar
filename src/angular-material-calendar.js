@@ -202,7 +202,8 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             startDateOfMonth: "=?",
             noOfDays: "=?",
             clearDataCacheOnLoad: "=?",
-            disableFutureSelection: "=?"
+            disableFutureSelection: "=?",
+            disableSelection: "=?"
         },
         link: function ($scope, $element, $attrs) {
 
@@ -239,7 +240,8 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             $scope.dayFormat = $scope.dayFormat || "d";
             $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
             $scope.disableFutureSelection = $scope.disableFutureSelection || false;
-
+            $scope.disableSelection = $scope.disableSelection || false;
+            
             $scope.sameMonth = function (date) {
                 var d = angular.copy(date);
                 return d.getFullYear() === $scope.calendar.year &&
@@ -318,7 +320,11 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 if($scope.disableFutureSelection && date > new Date()) {
                     return;
                 }
-
+                
+                if($scope.disableSelection) {
+                    return;
+                }
+                
                 var active = angular.copy($scope.active);
                 if (angular.isArray(active)) {
                     var idx = dateFind(active, date);
