@@ -8,7 +8,7 @@ angular.module("materialExample").config(function($mdThemingProvider) {
 
 angular.module("materialExample").controller("calendarCtrl", function($scope, $filter, $q, $timeout, $log, MaterialCalendarData) {
 
-    $scope.selectedDate = null;
+    $scope.selectedDate = new Date();
     $scope.weekStartsOn = 0;
     $scope.dayFormat = "d";
     $scope.tooltips = true;
