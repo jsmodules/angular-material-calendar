@@ -202,7 +202,8 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             startDateOfMonth: "=?",
             noOfDays: "=?",
             clearDataCacheOnLoad: "=?",
-            disableFutureSelection: "=?"
+            disableFutureSelection: "=?",
+            disableSelection: "=?"
         },
         link: function ($scope, $element, $attrs) {
 
@@ -239,6 +240,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             $scope.dayFormat = $scope.dayFormat || "d";
             $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
             $scope.disableFutureSelection = $scope.disableFutureSelection || false;
+            $scope.disableSelection = $scope.disableSelection || false;
 
             $scope.sameMonth = function (date) {
                 var d = angular.copy(date);
@@ -247,7 +249,8 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             };
 
             $scope.isDisabled = function (date,startDateOfMonth,noOfDays) {
-                if (noOfDays!=0 && date.getDate() >= (startDateOfMonth+noOfDays)) {return true;}
+                if (noOfDays!=0 && date.getDate() >= (startDateOfMonth+noOfDays)) { return true; }
+                if ($scope.disableSelection) { return true; }
                 if ($scope.disableFutureSelection && date > new Date()) { return true; }
                 return !$scope.sameMonth(date);
             };
@@ -316,6 +319,10 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             $scope.handleDayClick = function (date) {
 
                 if($scope.disableFutureSelection && date > new Date()) {
+                    return;
+                }
+
+                if($scope.disableSelection) {
                     return;
                 }
 
