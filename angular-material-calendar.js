@@ -241,7 +241,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
             $scope.disableFutureSelection = $scope.disableFutureSelection || false;
             $scope.disableSelection = $scope.disableSelection || false;
-            
+
             $scope.sameMonth = function (date) {
                 var d = angular.copy(date);
                 return d.getFullYear() === $scope.calendar.year &&
@@ -249,7 +249,13 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             };
 
             $scope.isDisabled = function (date,startDateOfMonth,noOfDays) {
-                if (noOfDays!=0 && date.getDate() >= (startDateOfMonth+noOfDays)) {return true;}
+                if (noOfDays!=0 && angular.isDefined(noOfDays)) { 
+                    var dateStart = new Date($scope.calendar.year,$scope.calendar.month,startDateOfMonth);
+                    var dateEnd = angular.copy(dateStart);
+                    dateEnd.setDate(dateStart.getDate()+parseInt(noOfDays));
+                    if (date.getDate() <= dateStart && date.getDate() >= dateEnd) { return true; }
+                }
+                if ($scope.disableSelection) { return true; }
                 if ($scope.disableFutureSelection && date > new Date()) { return true; }
                 return !$scope.sameMonth(date);
             };
@@ -320,11 +326,11 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 if($scope.disableFutureSelection && date > new Date()) {
                     return;
                 }
-                
+
                 if($scope.disableSelection) {
                     return;
                 }
-                
+
                 var active = angular.copy($scope.active);
                 if (angular.isArray(active)) {
                     var idx = dateFind(active, date);
