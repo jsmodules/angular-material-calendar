@@ -241,7 +241,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
             $scope.disableFutureSelection = $scope.disableFutureSelection || false;
             $scope.disableSelection = $scope.disableSelection || false;
-            
+
             $scope.sameMonth = function (date) {
                 var d = angular.copy(date);
                 return d.getFullYear() === $scope.calendar.year &&
@@ -249,7 +249,8 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             };
 
             $scope.isDisabled = function (date,startDateOfMonth,noOfDays) {
-                if (noOfDays!=0 && date.getDate() >= (startDateOfMonth+noOfDays)) {return true;}
+                if (noOfDays!=0 && date.getDate() >= (startDateOfMonth+noOfDays)) { return true; }
+                if ($scope.disableSelection) { return true; }
                 if ($scope.disableFutureSelection && date > new Date()) { return true; }
                 return !$scope.sameMonth(date);
             };
@@ -286,7 +287,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 var match;
                 var active = angular.copy($scope.active);
                 if (!angular.isArray(active)) {
-                    if (angular.equals(active.getYear(), date.getYear()) && angular.equals(active.getMonth(), date.getMonth()) && angular.equals(active.getDate(), date.getDate())) {
+                    if ( active != null && angular.equals(active.getYear(), date.getYear()) && angular.equals(active.getMonth(), date.getMonth()) && angular.equals(active.getDate(), date.getDate())) {
                         match = true;
                     }
                 } else {
@@ -320,11 +321,11 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 if($scope.disableFutureSelection && date > new Date()) {
                     return;
                 }
-                
+
                 if($scope.disableSelection) {
                     return;
                 }
-                
+
                 var active = angular.copy($scope.active);
                 if (angular.isArray(active)) {
                     var idx = dateFind(active, date);
