@@ -5,6 +5,8 @@ calendar-md {
     overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }
+  calendar-md .md-toolbar-tools .moveNext {
+    transform: translate3d(0%, 0%, 0) rotate(180deg); }
   calendar-md md-content > md-content {
     border: 1px solid rgba(0, 0, 0, 0.12); }
     calendar-md md-content > md-content.agenda > * > * {
