@@ -234,14 +234,14 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             }
 
             // Set the defaults here.
-            $scope.titleFormat = $scope.titleFormat || "MMMM yyyy";
+            $scope.titleFormat = $scope.titleFormat || "LLLL yyyy";
             $scope.dayLabelFormat = $scope.dayLabelFormat || "EEE";
             $scope.dayLabelTooltipFormat = $scope.dayLabelTooltipFormat || "EEEE";
             $scope.dayFormat = $scope.dayFormat || "d";
             $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
             $scope.disableFutureSelection = $scope.disableFutureSelection || false;
             $scope.disableSelection = $scope.disableSelection || false;
-            
+
             $scope.sameMonth = function (date) {
                 var d = angular.copy(date);
                 return d.getFullYear() === $scope.calendar.year &&
@@ -249,7 +249,8 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             };
 
             $scope.isDisabled = function (date,startDateOfMonth,noOfDays) {
-                if (noOfDays!=0 && date.getDate() >= (startDateOfMonth+noOfDays)) {return true;}
+                if (noOfDays!=0 && date.getDate() >= (startDateOfMonth+noOfDays)) { return true; }
+                if ($scope.disableSelection) { return true; }
                 if ($scope.disableFutureSelection && date > new Date()) { return true; }
                 return !$scope.sameMonth(date);
             };
@@ -320,11 +321,11 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 if($scope.disableFutureSelection && date > new Date()) {
                     return;
                 }
-                
+
                 if($scope.disableSelection) {
                     return;
                 }
-                
+
                 var active = angular.copy($scope.active);
                 if (angular.isArray(active)) {
                     var idx = dateFind(active, date);

@@ -234,7 +234,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             }
 
             // Set the defaults here.
-            $scope.titleFormat = $scope.titleFormat || "MMMM yyyy";
+            $scope.titleFormat = $scope.titleFormat || "LLLL yyyy";
             $scope.dayLabelFormat = $scope.dayLabelFormat || "EEE";
             $scope.dayLabelTooltipFormat = $scope.dayLabelTooltipFormat || "EEEE";
             $scope.dayFormat = $scope.dayFormat || "d";
