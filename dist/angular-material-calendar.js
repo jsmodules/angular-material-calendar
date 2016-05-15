@@ -234,7 +234,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             }
 
             // Set the defaults here.
-            $scope.titleFormat = $scope.titleFormat || "MMMM yyyy";
+            $scope.titleFormat = $scope.titleFormat || "LLLL yyyy";
             $scope.dayLabelFormat = $scope.dayLabelFormat || "EEE";
             $scope.dayLabelTooltipFormat = $scope.dayLabelTooltipFormat || "EEEE";
             $scope.dayFormat = $scope.dayFormat || "d";
@@ -292,7 +292,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 var match;
                 var active = angular.copy($scope.active);
                 if (!angular.isArray(active)) {
-                    if (angular.equals(active.getYear(), date.getYear()) && angular.equals(active.getMonth(), date.getMonth()) && angular.equals(active.getDate(), date.getDate())) {
+                    if (active && angular.equals(active.getYear(), date.getYear()) && angular.equals(active.getMonth(), date.getMonth()) && angular.equals(active.getDate(), date.getDate())) {
                         match = true;
                     }
                 } else {
