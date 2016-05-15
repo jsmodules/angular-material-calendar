@@ -239,6 +239,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             $scope.dayLabelTooltipFormat = $scope.dayLabelTooltipFormat || "EEEE";
             $scope.dayFormat = $scope.dayFormat || "d";
             $scope.dayTooltipFormat = $scope.dayTooltipFormat || "fullDate";
+            $scope.dayIdFormat = "dd-MM-yy";
             $scope.disableFutureSelection = $scope.disableFutureSelection || false;
             $scope.disableSelection = $scope.disableSelection || false;
 
