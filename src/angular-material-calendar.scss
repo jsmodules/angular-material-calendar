@@ -14,6 +14,11 @@ calendar-md {
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+        .moveNext {
+            -ms-transform: translate3d(0%,0%,0) rotate(180deg);
+            -webkit-transform: translate3d(0%,0%,0) rotate(180deg);
+            transform: translate3d(0%,0%,0) rotate(180deg);
+        }
     }
 
     md-content {
