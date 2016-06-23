@@ -110,6 +110,41 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
 });
 ```
 
+### Localization
+
+The localization of the calendar is straightforward and follows the standard Angular
+localization process described in the [guide](https://docs.angularjs.org/guide/i18n).
+You can find the list of natively supported locales [here](https://github.com/angular/angular.js/tree/master/src/ngLocale).
+
+To translate the calendar, just include the correct localization file in your web page, 
+right after the inclusion of angular.js.
+You can install it by downloading the file manually or using either npm or bower to automate
+the download.
+
+```bash
+npm install angular-i18n
+```
+
+or
+
+```bash
+bower install angular-i18n
+```
+
+Then use the script tag to include the translations (for example, for spanish locale):
+
+```html
+<script src="bower_components/angular-i18n/angular-locale_es-es.js"></script>
+```
+
+Another option is to use directly a CDN like [cdnjs](https://cdnjs.com/libraries/angular-i18n):
+
+```html
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.7/angular-locale_es-es.js"></script>
+```
+
+That's all, now the calendar will be automatically translated in the language of you choice.
+
 ## Hacking On It
 
 Use gulp to spin up the server and re-compile resources on the fly. The
