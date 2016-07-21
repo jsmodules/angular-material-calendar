@@ -256,7 +256,9 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                     dateEnd.setDate(dateStart.getDate()+parseInt(noOfDays));
                     if (date.getDate() <= dateStart && date.getDate() >= dateEnd) { return true; }
                 }
-                if ($scope.disableSelection) { return true; }
+                if ($scope.disableSelection) {
+                    return ("function" === typeof $scope.disableSelection) ? ($scope.disableSelection)(date) : true;
+                }
                 if ($scope.disableFutureSelection && date > new Date()) { return true; }
                 return !$scope.sameMonth(date);
             };
@@ -334,7 +336,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 }
 
                 if($scope.disableSelection) {
-                    return;
+                    return ("function" === typeof $scope.disableSelection) ? ($scope.disableSelection)(date) : null;
                 }
 
                 var active = angular.copy($scope.active);
