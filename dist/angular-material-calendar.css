@@ -15,6 +15,8 @@ calendar-md {
         color: rgba(0, 0, 0, 0.3);
         pointer-events: none;
         cursor: auto; }
+      calendar-md md-content > md-content.agenda > * > *.has-events {
+        background-color: #96ca2d; }
       calendar-md md-content > md-content.agenda > * > * :first-child {
         padding: 12px;
         width: 200px;
@@ -47,6 +49,8 @@ calendar-md {
       calendar-md md-content > md-content.calendar > :not(:first-child) > *.active {
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
         background: rgba(0, 0, 0, 0.02); }
+      calendar-md md-content > md-content.calendar > :not(:first-child) > *.has-events {
+        background-color: #96ca2d; }
       calendar-md md-content > md-content.calendar > :not(:first-child) > * :first-child {
         padding: 0; }
       calendar-md md-content > md-content.calendar > :not(:first-child) > * :last-child {
