@@ -381,7 +381,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                     return $templateRequest($scope.templateUrl);
                 }
 
-                return $q.resolve($scope.template() || defaultTemplate);
+                return $q.when($scope.template() || defaultTemplate);
             };
 
 
