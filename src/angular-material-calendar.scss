@@ -33,7 +33,7 @@ calendar-md {
                     > * {
                         &.disabled {
                             color: rgba(0, 0, 0, .3);
-                            pointer-events: none;
+                            // pointer-events: none;
                             cursor: auto;
                         }
                         &.has-events {
@@ -86,13 +86,19 @@ calendar-md {
                         border-right: $calendar-md-border;
                         cursor: pointer;
 
-                        &:hover {
-                            background: $calendar-md-background-hover;
+                        &.disabled:focus {
+                            outline-style: none;
+                        }
+
+                        &:not(.disabled){
+                            &:hover {
+                                background: $calendar-md-background-hover;
+                            }
                         }
 
                         &.disabled {
                             color: rgba(0, 0, 0, .3);
-                            pointer-events: none;
+                            // pointer-events: none;
                             cursor: auto;
                         }
 
@@ -114,6 +120,7 @@ calendar-md {
                         :last-child {
                             overflow: hidden;
                             text-overflow: ellipsis;
+                            min-height: 45px;
                         }
                     }
                 }
