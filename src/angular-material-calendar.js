@@ -12,7 +12,7 @@ angular.module("materialCalendar").config(["materialCalendar.config", "$logProvi
     }
 }]);
 
-angular.module("materialCalendar").directive('compile', ['$compile', function ($compile) {
+angular.module("materialCalendar").directive("compile", ["$compile", function ($compile) {
     return function(scope, element, attrs) {
         scope.$watch(
             function(scope) {
