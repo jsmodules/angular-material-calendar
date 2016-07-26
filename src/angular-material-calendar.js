@@ -264,7 +264,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             };
 
             $scope.isDisabled = function (date,startDateOfMonth,noOfDays) {
-                if (noOfDays!=0 && angular.isDefined(noOfDays)) { 
+                if (noOfDays!=0 && angular.isDefined(noOfDays)) {
                     var dateStart = new Date($scope.calendar.year,$scope.calendar.month,startDateOfMonth);
                     var dateEnd = angular.copy(dateStart);
                     dateEnd.setDate(dateStart.getDate()+parseInt(noOfDays));
@@ -314,6 +314,11 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                     match = dateFind(active, date) > -1;
                 }
                 return match;
+            };
+
+            $scope.hasEvents = function (date) {
+                var data = CalendarData.data[$scope.dayKey(date)];
+                return (data && data.length > 0);
             };
 
             $scope.prev = function () {
@@ -390,7 +395,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                     return $templateRequest($scope.templateUrl);
                 }
 
-                return $q.resolve($scope.template() || defaultTemplate);
+                return $q.when($scope.template() || defaultTemplate);
             };
 
 
