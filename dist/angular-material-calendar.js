@@ -5,11 +5,14 @@ angular.module("materialCalendar").constant("materialCalendar.config", {
     debug: document.domain.indexOf("localhost") > -1
 });
 
-angular.module("materialCalendar").config(["materialCalendar.config", "$logProvider", "$compileProvider", function (config, $logProvider, $compileProvider) {
+angular.module("materialCalendar").config(["materialCalendar.config", "$logProvider", "$compileProvider", "$mdIconProvider", function (config, $logProvider, $compileProvider, $mdIconProvider) {
     if (config.debug) {
         $logProvider.debugEnabled(false);
         $compileProvider.debugInfoEnabled(false);
     }
+    /* tslint:disable:max-line-length */
+    $mdIconProvider.icon("md-tabs-arrow", "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9ImN1cnJlbnRDb2xvciI+PHBvbHlnb24gcG9pbnRzPSIxNS40LDcuNCAxNCw2IDgsMTIgMTQsMTggMTUuNCwxNi42IDEwLjgsMTIgIi8+PC9nPjwvc3ZnPg==", 24);
+    /* tslint:enable:max-line-length */
 }]);
 
 angular.module("materialCalendar").service("materialCalendar.Calendar", [function () {
@@ -205,7 +208,8 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
             disableFutureSelection: "=?",
             disableSelection: "=?",
             daysToDisable: "=?",
-            disabledDayClick: "=?"
+            disabledDayClick: "=?",
+            dateFilter: "=?"
         },
         link: function ($scope, $element, $attrs) {
             // debugger;
@@ -271,8 +275,11 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 }
                 if ($scope.disableSelection) { return true; }
                 if ($scope.disableFutureSelection && date > new Date()) { return true; }
+                if (!$scope.sameMonth(date)) { return true; }
+
+                if ($scope.dateFilter) { return $scope.dateFilter(date); }
                 if (chkDisabledDay(date)) { return true; }
-                return !$scope.sameMonth(date);
+                return false;
             };
 
             $scope.calendarDirection = $scope.calendarDirection || "horizontal";
@@ -351,7 +358,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                     return;
                 }
 
-                if (chkDisabledDay(date) && $scope.disabledDayClick) {
+                if ($scope.isDisabled(date)) {
                     handleCb($scope.disabledDayClick, angular.copy(date));
                     return;
                 }
