@@ -35,7 +35,7 @@
         </div>
         <div ng-if='week.length' ng-repeat='week in calendar.weeks track by $index' flex layout='row'>
             <div tabindex='{{ sameMonth(day) ? (day | date:dayFormat:timezone) : 0 }}' ng-repeat='day in week track by $index' ng-click='handleDayClick(day)'
-                flex layout layout-padding ng-class='{"disabled" : isDisabled(day), "active": (isActive(day) && !isDisabled(day)), "has-events": hasEvents(day), "md-whiteframe-12dp": hover || focus }'
+                flex layout layout-padding ng-class='{"disabled" : isDisabled(day), "active": (isActive(day) && !isDisabled(day)), "has-events": hasEvents(day), "": hover || focus }'
                 ng-focus='focus = (!isDisabled(day) ? true : false)' ng-blur='focus = false;' ng-mouseleave="hover = false" ng-mouseenter="hover = !isDisabled(day)">
                 <!--ng-focus='focus = !isDisabled(day);' ng-blur='focus = isDisabled(day);' ng-mouseleave="hover = false" ng-mouseenter="hover = !isDisabled(day)"-->
                 <md-tooltip ng-if="::tooltips()">{{ day | date:dayTooltipFormat }}</md-tooltip>

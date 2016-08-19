@@ -1,7 +1,10 @@
-$calendar-md-background-active: rgba(0, 0, 0, .02) !default;
+// $calendar-md-background-active: rgba(0, 0, 0, .02) !default;
+// $calendar-md-shadow-active: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12) !default;
+$calendar-md-background-active: #C3E0FC !default;
 $calendar-md-shadow-active: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12) !default;
 $calendar-md-border: 1px solid rgba(0, 0, 0, .12) !default;
-$calendar-md-background-hover: rgba(0, 0, 0, .04) !default;
+// $calendar-md-background-hover: rgba(0, 0, 0, .04) !default;
+$calendar-md-background-hover: $calendar-md-background-active;
 $calendar-md-event-background: rgba(150, 202, 45, 1) !default;
 
 calendar-md {
@@ -70,7 +73,7 @@ calendar-md {
 
                 // Subheader row.
                 > :first-child {
-                    background: $calendar-md-background-active;
+                    background: rgba(0, 0, 0, .02);
                     border-bottom: $calendar-md-border;
                     margin-right: 0;
                     min-height: 36px;
@@ -103,7 +106,7 @@ calendar-md {
                         }
 
                         &.active {
-                            box-shadow: $calendar-md-shadow-active;
+                            // box-shadow: $calendar-md-shadow-active;
                             background: $calendar-md-background-active;
                         }
 
