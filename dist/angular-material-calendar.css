@@ -42,13 +42,12 @@ calendar-md {
       calendar-md md-content > md-content.calendar > :not(:first-child) > *.disabled:focus {
         outline-style: none; }
       calendar-md md-content > md-content.calendar > :not(:first-child) > *:not(.disabled):hover {
-        background: rgba(0, 0, 0, 0.04); }
+        background: #C3E0FC; }
       calendar-md md-content > md-content.calendar > :not(:first-child) > *.disabled {
         color: rgba(0, 0, 0, 0.3);
         cursor: auto; }
       calendar-md md-content > md-content.calendar > :not(:first-child) > *.active {
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
-        background: rgba(0, 0, 0, 0.02); }
+        background: #C3E0FC; }
       calendar-md md-content > md-content.calendar > :not(:first-child) > *.has-events {
         background-color: #96ca2d; }
       calendar-md md-content > md-content.calendar > :not(:first-child) > * :first-child {
