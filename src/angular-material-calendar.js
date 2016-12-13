@@ -422,11 +422,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 var result = (cb || angular.noop)(date);
 
                 // Check for async function. This should support $http.get() and also regular $q.defer() functions.
-                if (angular.isObject(result) && "function" === typeof result.success) {
-                    result.success(function (html) {
-                        $scope.dataService.setDayContent(date, html);
-                    });
-                } else if (angular.isObject(result) && "function" === typeof result.then) {
+                if (angular.isObject(result) && ("function" === typeof result.then || "function" === typeof result.success)) {
                     result.then(function (html) {
                         $scope.dataService.setDayContent(date, html);
                     });
