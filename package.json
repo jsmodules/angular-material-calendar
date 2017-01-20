@@ -14,7 +14,7 @@
     "md-calendar",
     "ng-calendar"
   ],
-  "main": "angular-material-calendar.js",
+  "main": "index.js",
   "scripts": {
     "test": "karma start --single-run && gulp test"
   },
