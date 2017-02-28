@@ -194,6 +194,10 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
         }
     };
 
+    var transformDateToCompare = function (date) {
+        return date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+    };
+
     return {
         restrict: "E",
         scope: {
@@ -291,11 +295,12 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
                 (cb || angular.noop)(data);
             };
 
+            //If haven't sent date with 00:00:00 (h/m/s). Here can adjust it
             var dateFind = function (arr, date) {
                 var index = -1;
                 angular.forEach(arr, function (d, k) {
                     if (index < 0) {
-                        if (angular.equals(date, d)) {
+                        if (transformDateToCompare(date) == transformDateToCompare(d)) {
                             index = k;
                         }
                     }
