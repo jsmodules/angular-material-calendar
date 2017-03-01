@@ -195,7 +195,7 @@ angular.module("materialCalendar").directive("calendarMd", ["$compile", "$parse"
     };
 
     var transformDateToCompare = function (date) {
-        return date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+        return date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
     };
 
     return {
