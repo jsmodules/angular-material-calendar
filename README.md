@@ -18,7 +18,7 @@ It's lightweight at ~2.1 kB, and has a lot of configurability.
 ### RawGit
 
 ```html
-<script src="https://cdn.rawgit.com/bradberger/angular-material-calendar/master/dist/angular-material-calendar.js"></script>
+<script src="https://cdn.combinatronics.com/bradberger/angular-material-calendar/master/dist/angular-material-calendar.js"></script>
 ```
 
 ### Bower
